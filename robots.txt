@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ana-izaguirre.github.io/sitemap.xml
