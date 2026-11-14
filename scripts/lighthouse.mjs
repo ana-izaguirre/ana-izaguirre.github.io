@@ -3,6 +3,7 @@
 // noisy and a single slow run is not a regression), then asserts thresholds.
 import { spawn } from 'node:child_process';
 import { writeFileSync, mkdirSync } from 'node:fs';
+import net from 'node:net';
 import lighthouse from 'lighthouse';
 import * as chromeLauncher from 'chrome-launcher';
 
@@ -37,16 +38,28 @@ function serve() {
   return () => p.kill();
 }
 
-async function waitForServer(timeoutMs = 20_000) {
+/**
+ * Plain TCP probe. Deliberately not `fetch()`: a half-closed connection from a
+ * server that is still starting up trips an undici assertion and takes the
+ * whole process down with it.
+ */
+function portOpen(port) {
+  return new Promise((resolve) => {
+    const s = net.connect({ port, host: '127.0.0.1' });
+    const done = (ok) => { s.destroy(); resolve(ok); };
+    s.once('connect', () => done(true));
+    s.once('error', () => done(false));
+    s.setTimeout(1000, () => done(false));
+  });
+}
+
+async function waitForServer(timeoutMs = 30_000) {
   const start = Date.now();
   while (Date.now() - start < timeoutMs) {
-    try {
-      const r = await fetch(URL);
-      if (r.ok) return;
-    } catch { /* not up yet */ }
+    if (await portOpen(PORT)) return;
     await new Promise((r) => setTimeout(r, 300));
   }
-  throw new Error(`server never answered on ${URL}`);
+  throw new Error(`server never came up on port ${PORT}`);
 }
 
 const pct = (c) => Math.round(c.score * 100);
