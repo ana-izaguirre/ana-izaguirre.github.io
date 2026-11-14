@@ -1,0 +1,1133 @@
+<!doctype html>
+<html lang="es" data-theme="dark" class="boot">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ana Izaguirre, ingeniera full stack y backend en Zaragoza | Node.js, TypeScript, AWS</title>
+<meta name="description" content="CV interactivo de Ana Izaguirre, ingeniera full stack especializada en backend, en Zaragoza, con 8+ años en producción: Node.js, TypeScript, React y AWS.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#101A2E">
+<link rel="canonical" href="https://ana-izaguirre.github.io/">
+<link rel="alternate" hreflang="es" href="https://ana-izaguirre.github.io/?lang=es">
+<link rel="alternate" hreflang="en" href="https://ana-izaguirre.github.io/?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://ana-izaguirre.github.io/">
+<link rel="preload" href="fonts/instrument-serif.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/geist-mono.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23101A2E'/%3E%3Cpath d='M6 16h20' stroke='%232B2B30' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='20' cy='16' r='6' fill='%23E11D2E'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Ana Izaguirre">
+<meta property="og:title" content="Ana Izaguirre, ingeniera full stack y backend">
+<meta property="og:description" content="Un CV que se puede reproducir, consultar y descargar: mi carrera, evento por evento.">
+<meta property="og:url" content="https://ana-izaguirre.github.io/">
+<meta property="og:image" content="https://ana-izaguirre.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://ana-izaguirre.github.io/og.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Ana Izaguirre","jobTitle":"Full Stack Engineer (backend-focused)","url":"https://ana-izaguirre.github.io/","sameAs":["https://github.com/ana-izaguirre","https://www.linkedin.com/in/ana-izaguirre/"],"address":{"@type":"PostalAddress","addressLocality":"Zaragoza","addressCountry":"ES"},"knowsLanguage":["es","en"],"knowsAbout":["Node.js","TypeScript","AWS","GraphQL","Event-driven architecture","Message queues","Model Context Protocol"]}
+</script>
+<script>try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+<style>
+@font-face{font-family:"Instrument Serif";src:url(fonts/instrument-serif.woff2) format("woff2");font-weight:400;font-display:optional}
+@font-face{font-family:"Geist";src:url(fonts/geist.woff2) format("woff2");font-weight:100 900;font-display:optional}
+@font-face{font-family:"Geist Mono";src:url(fonts/geist-mono.woff2) format("woff2");font-weight:100 900;font-display:optional}
+:root{
+  --bg:#101A2E;--bg2:#1A2742;--line:#31405F;--text:#F2EFE4;--muted:#A9B4C8;
+  --red:#E4674A;--red-t:#FF8D6B;--glow:rgba(255,196,110,.18);--mark:rgba(255,196,110,.3);
+  --paper:transparent;--sheet:#17233C;--ink:#F2EFE4;--body:#DBD7C9;--slate:#A9B4C8;--rule:#31405F;--shadow:0 36px 80px -40px rgba(0,0,0,.75),0 0 0 1px var(--rule);
+  --on-red:#2A1409;--sky1:#0A151C;--sky2:#102128;--sky3:#15292B;--sun:#F3F8EE;--sun2:#C3D8CA;
+  --hill1:#163A44;--hill2:#1B3F49;--hill3:#102A33;--grass:#0A1A20;--star:#CFF3E4;--mist:rgba(170,215,205,.13);--spirit:#F2FBF6;
+  --serif:"Instrument Serif",Georgia,"Times New Roman",serif;
+  --sans:"Geist",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"Geist Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+html[data-theme=light]{
+  --bg:#DCEDF4;--bg2:#FFFCF4;--line:#D9CFBC;--text:#243040;--muted:#5C6675;
+  --red:#C8482C;--red-t:#A93A21;--glow:rgba(255,214,140,.5);--mark:rgba(240,176,80,.32);
+  --paper:transparent;--sheet:#FFFCF4;--ink:#243040;--body:#3A4454;--slate:#5C6675;--rule:#E6DCC8;--shadow:0 36px 80px -48px rgba(36,48,64,.45),0 0 0 1px var(--rule);
+  --on-red:#FFFFFF;--sky1:#D6E2DB;--sky2:#E8EEE7;--sky3:#F2F1E7;--sun:#FFFBEC;--sun2:#FFEFC6;
+  --hill1:#AFC3AC;--hill2:#93AB92;--hill3:#73907A;--grass:#5A7A63;--star:transparent;--mist:rgba(255,255,255,.4);--spirit:#43584B;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{overflow-x:clip}
+body{margin:0;background:linear-gradient(180deg,var(--sky1) 0%,var(--sky2) 42%,var(--sky3) 100%) fixed;color:var(--text);font:400 1.0625rem/1.6 var(--sans);-webkit-font-smoothing:antialiased;transition:background .25s,color .25s}
+.wrap{max-width:1080px;margin:0 auto;padding:0 clamp(1.1rem,4vw,2rem)}
+:focus-visible{outline:2px solid var(--red-t);outline-offset:3px;border-radius:4px}
+.skip{position:absolute;left:-999px;top:0;background:var(--red);color:var(--on-red);padding:.6rem 1rem;z-index:30;font-weight:600}
+.skip:focus{left:0}
+
+.bar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--sky1) 78%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:.8rem;height:60px}
+.brand{font:400 1.45rem/1.3 var(--serif);color:var(--text);text-decoration:none;white-space:nowrap}
+.bar-r{display:flex;gap:.5rem;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;font:600 .93rem/1 var(--sans);padding:.7rem 1rem;border-radius:12px;border:1px solid transparent;cursor:pointer;text-decoration:none;min-height:42px;white-space:nowrap}
+.btn:active{transform:translateY(1px)}
+.btn.red{background:var(--red);color:var(--on-red)}
+.btn.ghost{background:transparent;color:var(--text);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--red)}
+.ico{width:42px;padding:0;display:grid;place-items:center}
+.code{width:46px;padding:0;display:grid;place-items:center;font-weight:700;letter-spacing:.05em}
+.ico svg{width:20px;height:20px}
+.i-sun{fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round}
+.i-sun circle{fill:var(--sun);stroke:currentColor}
+.i-moon{fill:currentColor;display:none}
+.i-moon .spark{fill:var(--red)}
+html[data-theme=light] .i-sun{display:none}
+html[data-theme=light] .i-moon{display:block}
+.btn.ink{background:var(--ink);color:var(--sheet)}
+
+.sys{min-height:calc(100svh - 60px);display:flex;flex-direction:column;justify-content:center;padding:1.2rem 0 1.6rem}
+.sys>.wrap{display:flex;flex-direction:column;justify-content:center;flex:1;min-height:0}
+.askwrap{padding:clamp(2rem,5vw,3.4rem) 0 clamp(3.5rem,7vw,5.5rem);content-visibility:auto;contain-intrinsic-size:auto 700px}
+.ask-rule{height:1px;border:0;margin:0 0 1.5rem;background:linear-gradient(90deg,var(--line),transparent 70%)}
+.top{position:fixed;right:clamp(.9rem,3vw,1.6rem);bottom:calc(clamp(.9rem,3vw,1.6rem) + 56px);z-index:25;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--bg2);color:var(--text);font-size:1.2rem;line-height:1;cursor:pointer;opacity:0;transform:translateY(12px);pointer-events:none;visibility:hidden;transition:opacity .3s,transform .3s,visibility .3s,border-color .2s;box-shadow:0 12px 30px -16px #000}
+.top.show{opacity:1;transform:none;pointer-events:auto;visibility:visible}
+.top:hover{border-color:var(--red);color:var(--red-t)}
+h1{font:400 clamp(2rem,4.6vw,3.4rem)/1.1 var(--serif);letter-spacing:-.015em;margin:0 0 .5rem}
+.facts{display:flex;flex-wrap:wrap;gap:.4rem;list-style:none;margin:0 0 .8rem;padding:0;min-width:0;max-width:100%}
+.facts li{font-size:.82rem;font-weight:500;border:1px solid var(--line);border-radius:999px;padding:.3rem .7rem;color:var(--text)}
+.facts li:first-child{border-color:var(--red);color:var(--red-t)}
+.lead{font-size:1.02rem;line-height:1.5;color:var(--muted);max-width:76ch;margin:0 0 1.1rem}
+.h2{font:400 1.75rem/1.2 var(--serif);margin:0 0 .35rem}
+.note{color:var(--muted);font-size:.93rem;margin:0 0 .6rem;max-width:76ch}
+
+.replay{border:1px solid var(--line);border-radius:22px;background:color-mix(in srgb,var(--bg2) 96%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 28px 64px -44px rgba(0,0,0,.55);padding:clamp(1rem,2.4vw,1.5rem);margin:0;flex:0 0 auto;display:flex;flex-direction:column}
+.rp-top{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:.8rem 1.8rem;align-items:center}
+.rp-year{font:400 clamp(4.2rem,11vw,7.6rem)/.86 var(--serif);color:var(--red-t);font-variant-numeric:tabular-nums;letter-spacing:-.03em;min-width:3.7ch}
+.rp-year.tick{animation:tick .3s ease-out}
+@keyframes tick{from{opacity:.15;transform:translateY(12px)}}
+.rp-ev{min-height:6.6rem;display:flex;flex-direction:column;justify-content:center}
+.rp-when{font-size:.88rem;color:var(--muted);margin:0 0 .15rem;font-variant-numeric:tabular-nums;display:flex;flex-wrap:wrap;gap:.45rem;align-items:center}
+.rp-badge{border:1px solid var(--line);border-radius:999px;padding:.18rem .55rem;font-size:.76rem;color:var(--text);font-variant-numeric:normal}
+.rp-title{font:600 1.15rem/1.3 var(--sans);margin:.1rem 0 .25rem}
+.rp-line{margin:0 0 .35rem;color:var(--muted);max-width:62ch;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.rp-link{font-weight:600;font-size:.9rem;color:var(--text);text-decoration-color:var(--red);text-underline-offset:3px;align-self:flex-start}
+.scene{position:relative;flex:0 0 auto;min-height:15.5rem;margin:1.4rem 0 0;perspective:1400px;perspective-origin:50% 60%}
+.card{position:absolute;bottom:0;left:0;width:min(560px,100%);padding:1.4rem 1.5rem 1.5rem;border:1px solid var(--line);border-radius:18px;background:linear-gradient(165deg,var(--sheet),color-mix(in srgb,var(--sheet) 88%,var(--sun2)));box-shadow:0 26px 70px -40px rgba(0,0,0,.55);transform-style:preserve-3d;transform:translateX(var(--x,0px));transition:transform .7s cubic-bezier(.22,1,.36,1)}
+.card.enter{animation:enter .65s cubic-bezier(.22,1,.36,1)}
+@keyframes enter{from{transform:translateX(var(--x,0px)) translateZ(-90px) rotateY(10deg);opacity:.55}to{transform:translateX(var(--x,0px));opacity:1}}
+.ln{opacity:0;transform:translateY(12px) translateZ(-40px);transition:opacity .45s ease,transform .6s cubic-bezier(.22,1,.36,1)}
+.b1 .l1,.b2 .l1,.b3 .l1,.b4 .l1,.b2 .l2,.b3 .l2,.b4 .l2,.b3 .l3,.b4 .l3,.b4 .l4{opacity:1;transform:none}
+.c-year{font:600 .78rem/1 var(--mono);color:var(--red-t);letter-spacing:.14em;margin:0 0 .5rem}
+.c-co{font:400 clamp(1.8rem,4vw,2.5rem)/1.12 var(--serif);margin:0;font-weight:400}
+.c-role{font:600 .98rem/1.35 var(--sans);margin:.2rem 0 0}
+.c-sector{margin:.75rem 0 0;color:var(--muted);max-width:46ch}
+.c-dur{margin:.5rem 0 0;font-weight:600}
+.c-logos{display:flex;flex-wrap:wrap;gap:.45rem;margin:.9rem 0 0;min-height:2rem}
+.lg{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--line);background:var(--bg);border-radius:11px;padding:.32rem .55rem .32rem .42rem;font:500 .78rem/1 var(--sans);color:var(--text);cursor:pointer;opacity:0;transform:rotateY(60deg) translateZ(-30px);transform-origin:left center;transition:opacity .35s,transform .45s cubic-bezier(.22,1,.36,1),border-color .2s}
+.lg:hover{border-color:var(--red)}
+.lg svg{width:15px;height:15px;flex:none}
+.lg b{display:grid;place-items:center;width:15px;height:15px;border-radius:4px;background:var(--line);font:700 .55rem/1 var(--sans)}
+.b4 .lg{opacity:1;transform:none;transition-delay:calc(var(--i) * 50ms)}
+.wire{position:absolute;left:0;bottom:-14px;width:1px;height:14px;background:linear-gradient(var(--line),var(--red));transform:translateX(var(--wx,0px));transition:transform .7s cubic-bezier(.22,1,.36,1)}
+.rail{position:relative;padding-top:0}
+.rail-line{position:relative;height:2px;background:var(--line);border-radius:2px}
+.rail-line i{position:absolute;inset:0 auto 0 0;width:0;background:var(--red);border-radius:2px;transition:width .7s cubic-bezier(.22,1,.36,1)}
+.knob{position:absolute;top:50%;left:0;width:13px;height:13px;margin:-6.5px 0 0 -6.5px;border-radius:50%;background:var(--red);border:2px solid var(--bg2);box-shadow:0 0 0 1px var(--red),0 0 14px color-mix(in srgb,var(--red) 70%,transparent);transform:translateX(var(--kx,0px));transition:transform .7s cubic-bezier(.22,1,.36,1);will-change:transform}
+.segs{position:relative;height:30px}
+.seg{position:absolute;top:0;height:30px;padding:14px 10px 0;margin-left:-10px;border:0;background:transparent;color:var(--muted);font:600 .74rem/1 var(--sans);white-space:nowrap;cursor:pointer;opacity:.55;transition:opacity .3s,color .3s}
+.seg::before{content:"";position:absolute;left:10px;top:-5px;width:9px;height:9px;margin-left:-4.5px;border-radius:50%;background:var(--bg2);border:2px solid var(--line);transition:background .4s,border-color .4s,transform .4s}
+.seg em{display:block;font:500 .66rem/1.3 var(--sans);font-style:normal;color:var(--muted);opacity:0;transition:opacity .3s}
+.seg.seen{opacity:1}
+.seg.seen::before{background:var(--red);border-color:var(--red)}
+.seg.on{color:var(--red-t);opacity:1}
+.seg.on::before{transform:scale(1.35);box-shadow:0 0 0 4px color-mix(in srgb,var(--red) 22%,transparent)}
+.seg.on em{opacity:1}
+.seg:hover{opacity:1;color:var(--text)}
+.seg:hover::before{border-color:var(--red)}
+.years{position:relative;height:1rem;font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.years span{position:absolute;transform:translateX(-50%)}
+.rp-bar{display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:center;margin-top:.8rem;padding-top:.8rem;border-top:1px solid var(--line)}
+.btn.ic{padding:0;width:42px;height:42px;border-radius:50%;display:grid;place-items:center}
+.btn.ic>svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.btn.red.ic{width:48px;height:48px}
+.btn.red.ic>svg{width:22px;height:22px;fill:currentColor;stroke:none}
+#rp-play .i-pause,#rp-play .i-replay{display:none}
+#rp-play.pause .i-play,#rp-play.pause .i-replay{display:none}
+#rp-play.pause .i-pause{display:block}
+#rp-play.replay .i-play,#rp-play.replay .i-pause{display:none}
+#rp-play.replay .i-replay{display:block}
+.rp-step{flex:1;min-width:7rem;margin:0;font:.8rem/1.4 var(--mono);color:var(--muted)}
+.rp-counts{display:flex;flex-wrap:wrap;gap:.2rem 1.3rem;font-size:.88rem;color:var(--muted)}
+.rp-counts b{color:var(--text);font-size:1.05rem;font-weight:600;font-variant-numeric:tabular-nums}
+@media (max-height:870px){
+  .sys{padding:.7rem 0 1rem}
+  h1{font-size:clamp(1.7rem,3.2vw,2.3rem);margin-bottom:.3rem}
+  .lead{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:.6rem;font-size:.97rem}
+  .replay{padding:1rem}
+  .h2{font-size:1.35rem}
+  .note{margin-bottom:.45rem;font-size:.88rem}
+  .c-co{font-size:clamp(1.5rem,3vw,2rem)}
+  .c-sector{margin-top:.5rem}
+  .c-dur{margin-top:.35rem}
+  .c-logos{margin-top:.6rem}
+  .card{padding:1.1rem 1.2rem 1.2rem}
+  .rp-bar{margin-top:.6rem;padding-top:.6rem}
+}
+@media (max-width:900px){
+  h1{font-size:1.9rem}
+  .lead{font-size:.95rem;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+  .h2{font-size:1.35rem}
+  .note{font-size:.85rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .c-co{font-size:1.6rem}
+  .c-sector,.c-dur{font-size:.92rem}
+  .lg{font-size:.72rem;padding:.28rem .45rem .28rem .36rem}
+  .rp-counts{font-size:.8rem;gap:.1rem .9rem}
+  .rp-counts b{font-size:.95rem}
+}
+@media (max-height:705px) and (max-width:700px){
+  .note{display:none}
+  .h2{font-size:1.15rem}
+  h1{font-size:1.5rem}
+}
+@media (max-height:790px) and (max-width:700px){
+  .lead,.facts,.rp-counts,.note{display:none}
+  .replay{padding:.8rem}
+  .card{padding:.95rem 1rem 1rem}
+  .h2{font-size:1.2rem}
+  .rp-bar{margin-top:.5rem;padding-top:.5rem}
+  .c-logos{margin-top:.5rem}
+  .years{display:none}
+  .segs{height:26px}
+}
+@media (max-width:430px){
+  .bar .wrap{gap:.5rem}
+  .brand{font-size:1.1rem}
+  .bar-r{gap:.35rem}
+  .bar .btn{padding:.6rem .6rem;font-size:.85rem}
+  .ico{width:38px}
+  .code{width:40px}
+  .top{width:42px;height:42px;bottom:calc(clamp(.9rem,3vw,1.6rem) + 52px)}
+  .fab{padding:.7rem .9rem;font-size:.86rem}
+}
+@media (max-width:700px){
+  .facts{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;margin-bottom:.6rem;padding-bottom:.15rem}
+  .facts::-webkit-scrollbar{display:none}
+  .facts li{flex:none;font-size:.76rem;padding:.26rem .6rem}
+  .lead{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;font-size:.92rem;margin-bottom:.7rem}
+}
+@media (max-width:640px){
+  .scene{perspective:900px}
+  .years{display:none}
+  .sun{right:5%;top:3%;width:68px;opacity:.5}
+  .cl{opacity:.3}
+  .seg{font-size:0;padding:14px 14px 0;margin-left:-14px;height:34px}
+  .seg::before{left:14px}
+  .segs{height:26px}
+  .segs{height:16px}
+  h1{font-size:1.65rem}
+  .lead{-webkit-line-clamp:5;font-size:.9rem}
+  .c-sector{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .replay{padding:.9rem}
+  .rp-step{display:none}
+  .rp-bar{gap:.5rem .7rem}
+  .btn.ic{width:38px;min-height:38px}
+  .btn.red.ic{width:44px;height:44px}
+  .card{width:100%;padding:1.1rem 1.1rem 1.2rem}
+  .c-sector{max-width:none}
+  .years span:nth-child(even){display:none}
+  .rp-step{order:5;flex-basis:100%}
+}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);grid-template-areas:"f a" "c a";gap:1.1rem 2.2rem;align-items:start}
+.g-form{grid-area:f}.g-chips{grid-area:c}.g-ans{grid-area:a}
+.ask{display:flex;gap:.6rem}
+.q-wrap{position:relative;flex:1;min-width:0;display:flex}
+.q-x{position:absolute;right:.5rem;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;border:0;background:transparent;color:var(--muted);font-size:1.25rem;line-height:1;cursor:pointer}
+.q-x:hover{color:var(--red-t);background:color-mix(in srgb,var(--red) 12%,transparent)}
+.ask input{flex:1;min-width:0;background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:1rem 1.15rem;font:400 1.05rem var(--sans);color:var(--text)}
+.ask input::placeholder{color:var(--muted)}
+.ask input{padding-right:2.6rem}
+.ask input:focus{outline:2px solid var(--red-t);outline-offset:2px;border-color:transparent}
+.ask .btn{border-radius:14px;padding:0 1.4rem}
+.ask-head{max-width:70ch;margin:0 0 1.3rem}
+.ask-head .h2{margin-bottom:.45rem}
+.ask-head .how{margin:0}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.ask-h{margin:1.3rem 0 .6rem;font-size:.88rem;color:var(--slate)}
+.chips{display:flex;flex-wrap:wrap;gap:.55rem;margin:0}
+.chip{font:500 .95rem/1.25 var(--sans);color:var(--text);background:var(--sheet);border:1px solid var(--rule);border-radius:999px;padding:.55rem .95rem;cursor:pointer;text-align:left;box-shadow:0 1px 2px rgba(0,0,0,.08);transition:border-color .2s,transform .15s,box-shadow .2s}
+.chip:hover{border-color:var(--red);transform:translateY(-1px);box-shadow:0 4px 10px -4px rgba(0,0,0,.3)}
+.how{margin:1.2rem 0 0;font-size:.88rem;line-height:1.55;color:var(--slate);max-width:54ch}
+.answer{min-height:5rem;scroll-margin-top:76px}
+.ans{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:1.4rem 1.4rem .6rem}
+.ans.in{animation:rise .35s ease-out}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}}
+.ans{position:relative}
+.ans-x{position:absolute;top:.7rem;right:.8rem;width:32px;height:32px;border-radius:50%;border:1px solid transparent;background:transparent;color:var(--muted);font-size:1.3rem;line-height:1;cursor:pointer}
+.ans-x:hover{color:var(--red-t);border-color:var(--red)}
+.ans-q{font:400 1.7rem/1.24 var(--serif);margin:0 2rem .35rem 0}
+.ans-meta{font:.8rem/1.5 var(--mono);color:var(--muted);margin:0 0 1rem}
+.hit{padding:.95rem 0;border-top:1px solid var(--line)}
+.hit-src{font-weight:600;font-size:.9rem;color:var(--red-t);margin:0 0 .35rem}
+.hit-txt{margin:0 0 .35rem}
+mark{background:var(--mark);color:inherit;border-radius:3px;padding:0 .12em}
+.hit a,.none a{color:var(--text);font-weight:600;font-size:.92rem;text-decoration-color:var(--red);text-underline-offset:3px}
+.none{margin:0 0 .9rem}
+.hist[hidden]{display:none}
+.hist{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-top:1rem;font-size:.88rem;color:var(--muted)}
+
+.doc{scroll-margin-top:70px;background:transparent;color:var(--ink);margin-top:0;padding:0 0 4rem;content-visibility:auto;contain-intrinsic-size:auto 2300px}
+.sheet{scroll-margin-top:76px;position:relative;background:var(--sheet);max-width:900px;margin:0 auto;border-radius:22px;padding:clamp(1.4rem,5vw,3.5rem);box-shadow:var(--shadow);transition:background .25s}
+.sh{display:flex;justify-content:space-between;gap:1.2rem 1.5rem;align-items:flex-start;flex-wrap:wrap;padding-bottom:1.6rem;border-bottom:1px solid var(--rule)}
+.sh-name{font:400 clamp(2.3rem,5vw,3.3rem)/1.12 var(--serif);margin:0 0 .45rem}
+.sh-role{margin:0 0 .5rem;font-weight:600}
+.sh-contact{margin:0;color:var(--slate);font-size:.95rem;display:flex;flex-wrap:wrap;gap:.15rem 1.1rem}
+.sheet a{color:var(--ink);text-decoration-color:var(--red);text-underline-offset:3px}
+.sheet a.btn{color:var(--sheet);text-decoration:none}
+.sheet h2{font:400 1.75rem/1.2 var(--serif);margin:2.2rem 0 .9rem}
+.txt{margin:0 0 .7rem;color:var(--body);max-width:72ch;border-radius:6px}
+.yrs{display:flex;flex-wrap:wrap;gap:.35rem 1.7rem;list-style:none;margin:0 0 .35rem;padding:0}
+.yrs li{display:flex;align-items:baseline;gap:.35rem}
+.yrs b{font:400 1.6rem/1 var(--serif);color:var(--red-t);font-variant-numeric:tabular-nums}
+.yrs span{font-size:.92rem;color:var(--body)}
+.yrs-k{margin:0 0 1.1rem;font-size:.8rem;color:var(--slate)}
+.row{display:grid;grid-template-columns:7.4rem minmax(0,1fr);gap:.2rem 1.4rem;padding:.9rem 0;border-top:1px solid var(--rule);border-radius:6px}
+.when{color:var(--slate);font-size:.92rem;font-variant-numeric:tabular-nums;padding-top:.12rem}
+.when.k{color:var(--ink);font-weight:600;font-size:1rem}
+.row h3{font:600 1.05rem/1.35 var(--sans);margin:0 0 .3rem}
+.row p,.row li{margin:0 0 .28rem;color:var(--body)}
+.row ul{margin:0;padding-left:1.1rem}
+.row li::marker{color:var(--red)}
+.row p:last-child,.row li:last-child{margin-bottom:0}
+[data-chunk]{scroll-margin-top:96px}
+.flash{animation:flash 2.4s ease-out}
+@keyframes flash{0%,35%{background:var(--mark);box-shadow:0 0 0 8px var(--mark)}100%{background:transparent;box-shadow:0 0 0 8px transparent}}
+.contact{margin-top:1.6rem}
+.cta{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.9rem}
+.cta .btn{text-decoration:none}
+.sheet a.btn.red,.cta .btn.red{color:var(--on-red)}
+.sheet a.btn.ghost2{color:var(--ink)}
+.btn.ghost2{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn.ghost2:hover{border-color:var(--red)}
+.sky{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
+html.boot .sky *,html.boot .spirits *,html.boot .stars i{animation-play-state:paused!important}
+.sun{position:absolute;right:13%;top:6%;width:clamp(70px,9vw,120px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 50% 50%,var(--sun) 36%,var(--sun2) 54%,transparent 72%);opacity:.85;animation:breathe 16s ease-in-out infinite;will-change:transform}
+@keyframes breathe{50%{transform:scale(1.05);opacity:1}}
+.stars{position:absolute;inset:0 0 42% 0}
+.stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:var(--star);opacity:.7;animation:twinkle 4s ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:.15}50%{opacity:.85}}
+html[data-theme=light] .stars i{width:3px;height:3px;background:#FFF6CC;box-shadow:0 0 8px rgba(255,226,150,.9);animation:pollen 12s ease-in-out infinite}
+@keyframes pollen{0%,100%{transform:translate(0,0)}50%{transform:translate(16px,-20px)}}
+.canopy{position:absolute;top:0;left:0;right:0;width:100%;height:min(14vh,100px);fill:var(--grass);opacity:.14}
+html[data-theme=light] .canopy{opacity:.18}
+.ridge{position:absolute;left:-2%;right:-2%;bottom:26%;width:104%;height:min(34vh,320px);fill:var(--hill1);opacity:.3}
+.mist{position:absolute;left:-60%;width:220%;height:clamp(70px,15vh,150px);background:radial-gradient(58% 100% at 50% 50%,var(--mist),transparent 72%);will-change:transform}
+.m1{bottom:30%;animation:drift2 120s linear infinite}
+.m2{bottom:19%;height:clamp(50px,10vh,100px);opacity:.75;animation:drift2 170s linear infinite -70s}
+.m3{bottom:40%;opacity:.5;animation:drift2 220s linear infinite -150s}
+@keyframes drift2{to{transform:translateX(42%)}}
+.trees{position:absolute;left:0;right:0;bottom:0;width:100%}
+.trees.far{height:min(84vh,760px);fill:var(--hill2);opacity:.38}
+.trees .lv{opacity:.72}
+.trees.mid{height:min(104vh,980px);fill:var(--hill3);opacity:.55}
+.floor{position:absolute;left:0;right:0;bottom:0;width:100%;height:min(22vh,210px)}
+.floor .f1{fill:var(--hill3);opacity:.75}
+.floor .f2{fill:var(--grass)}
+.shafts{position:absolute;inset:0;background:linear-gradient(104deg,transparent 18%,color-mix(in srgb,var(--sun) 26%,transparent) 23%,transparent 28%,transparent 44%,color-mix(in srgb,var(--sun) 18%,transparent) 48%,transparent 54%);opacity:.3;mix-blend-mode:screen}
+html[data-theme=light] .shafts{opacity:.45}
+.spirits{position:absolute;left:0;right:0;bottom:0;height:min(72vh,680px);pointer-events:none}
+.spirits.front{position:fixed;z-index:24;opacity:.2;height:min(70vh,660px)}
+.sp{position:absolute;bottom:0;will-change:transform;animation:walkx linear infinite}
+.sp-b{display:block;animation:bob .9s ease-in-out infinite alternate;transform-origin:50% 100%}
+.sp svg{display:block;width:100%;height:auto}
+.sp::before{content:"";position:absolute;inset:-45% -60%;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--spirit) 30%,transparent),transparent 68%)}
+html[data-theme=light] .sp::before{background:radial-gradient(circle,rgba(255,255,255,.75),transparent 66%)}
+.sp .body{fill:var(--spirit)}
+.sp .leg{fill:var(--spirit);transform-origin:50% 0;animation:stepa .9s ease-in-out infinite alternate}
+.sp .leg.r{animation-name:stepb}
+@keyframes walkx{from{transform:translateX(-14vw)}to{transform:translateX(114vw)}}
+@keyframes bob{to{transform:translateY(-3px)}}
+@keyframes stepa{from{transform:rotate(-16deg)}to{transform:rotate(16deg)}}
+@keyframes stepb{from{transform:rotate(16deg)}to{transform:rotate(-16deg)}}
+.grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E")}
+.dock{position:fixed;right:clamp(.9rem,3vw,1.6rem);bottom:clamp(.9rem,3vw,1.6rem);z-index:26;display:flex;flex-direction:column;align-items:flex-end;gap:.6rem}
+.fab{display:inline-flex;align-items:center;gap:.5rem;font:600 .93rem/1 var(--sans);padding:.8rem 1.1rem;border-radius:999px;border:1px solid var(--red);background:var(--red);color:var(--on-red);cursor:pointer;box-shadow:0 14px 34px -14px rgba(0,0,0,.6)}
+.fab-i{width:17px;height:17px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round}
+.pop{width:min(310px,calc(100vw - 2.2rem));background:var(--sheet);color:var(--ink);border:1px solid var(--rule);border-radius:18px;padding:1.1rem 1.15rem;box-shadow:0 30px 70px -30px rgba(0,0,0,.6);animation:rise .25s ease-out}
+.pop[hidden]{display:none}
+.pop-t{margin:0 0 .3rem;font:600 1rem/1.3 var(--sans)}
+.pop-d{margin:0 0 .7rem;font-size:.88rem;line-height:1.5;color:var(--slate)}
+.pop-a{display:block;font-size:.88rem;font-weight:600;color:var(--ink);word-break:break-all;text-decoration-color:var(--red);text-underline-offset:3px}
+.pop-b{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.8rem}
+.pop-b .btn{padding:.55rem .8rem;font-size:.85rem;min-height:38px;border-radius:11px;text-decoration:none}
+.pop-b .btn.ghost{color:var(--ink);border-color:var(--rule);background:transparent}
+.pop-b .btn.ghost:hover{border-color:var(--red)}
+.loader{position:fixed;inset:0;z-index:100;overflow:hidden;display:grid;place-content:center;justify-items:center;gap:1rem;background:linear-gradient(180deg,var(--sky1),var(--sky2) 55%,var(--sky3));animation:curtain 1s ease-in .85s forwards}
+.loader.gone{display:none}
+@keyframes curtain{to{opacity:0;visibility:hidden}}
+.l-art{position:relative;width:170px;height:92px}
+.l-sun{position:absolute;left:50%;top:52px;width:72px;height:72px;margin-left:-36px;border-radius:50%;background:radial-gradient(circle,var(--sun) 45%,var(--sun2) 62%,transparent 74%);animation:rise 1.5s cubic-bezier(.22,1,.36,1) forwards;will-change:transform}
+@keyframes rise{to{transform:translateY(-48px)}}
+.l-cloud{position:absolute;height:14px;border-radius:9px;background:#fff;opacity:.85}
+.l-cloud.c1{width:62px;left:-6px;top:30px;animation:away 1.6s cubic-bezier(.22,1,.36,1) forwards}
+.l-cloud.c2{width:46px;right:-4px;top:54px;animation:away2 1.6s cubic-bezier(.22,1,.36,1) forwards}
+.l-cloud.c3{width:34px;left:16px;top:68px;opacity:.6;animation:away 1.9s cubic-bezier(.22,1,.36,1) forwards}
+@keyframes away{to{transform:translateX(-120px);opacity:0}}
+@keyframes away2{to{transform:translateX(120px);opacity:0}}
+.l-name{margin:0;font:400 2rem/1.25 var(--serif);color:var(--text);letter-spacing:.16em;opacity:0;animation:fadeup .9s cubic-bezier(.22,1,.36,1) .25s forwards}
+.l-hills{position:absolute;left:0;right:0;bottom:0;width:100%;height:30vh;opacity:0;animation:fadeup 1s ease-out .15s forwards}
+@keyframes fadeup{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+footer{max-width:900px;margin:0 auto;padding:1.6rem clamp(1.1rem,4vw,2rem) 0;color:var(--slate);font-size:.88rem}
+
+@media (min-width:701px){.doc{scroll-margin-top:60px}}
+@media (max-width:900px){.grid{grid-template-columns:1fr;grid-template-areas:"f" "a" "c"}}
+@media (max-width:640px){
+  .ask{flex-direction:column}.ask .btn{min-height:50px}
+  .row{grid-template-columns:1fr}
+  .brand{font-size:1.2rem}
+  .bar .btn{padding:.6rem .7rem;font-size:.86rem}
+  .sheet{border-radius:14px;margin-left:.6rem;margin-right:.6rem}
+  .rp-top{grid-template-columns:minmax(0,1fr) auto}
+  .rp-ev{grid-column:1/-1;order:3;min-height:8.6rem;justify-content:flex-start}
+}
+@media (prefers-reduced-motion:reduce){
+  .grain{display:none}
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}
+@media (max-width:700px){
+  .grain,.shafts{display:none}
+  .spirits.front{opacity:.16}
+  .fab{width:54px;height:54px;padding:0;justify-content:center;border-radius:50%}
+  .fab span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+  .fab-i{width:21px;height:21px}
+  .replay{-webkit-backdrop-filter:none;backdrop-filter:none;background:var(--bg2)}
+  .canopy{height:min(15vh,110px);opacity:.3}
+  .trees.mid{opacity:.72}
+  .shafts{opacity:.4}
+  .sun{animation:none}
+  .cl-c{display:none}
+  .sun{right:4%;top:2.5%;width:64px;opacity:.45}
+  .cl-a{top:3%}.cl-b{top:14%}.cl-c{top:24%}
+  .hills{height:min(34vh,300px)}
+}
+@media print{
+  @page{size:A4;margin:9mm 12mm}
+  html,body{overflow:visible}
+  :root,html[data-theme]{--sheet:#fff;--ink:#000;--body:#111;--slate:#444;--rule:#d9d9d9;--paper:#fff;--red:#C01226;color-scheme:light}
+  body{background:#fff!important;color:#000;font-size:8.3pt;line-height:1.28}
+  .yrs{gap:.1rem 11pt;margin-bottom:0}
+  .yrs b{font-size:11.5pt}
+  .yrs span{font-size:8.3pt}
+  .yrs-k{font-size:7.4pt;margin-bottom:3pt}
+  .skg{display:grid;grid-template-columns:1fr 1fr;gap:0 14pt}
+  .skg .row{grid-template-columns:5.2rem 1fr}
+  .askwrap,.doc{content-visibility:visible}
+  .bar,.sys,.askwrap,.top,.dock,footer,.no-print,.skip,.sky,.grain,.loader{display:none!important}
+  .doc{background:#fff;padding:0}
+  .sheet{margin:0;max-width:none;padding:0;box-shadow:none;border-radius:0}
+  .sh{padding-bottom:5pt}.sh-name{font-size:21pt;margin-bottom:2pt}.sh-role{margin-bottom:1pt}.sh-contact{font-size:8.4pt}
+  .sheet h2{font-size:12pt;margin:5.5pt 0 1.5pt}
+  .row{padding:2.3pt 0;grid-template-columns:6.4rem 1fr;gap:0 9pt;break-inside:avoid}
+  .row h3{font-size:9pt;margin-bottom:1pt}.row p,.row li{margin-bottom:.5pt}
+  .when{font-size:8.2pt}.when.k{font-size:8.6pt}
+  .txt{margin-bottom:2pt;max-width:none}
+  .sheet a{text-decoration:none}
+}
+</style>
+</head>
+<body>
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="l-art">
+    <span class="l-sun"></span>
+    <span class="l-cloud c1"></span><span class="l-cloud c2"></span><span class="l-cloud c3"></span>
+  </div>
+  <p class="l-name">Ana Izaguirre</p>
+  <svg class="l-hills" viewBox="0 0 1440 260" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="var(--hill2)" opacity=".75" d="M120 260V54l-22-44 22-28 21 28-21 44v206zM430 260V34l-25-48 25-30 24 30-24 48v226zM760 260V70l-23-46 23-30 22 30-22 46v190zM1090 260V44l-24-46 24-30 23 30-23 46v216zM1340 260V84l-20-40 20-26 19 26-19 40v176z"/>
+    <path fill="var(--hill3)" d="M0 168c230-38 350-8 490 28s320 20 470-18 330-10 480 46v36H0z"/>
+  </svg>
+</div>
+<div class="sky" aria-hidden="true">
+  <span class="sun"></span>
+  <div class="stars" id="stars"></div>
+  <svg class="ridge" viewBox="0 0 1440 300" preserveAspectRatio="none"><path d="M0 196l170-96 128 64 150-84 164 92 148-70 170 86 160-62 180 88 170-40v226H0z"/></svg>
+  <svg class="canopy" viewBox="0 0 1440 200" preserveAspectRatio="none"><path d="M0 0h1440v62c-54 34-96 6-150 30-58 26-104-10-158 16-52 25-96-6-150 18-56 25-104-8-158 14-54 22-100-10-156 12-54 21-102-12-156 10-50 20-96-8-148 12-44 17-92-6-132 14-18 9-32 6-32 6z"/></svg>
+  <div class="mist m1"></div><div class="mist m2"></div><div class="mist m3"></div>
+  <svg class="trees far" viewBox="0 0 1440 520" preserveAspectRatio="xMidYMax slice"><path class="tk" d="M54 520L52 68L60 68L66 520ZM180 520L185 110L191 110L190 520ZM292 520L297 44L307 44L308 520ZM426 520L425 138L429 138L434 520ZM539 520L545 86L553 86L551 520ZM665 520L665 120L671 120L675 520ZM793 520L799 58L807 58L807 520ZM926 520L923 128L929 128L934 520ZM1044 520L1048 76L1056 76L1056 520ZM1175 520L1180 106L1186 106L1185 520ZM1312 520L1312 50L1322 50L1328 520ZM1411 520L1415 142L1419 142L1419 520Z"/><path class="lv" d="M56 59m-19 0a19 15 0 1 0 38 0a19 15 0 1 0 -38 0ZM41 67m-12 0a12 10 0 1 0 25 0a12 10 0 1 0 -25 0ZM71 66m-12 0a12 9 0 1 0 23 0a12 9 0 1 0 -23 0ZM50 49m-11 0a11 9 0 1 0 22 0a11 9 0 1 0 -22 0ZM64 50m-10 0a10 8 0 1 0 20 0a10 8 0 1 0 -20 0ZM56 40m-8 0a8 7 0 1 0 17 0a8 7 0 1 0 -17 0ZM188 103m-13 0a13 10 0 1 0 26 0a13 10 0 1 0 -26 0ZM178 109m-9 0a9 7 0 1 0 17 0a9 7 0 1 0 -17 0ZM199 109m-8 0a8 6 0 1 0 16 0a8 6 0 1 0 -16 0ZM184 97m-8 0a8 6 0 1 0 15 0a8 6 0 1 0 -15 0ZM193 98m-7 0a7 6 0 1 0 14 0a7 6 0 1 0 -14 0ZM188 90m-6 0a6 5 0 1 0 11 0a6 5 0 1 0 -11 0ZM302 33m-22 0a22 17 0 1 0 44 0a22 17 0 1 0 -44 0ZM285 43m-14 0a14 11 0 1 0 29 0a14 11 0 1 0 -29 0ZM320 42m-13 0a13 11 0 1 0 27 0a13 11 0 1 0 -27 0ZM295 22m-13 0a13 10 0 1 0 25 0a13 10 0 1 0 -25 0ZM311 23m-12 0a12 9 0 1 0 23 0a12 9 0 1 0 -23 0ZM302 11m-10 0a10 8 0 1 0 19 0a10 8 0 1 0 -19 0ZM427 132m-12 0a12 9 0 1 0 23 0a12 9 0 1 0 -23 0ZM418 137m-8 0a8 6 0 1 0 15 0a8 6 0 1 0 -15 0ZM437 137m-7 0a7 6 0 1 0 14 0a7 6 0 1 0 -14 0ZM423 126m-7 0a7 5 0 1 0 13 0a7 5 0 1 0 -13 0ZM432 127m-6 0a6 5 0 1 0 13 0a6 5 0 1 0 -13 0ZM427 121m-5 0a5 4 0 1 0 10 0a5 4 0 1 0 -10 0ZM549 77m-17 0a17 14 0 1 0 35 0a17 14 0 1 0 -35 0ZM535 85m-11 0a11 9 0 1 0 23 0a11 9 0 1 0 -23 0ZM563 84m-11 0a11 9 0 1 0 22 0a11 9 0 1 0 -22 0ZM543 69m-10 0a10 8 0 1 0 20 0a10 8 0 1 0 -20 0ZM556 69m-9 0a9 8 0 1 0 19 0a9 8 0 1 0 -19 0ZM549 60m-8 0a8 6 0 1 0 15 0a8 6 0 1 0 -15 0ZM668 113m-14 0a14 12 0 1 0 29 0a14 12 0 1 0 -29 0ZM656 119m-10 0a10 8 0 1 0 19 0a10 8 0 1 0 -19 0ZM680 119m-9 0a9 7 0 1 0 18 0a9 7 0 1 0 -18 0ZM663 106m-8 0a8 7 0 1 0 17 0a8 7 0 1 0 -17 0ZM674 106m-8 0a8 6 0 1 0 16 0a8 6 0 1 0 -16 0ZM668 98m-6 0a6 5 0 1 0 13 0a6 5 0 1 0 -13 0ZM803 48m-20 0a20 16 0 1 0 41 0a20 16 0 1 0 -41 0ZM787 57m-13 0a13 11 0 1 0 27 0a13 11 0 1 0 -27 0ZM820 56m-13 0a13 10 0 1 0 25 0a13 10 0 1 0 -25 0ZM796 38m-12 0a12 9 0 1 0 24 0a12 9 0 1 0 -24 0ZM811 39m-11 0a11 9 0 1 0 22 0a11 9 0 1 0 -22 0ZM803 28m-9 0a9 7 0 1 0 18 0a9 7 0 1 0 -18 0ZM926 121m-13 0a13 10 0 1 0 26 0a13 10 0 1 0 -26 0ZM916 127m-9 0a9 7 0 1 0 17 0a9 7 0 1 0 -17 0ZM937 127m-8 0a8 6 0 1 0 16 0a8 6 0 1 0 -16 0ZM922 115m-8 0a8 6 0 1 0 15 0a8 6 0 1 0 -15 0ZM931 116m-7 0a7 6 0 1 0 14 0a7 6 0 1 0 -14 0ZM926 108m-6 0a6 5 0 1 0 11 0a6 5 0 1 0 -11 0ZM1052 67m-19 0a19 15 0 1 0 38 0a19 15 0 1 0 -38 0ZM1037 75m-12 0a12 10 0 1 0 25 0a12 10 0 1 0 -25 0ZM1067 74m-12 0a12 9 0 1 0 23 0a12 9 0 1 0 -23 0ZM1046 57m-11 0a11 9 0 1 0 22 0a11 9 0 1 0 -22 0ZM1060 58m-10 0a10 8 0 1 0 20 0a10 8 0 1 0 -20 0ZM1052 48m-8 0a8 7 0 1 0 17 0a8 7 0 1 0 -17 0ZM1183 99m-14 0a14 12 0 1 0 29 0a14 12 0 1 0 -29 0ZM1171 105m-10 0a10 8 0 1 0 19 0a10 8 0 1 0 -19 0ZM1195 105m-9 0a9 7 0 1 0 18 0a9 7 0 1 0 -18 0ZM1178 92m-8 0a8 7 0 1 0 17 0a8 7 0 1 0 -17 0ZM1189 92m-8 0a8 6 0 1 0 16 0a8 6 0 1 0 -16 0ZM1183 84m-6 0a6 5 0 1 0 13 0a6 5 0 1 0 -13 0ZM1317 39m-22 0a22 17 0 1 0 44 0a22 17 0 1 0 -44 0ZM1300 49m-14 0a14 11 0 1 0 29 0a14 11 0 1 0 -29 0ZM1335 48m-13 0a13 11 0 1 0 27 0a13 11 0 1 0 -27 0ZM1310 28m-13 0a13 10 0 1 0 25 0a13 10 0 1 0 -25 0ZM1326 29m-12 0a12 9 0 1 0 23 0a12 9 0 1 0 -23 0ZM1317 17m-10 0a10 8 0 1 0 19 0a10 8 0 1 0 -19 0ZM1417 136m-12 0a12 9 0 1 0 23 0a12 9 0 1 0 -23 0ZM1408 141m-8 0a8 6 0 1 0 15 0a8 6 0 1 0 -15 0ZM1427 141m-7 0a7 6 0 1 0 14 0a7 6 0 1 0 -14 0ZM1413 130m-7 0a7 5 0 1 0 13 0a7 5 0 1 0 -13 0ZM1422 131m-6 0a6 5 0 1 0 13 0a6 5 0 1 0 -13 0ZM1417 125m-5 0a5 4 0 1 0 10 0a5 4 0 1 0 -10 0Z"/></svg>
+  <svg class="trees mid" viewBox="0 0 1440 520" preserveAspectRatio="xMidYMax slice"><path class="tk" d="M105 520L105 50L123 50L135 520ZM397 520L407 68L423 68L423 520ZM718 520L720 50L742 50L752 520ZM1008 520L1019 84L1033 84L1032 520ZM1285 520L1286 54L1304 54L1315 520Z"/><path class="lv" d="M114 28m-44 0a44 35 0 1 0 87 0a44 35 0 1 0 -87 0ZM79 48m-29 0a29 23 0 1 0 57 0a29 23 0 1 0 -57 0ZM150 46m-27 0a27 22 0 1 0 54 0a27 22 0 1 0 -54 0ZM99 6m-25 0a25 20 0 1 0 50 0a25 20 0 1 0 -50 0ZM131 9m-23 0a23 19 0 1 0 47 0a23 19 0 1 0 -47 0ZM114 -15m-19 0a19 15 0 1 0 38 0a19 15 0 1 0 -38 0ZM415 49m-38 0a38 30 0 1 0 75 0a38 30 0 1 0 -75 0ZM385 66m-25 0a25 20 0 1 0 50 0a25 20 0 1 0 -50 0ZM446 64m-23 0a23 19 0 1 0 47 0a23 19 0 1 0 -47 0ZM402 30m-22 0a22 17 0 1 0 44 0a22 17 0 1 0 -44 0ZM430 32m-20 0a20 16 0 1 0 41 0a20 16 0 1 0 -41 0ZM415 11m-17 0a17 13 0 1 0 33 0a17 13 0 1 0 -33 0ZM731 25m-49 0a49 39 0 1 0 99 0a49 39 0 1 0 -99 0ZM692 48m-33 0a33 26 0 1 0 65 0a33 26 0 1 0 -65 0ZM771 45m-31 0a31 24 0 1 0 61 0a31 24 0 1 0 -61 0ZM714 1m-29 0a29 23 0 1 0 57 0a29 23 0 1 0 -57 0ZM751 3m-27 0a27 21 0 1 0 53 0a27 21 0 1 0 -53 0ZM731 -24m-22 0a22 17 0 1 0 43 0a22 17 0 1 0 -43 0ZM1026 67m-35 0a35 28 0 1 0 70 0a35 28 0 1 0 -70 0ZM998 82m-23 0a23 18 0 1 0 46 0a23 18 0 1 0 -46 0ZM1055 81m-22 0a22 17 0 1 0 43 0a22 17 0 1 0 -43 0ZM1014 49m-20 0a20 16 0 1 0 40 0a20 16 0 1 0 -40 0ZM1040 51m-19 0a19 15 0 1 0 38 0a19 15 0 1 0 -38 0ZM1026 32m-15 0a15 12 0 1 0 31 0a15 12 0 1 0 -31 0ZM1295 32m-44 0a44 35 0 1 0 87 0a44 35 0 1 0 -87 0ZM1260 52m-29 0a29 23 0 1 0 57 0a29 23 0 1 0 -57 0ZM1331 50m-27 0a27 22 0 1 0 54 0a27 22 0 1 0 -54 0ZM1280 10m-25 0a25 20 0 1 0 50 0a25 20 0 1 0 -50 0ZM1312 13m-23 0a23 19 0 1 0 47 0a23 19 0 1 0 -47 0ZM1295 -11m-19 0a19 15 0 1 0 38 0a19 15 0 1 0 -38 0Z"/></svg>
+  <div class="spirits back" id="spirits"></div>
+  <svg class="floor" viewBox="0 0 1440 220" preserveAspectRatio="none">
+    <path class="f1" d="M0 96c210-42 330-14 470 24s330 26 480-16 330-18 490 40v76H0z"/>
+    <path class="f2" d="M0 150c230-38 350-8 490 28s320 20 470-18 330-10 480 46v14H0z"/>
+  </svg>
+  <div class="shafts"></div>
+</div>
+<div class="spirits front" id="spirits-f" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<a class="skip" href="#cv" data-i18n="skip">Ir al CV</a>
+<button class="top" id="to-top" type="button" data-i18n-aria="to_top" aria-label="Volver arriba">↑</button>
+<div class="dock">
+  <div class="pop" id="pop" hidden>
+    <p class="pop-t" data-i18n="pop_t">Disponible para incorporarme ya</p>
+    <p class="pop-d" data-i18n="pop_d">Puesto indefinido como ingeniera full stack o backend: híbrido en Zaragoza o remoto desde España.</p>
+    <a class="pop-a" href="mailto:ana.izaguirrematamoros@gmail.com?subject=Oportunidad%20backend">ana.izaguirrematamoros@gmail.com</a>
+    <div class="pop-b">
+      <button class="btn red" id="pop-copy" type="button" data-i18n="c_copy">Copiar correo</button>
+      <a class="btn ghost" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=ana.izaguirrematamoros@gmail.com&amp;su=Oportunidad%20backend" target="_blank" rel="noopener">Gmail</a>
+      <a class="btn ghost" href="https://www.linkedin.com/in/ana-izaguirre/">LinkedIn</a>
+      <a class="btn ghost" href="https://github.com/ana-izaguirre">GitHub</a>
+    </div>
+  </div>
+  <button class="fab" id="fab" type="button" aria-expanded="false" aria-controls="pop"><svg class="fab-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 6.2h17v11.6h-17z"/><path class="flap" d="M3.9 6.6L12 12.6l8.1-6"/></svg><span data-i18n="fab">Contactar</span></button>
+</div>
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="#top">Ana Izaguirre</a>
+    <div class="bar-r">
+      <button class="btn ghost ico" id="theme" type="button" aria-label="Claro" title="Claro">
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.4"/><g class="rays"><path d="M12 1.6v2.6M12 19.8v2.6M22.4 12h-2.6M4.2 12H1.6M19.35 4.65l-1.84 1.84M6.49 17.51l-1.84 1.84M19.35 19.35l-1.84-1.84M6.49 6.49L4.65 4.65"/></g></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1z"/><path class="spark" d="M17.6 3.2l.55 1.55 1.55.55-1.55.55-.55 1.55-.55-1.55-1.55-.55 1.55-.55z"/></svg>
+      </button>
+      <button class="btn ghost code" id="lang" type="button" lang="en" aria-label="EN, English" title="English">EN</button>
+      <a class="btn red dl" href="Ana-Izaguirre-CV-ES.pdf" download data-i18n="dl">Descargar CV</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="sys" id="top">
+  <div class="wrap">
+    <h1 data-i18n="h1">Ana Izaguirre, ingeniera full stack.</h1>
+    <ul class="facts" id="facts">
+      <li data-i18n="f1">Zaragoza, remoto o híbrido</li>
+      <li data-i18n="f2">Contrato indefinido</li>
+      <li data-i18n="f3">Incorporación inmediata</li>
+      <li data-i18n="f4">Español nativo, inglés profesional</li>
+    </ul>
+    <p class="lead" data-i18n="lead">Más de 8 años en producción con Node.js y TypeScript: APIs REST y GraphQL, arquitecturas orientadas a eventos en AWS y guardias on-call. También React en el front.</p>
+
+    <section class="replay" aria-labelledby="rp-h">
+      <h2 class="h2" id="rp-h" data-i18n="rp_h">Mi carrera, contada en seis escenas</h2>
+      <p class="note" data-i18n="rp_note">En cada parada: quién, en qué sector, cuánto tiempo y con qué tecnologías.</p>
+      <div class="scene" id="scene">
+        <article class="card" id="card">
+          <p class="ln l1 c-year" id="c-year"></p>
+          <h3 class="ln l1 c-co" id="c-co"></h3>
+          <p class="ln l1 c-role" id="c-role"></p>
+          <p class="ln l2 c-sector" id="c-sector"></p>
+          <p class="ln l3 c-dur" id="c-dur"></p>
+          <div class="ln l4 c-logos" id="c-logos"></div>
+        </article>
+        <div class="wire" id="wire"></div>
+      </div>
+      <div class="rail" id="rail">
+        <div class="rail-line"><i id="rail-fill"></i><span class="knob" id="knob"></span></div>
+        <div class="segs" id="segs"></div>
+        <div class="years" id="years"></div>
+      </div>
+      <div class="rp-bar">
+        <button class="btn ghost ic" id="rp-prev" type="button" data-i18n-aria="rp_prev" aria-label="Paso anterior"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <button class="btn red ic play" id="rp-play" type="button" aria-label="Reproducir" title="Reproducir">
+          <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4.8v14.4l12-7.2z"/></svg>
+          <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4.5h3.4v15H8zM12.6 4.5H16v15h-3.4z"/></svg>
+          <svg class="i-replay" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5.2a6.8 6.8 0 1 0 6.6 8.4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M12 1.6l3.6 3.6L12 8.8z"/></svg>
+        </button>
+        <button class="btn ghost ic" id="rp-next" type="button" data-i18n-aria="rp_next" aria-label="Paso siguiente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        <p class="rp-step" id="rp-step"></p>
+        <div class="rp-counts">
+          <span><b id="k-co">6</b> <span data-i18n="k_co">empresas</span></span>
+          <span><b id="k-te">34</b> <span data-i18n="k_te">tecnologías</span></span>
+          <span><b id="k-pr">3</b> <span data-i18n="k_pr">proyectos propios</span></span>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</section>
+
+<section class="askwrap" id="ask-sec" style="scroll-margin-top:72px">
+  <div class="wrap">
+    <header class="ask-head">
+      <h2 class="h2" data-i18n="ask_l">Pregúntale a mi CV</h2>
+      <p class="how" data-i18n="how">Búsqueda por palabras clave (BM25) sobre este mismo CV, dentro de tu navegador. No hay un modelo generando texto: nada se inventa y cada respuesta cita su fuente.</p>
+    </header>
+    <hr class="ask-rule">
+    <div class="grid">
+      <div class="g-form">
+        <form id="ask" autocomplete="off">
+          <label class="vh" for="q" data-i18n="ask_h">Escribe una pregunta sobre mi CV</label>
+          <div class="ask">
+            <span class="q-wrap"><input id="q" name="q" type="text" maxlength="140" placeholder="Por ejemplo: ¿has trabajado con colas?"><button class="q-x" id="q-clear" type="button" hidden data-i18n-aria="clear" aria-label="Limpiar la búsqueda">×</button></span>
+            <button class="btn red" type="submit" data-i18n="ask_b">Preguntar</button>
+          </div>
+        </form>
+      </div>
+      <div class="g-chips">
+        <p class="ask-h" data-i18n="ask_h2">O toca una de estas preguntas:</p>
+        <div class="chips" id="chips">
+          <button class="chip" type="button" data-i18n="c1">¿Qué experiencia tienes con AWS?</button>
+          <button class="chip" type="button" data-i18n="c2">¿Has trabajado con colas y eventos?</button>
+          <button class="chip" type="button" data-i18n="c3">¿Qué has hecho con IA?</button>
+          <button class="chip" type="button" data-i18n="c4">¿Has liderado equipos?</button>
+          <button class="chip" type="button" data-i18n="c7">¿Has diseñado APIs con GraphQL?</button>
+          <button class="chip" type="button" data-i18n="c8">¿Cómo haces testing?</button>
+          <button class="chip" type="button" data-i18n="c9">¿Usas Docker y Kubernetes?</button>
+          <button class="chip" type="button" data-i18n="c10">¿Has hecho guardias on-call?</button>
+          <button class="chip" type="button" data-i18n="c11">¿Qué bases de datos has usado?</button>
+          <button class="chip" type="button" data-i18n="c12">¿Qué has hecho desde 2025?</button>
+          <button class="chip" type="button" data-i18n="c5">¿Dónde vives y qué puesto buscas?</button>
+          <button class="chip" type="button" data-i18n="c6">¿Qué nivel de inglés tienes?</button>
+        </div>
+      </div>
+      <div class="g-ans">
+        <div class="answer" id="answer" aria-live="polite"></div>
+        <div class="hist" id="hist" hidden></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="doc" id="cv">
+  <article class="sheet" id="sheet">
+    <header class="sh">
+      <div>
+        <p class="sh-name">Ana Izaguirre</p>
+        <p class="sh-role" data-i18n="role">Ingeniera full stack, especializada en backend</p>
+        <p class="sh-contact">
+          <span data-i18n="loc">Zaragoza, España</span>
+          <a href="mailto:ana.izaguirrematamoros@gmail.com">ana.izaguirrematamoros@gmail.com</a>
+          <a href="https://www.linkedin.com/in/ana-izaguirre/" rel="me">linkedin.com/in/ana-izaguirre</a>
+          <a href="https://github.com/ana-izaguirre" rel="me">github.com/ana-izaguirre</a>
+        </p>
+      </div>
+    </header>
+
+    <section aria-labelledby="h-perfil">
+      <h2 id="h-perfil" data-i18n="s_perfil">Perfil</h2>
+      <p class="txt" id="c-perfil" data-chunk data-sec="perfil" data-line data-i18n="perfil">Ingeniera full stack con más de 8 años construyendo sistemas en producción, con trabajos recientes en Allergan Data Labs (AbbVie) e Intel. Mi punto fuerte es el backend: arquitecturas orientadas a eventos en AWS, APIs REST y GraphQL, y guardias on-call con Datadog. Dos años liderando y mentoreando equipos. Desarrollo asistido por IA en mi flujo de trabajo diario.</p>
+      <p class="txt" id="c-disp" data-chunk data-sec="disp" data-line data-i18n="disp">Vivo en Zaragoza. Busco un puesto indefinido como ingeniera backend o full stack: híbrido en Zaragoza o remoto desde España. Incorporación inmediata.</p>
+    </section>
+
+    <section aria-labelledby="h-exp">
+      <h2 id="h-exp" data-i18n="s_exp">Experiencia</h2>
+      <div class="row" id="c-pausa" data-n2-es="Proyectos propios: crianza a tiempo completo y backend construido en abierto." data-n2-en="Own projects: full-time parenting and backend built in the open." data-n3-es="Un año y seis meses. Ahora vuelvo." data-n3-en="A year and six months. Now I am coming back." data-co-name="Pausa profesional" data-co-name-en="Career break" data-dur-es="1 año y 6 meses" data-dur-en="1 year 6 months" data-sec-es="Proyectos propios" data-sec-en="Own projects" data-role-es="Crianza y proyectos backend propios" data-role-en="Parenting and my own backend projects" data-s="2025.4" data-e="2026.9" data-short="Pausa" data-short-en="Break" data-y="2025" data-co="0" data-pr="3" data-tech="Python,MCP,SQLite FTS5,Deno,Supabase,Gemini" data-chunk data-sec="exp">
+        <span class="when">2025–<span data-i18n="hoy">hoy</span></span>
+        <div><h3 data-i18n="x0_t">Pausa profesional (crianza)</h3>
+          <p data-line data-i18n="x0_1">Dedicación completa a la crianza tras una reducción de plantilla. En este tiempo he publicado proyectos backend propios en GitHub.</p></div>
+      </div>
+      <div class="row" id="c-allergan" data-n2-es="Salud y farmacéutica: la plataforma de marketing de clínicas, con envío de correo a gran volumen." data-n2-en="Healthcare and pharma: the clinic marketing platform, with high-volume email delivery." data-n3-es="Un año y dos meses, hasta la reducción de plantilla." data-n3-en="A year and two months, until the layoff." data-co-name="Allergan Data Labs" data-dur-es="1 año y 2 meses" data-dur-en="1 year 2 months" data-sec-es="Salud, farma" data-sec-en="Health, pharma" data-role-es="Senior Backend Engineer" data-role-en="Senior Backend Engineer" data-s="2024.25" data-e="2025.4" data-short="Allergan" data-y="2024" data-co="1" data-tech="SNS,SQS,Snowflake,Datadog" data-chunk data-sec="exp">
+        <span class="when">2024–2025</span>
+        <div><h3>Senior Backend Engineer, Allergan Data Labs (AbbVie)</h3>
+          <ul>
+            <li data-line data-i18n="x1_1">Funcionalidades de extremo a extremo con Node.js, GraphQL y TypeScript en la plataforma de marketing de clínicas.</li>
+            <li data-line data-i18n="x1_2">Envío de correo a gran volumen sobre una arquitectura orientada a eventos en AWS (SNS, SQS, Lambda).</li>
+            <li data-line data-i18n="x1_3">Endpoint batch con permisos por rol multi-tenant que automatizó la configuración inicial de clínicas.</li>
+            <li data-line data-i18n="x1_4">Reportes de campañas en Snowflake y guardias on-call con Datadog.</li>
+          </ul></div>
+      </div>
+      <div class="row" id="c-intel" data-n2-es="Semiconductores: una plataforma interna usada por las fábricas de Intel." data-n2-en="Semiconductors: an internal platform used by Intel's fabs." data-n3-es="Dos años y siete meses, mi etapa más larga." data-n3-en="Two years and seven months, my longest chapter." data-co-name="Intel" data-dur-es="2 años y 7 meses" data-dur-en="2 years 7 months" data-sec-es="Semiconductores" data-sec-en="Semiconductors" data-role-es="Software Engineer" data-role-en="Software Engineer" data-s="2021.67" data-e="2024.2" data-short="Intel" data-y="2021" data-co="1" data-tech="Angular,Docker,Kubernetes,GitHub Actions,Cypress" data-chunk data-sec="exp">
+        <span class="when">2021–2024</span>
+        <div><h3>Software Engineer, Intel</h3>
+          <ul>
+            <li data-line data-i18n="x2_1">Desarrollo full stack (Angular, Node.js) en una plataforma interna de ingeniería.</li>
+            <li data-line data-i18n="x2_2">Lideré el CI/CD del equipo con Docker, GitHub Actions y Kubernetes.</li>
+            <li data-line data-i18n="x2_3">Mentoría e incorporación de ingenieros nuevos, prácticas de code review y automatización de pruebas con Cypress.</li>
+          </ul></div>
+      </div>
+      <div class="row" id="c-autofi" data-n2-es="Fintech de automoción: la API que mueve los flujos de financiación de coches en Estados Unidos." data-n2-en="Auto finance fintech: the API behind car financing flows in the United States." data-n3-es="Un año y seis meses, con ascenso a Senior." data-n3-en="A year and six months, with a promotion to Senior." data-co-name="AutoFi" data-dur-es="1 año y 6 meses" data-dur-en="1 year 6 months" data-sec-es="Fintech de automoción" data-sec-en="Auto finance, fintech" data-role-es="Senior Software Engineer" data-role-en="Senior Software Engineer" data-s="2020.2" data-e="2021.62" data-short="AutoFi" data-y="2020" data-co="1" data-tech="GraphQL,Apollo,TypeScript,Express,RabbitMQ,Jest,React" data-chunk data-sec="exp">
+        <span class="when">2020–2021</span>
+        <div><h3>Senior Software Engineer, AutoFi (Proximity)</h3>
+          <ul>
+            <li data-line data-i18n="x3_1">Servicios GraphQL con Apollo Server, TypeScript y Express para los flujos de financiación; ascenso a Senior.</li>
+            <li data-line data-i18n="x3_2">Mensajería asíncrona entre servicios con RabbitMQ y pruebas con Jest en las rutas críticas.</li>
+          </ul></div>
+      </div>
+      <div class="row" id="c-laureate" data-n2-es="Educación superior: SUMADI, exámenes remotos con visión por computador." data-n2-en="Higher education: SUMADI, remote proctoring with computer vision." data-n3-es="Un año y diez meses, y mi primer producto con IA en producción." data-n3-en="A year and ten months, and my first AI product in production." data-co-name="Laureate Education" data-dur-es="1 año y 10 meses" data-dur-en="1 year 10 months" data-sec-es="Educación superior" data-sec-en="Higher education" data-role-es="Web Software Engineer" data-role-en="Web Software Engineer" data-s="2018.35" data-e="2020.1" data-short="Laureate" data-y="2018" data-co="1" data-tech="Java EE,MongoDB,AWS Lambda,S3,DynamoDB,Rekognition" data-chunk data-sec="exp">
+        <span class="when">2018–2020</span>
+        <div><h3>Web Software Engineer, Laureate Education</h3>
+          <ul>
+            <li data-line data-i18n="x4_1">Verificación de identidad con AWS Rekognition en una plataforma de exámenes remotos, sobre arquitectura serverless (Lambda, S3, DynamoDB).</li>
+            <li data-line data-i18n="x4_2">Integraciones con Blackboard LMS en Java EE y MongoDB.</li>
+          </ul></div>
+      </div>
+      <div class="row" id="c-previo" data-n2-es="Sector público y software empresarial: plataformas de e-learning y una plataforma fiscal sobre SAP." data-n2-en="Public sector and enterprise software: e-learning platforms and a tax platform on SAP." data-n3-es="Casi tres años, mi primera etapa." data-n3-en="Almost three years, my first chapter." data-co-name="Agile Solutions, INFOP" data-dur-es="2 años y 11 meses" data-dur-en="2 years 11 months" data-sec-es="Sector público, software empresarial" data-sec-en="Public sector, enterprise" data-role-es="Software Engineer, QA" data-role-en="Software Engineer, QA" data-s="2015.45" data-e="2018.3" data-short="Agile Solutions, INFOP" data-y="2015" data-co="2" data-tech="C#,PHP,JSP,Node.js,SAP HANA,Selenium" data-chunk data-sec="exp">
+        <span class="when">2015–2018</span>
+        <div><h3>Agile Solutions, INFOP</h3>
+          <p data-line data-i18n="x5_1">Servicios Node.js sobre SAP HANA, pruebas automatizadas con Selenium y desarrollo full stack con C#, PHP y JSP.</p></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="h-proj">
+      <h2 id="h-proj" data-i18n="s_proj">Proyectos</h2>
+      <div class="row" id="c-trainer" data-chunk data-sec="proj">
+        <span class="when k">trainer-flow</span>
+        <div><h3 hidden>trainer-flow</h3>
+          <p data-line data-i18n="p1_1">Planificación de rutinas por Telegram donde la IA propone y el entrenador decide: una máquina de estados sin camino al cliente sin aprobación humana, webhooks idempotentes y cobertura del 100 % en los módulos críticos.</p>
+          <p data-line>TypeScript, Deno, Supabase, Gemini. <a href="https://github.com/ana-izaguirre/trainer-flow">github.com/ana-izaguirre/trainer-flow</a></p></div>
+      </div>
+      <div class="row" id="c-mcp" data-chunk data-sec="proj">
+        <span class="when k">mcp-docs-search</span>
+        <div><h3 hidden>mcp-docs-search</h3>
+          <p data-line data-i18n="p2_1">Servidor MCP que da a agentes de IA búsqueda por palabras clave sobre documentación en markdown, con un arnés de evaluación que publica sus métricas. Es la misma idea con la que funciona el buscador de mi CV interactivo.</p>
+          <p data-line>Python, SQLite FTS5, pytest, mypy. <a href="https://github.com/ana-izaguirre/mcp-docs-search">github.com/ana-izaguirre/mcp-docs-search</a></p></div>
+      </div>
+      <div class="row" id="c-latino" data-chunk data-sec="proj">
+        <span class="when k">latino-migra</span>
+        <div><h3 hidden>latino-migra</h3>
+          <p data-line data-i18n="p3_1">Plataforma web para estudiantes y profesionales latinoamericanos que migran: becas, asistente con IA (Gemini) y foros, con un proxy que mantiene las claves fuera del navegador.</p>
+          <p data-line>React 19, TypeScript, Express, Firestore. <a href="https://latino-migra.vercel.app">latino-migra.vercel.app</a></p></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="h-sk">
+      <h2 id="h-sk" data-i18n="s_sk">Competencias</h2>
+      <ul class="yrs" id="c-yrs" data-chunk data-sec="skills" data-line>
+        <li><b>8</b><span>Node.js</span></li>
+        <li><b>7</b><span>AWS</span></li>
+        <li><b>6</b><span>React</span></li>
+        <li><b>5</b><span>TypeScript</span></li>
+        <li><b>5</b><span>GraphQL</span></li>
+        <li><b>4</b><span>MongoDB</span></li>
+        <li><b>3</b><span>Docker</span></li>
+        <li><b>3</b><span>PostgreSQL</span></li>
+      </ul>
+      <p class="yrs-k" data-i18n="yrs_k">Años de experiencia por tecnología</p>
+      <div class="skg">
+      <div class="row" id="c-sk1" data-chunk data-sec="skills"><span class="when k">Backend</span><p data-line>Node.js, TypeScript, REST, GraphQL (Apollo), Express, Python</p></div>
+      <div class="row" id="c-sk2" data-chunk data-sec="skills"><span class="when k" data-i18n="k2">Mensajería</span><p data-line data-i18n="v2">SNS, SQS y RabbitMQ: colas, eventos y mensajería asíncrona</p></div>
+      <div class="row" id="c-sk3" data-chunk data-sec="skills"><span class="when k">Cloud, DevOps</span><p data-line>AWS (Lambda, S3, DynamoDB), Docker, Kubernetes, GitHub Actions, Datadog</p></div>
+      <div class="row" id="c-sk4" data-chunk data-sec="skills"><span class="when k" data-i18n="k4">Datos</span><p data-line>PostgreSQL, MongoDB, Snowflake</p></div>
+      <div class="row" id="c-sk5" data-chunk data-sec="skills"><span class="when k" data-i18n="k5">Frontend, pruebas</span><p data-line>React, Angular, Jest, Cypress</p></div>
+      <div class="row" id="c-sk6" data-chunk data-sec="skills"><span class="when k" data-i18n="k6">IA</span><p data-line data-i18n="v6">Gemini API, MCP y desarrollo con agentes de código (Claude Code, OpenCode)</p></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="h-edu">
+      <h2 id="h-edu" data-i18n="s_edu">Formación e idiomas</h2>
+      <div class="row" id="c-edu" data-chunk data-sec="edu"><span class="when k" data-i18n="k_edu">Formación</span>
+        <div><p data-line data-i18n="e1">Máster en Computación de Altas Prestaciones, Universidade da Coruña (2022–2026).</p>
+          <p data-line data-i18n="e2">Licenciatura en Ciencias de la Computación, UNAH (2010–2015).</p></div></div>
+      <div class="row" id="c-lang" data-chunk data-sec="lang"><span class="when k" data-i18n="k_lang">Idiomas</span>
+        <p data-line data-i18n="l1">Español nativo. Inglés profesional: más de 6 años con equipos de ingeniería de Estados Unidos. Portugués básico.</p></div>
+    </section>
+    <section aria-labelledby="h-contact" class="contact no-print">
+      <h2 id="h-contact" data-i18n="s_contact">Contacto</h2>
+      <p class="txt" data-i18n="p_contact">Busco un puesto indefinido como ingeniera backend o full stack, híbrido en Zaragoza o remoto desde España. Incorporación inmediata.</p>
+      <div class="cta">
+        <a class="btn red" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=ana.izaguirrematamoros@gmail.com&amp;su=Oportunidad%20backend" target="_blank" rel="noopener">Gmail</a>
+        <a class="btn ghost2" href="https://www.linkedin.com/in/ana-izaguirre/">LinkedIn</a>
+        <a class="btn ghost2" href="https://github.com/ana-izaguirre">GitHub</a>
+      </div>
+    </section>
+  </article>
+  <footer><span data-i18n="foot">© 2026 Ana Izaguirre. Hecha a mano: un HTML, sin frameworks ni rastreadores.</span></footer>
+</section>
+</main>
+
+<script>
+(()=>{
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const qs=new URLSearchParams(location.search),quiet=qs.has('quiet');
+
+/* ---------- i18n: el español sale del propio HTML ---------- */
+const ES={};$$('[data-i18n]').forEach(e=>{ES[e.dataset.i18n]=e.textContent});
+ES.ph=$('#q').placeholder;ES.rp_step='Paso';ES.c_done='Copiado';ES.clear='Limpiar la búsqueda';ES.oops='Algo falló en la búsqueda. Escríbeme y te contesto yo:';ES.to_top='Volver arriba';ES.rp_prev='Paso anterior';ES.rp_next='Paso siguiente';
+const EN={
+skip:'Go to the CV',dl:'Download CV',f1:'Zaragoza, remote or hybrid',f2:'Permanent contract',f3:'Available immediately',f4:'Native Spanish, professional English',
+h1:'Ana Izaguirre, full stack engineer.',
+lead:'8+ years building production systems: event-driven services on AWS, GraphQL APIs and on-call rotations. This CV works like the systems I build: every question enters a queue and the answer comes from my real experience, with its source.',
+ask_l:'Ask my CV',ask_h:'Type a question about my CV',ask_h2:'Or tap one of these questions:',ask_b:'Ask',ph:'For example: have you worked with queues?',
+c1:'What is your AWS experience?',c2:'Have you worked with queues and events?',c3:'What have you done with AI?',c4:'Have you led teams?',c5:'Where do you live and what role are you looking for?',c6:'What is your English level?',
+n0:'Question',n1:'Queue',n2:'CV search',n3:'Answer',
+st_done:'answered',st_cache:'from cache',st_retry:'retries',chaos:'Simulate a failure on the next question',
+how:'Keyword search (BM25) over this very CV, inside your browser. No model is generating text: nothing is made up and every answer cites its source.',
+how_3:'Every question is an event with an idempotency key. If it repeats, it is served from cache; if the search fails, it is retried after a wait.',
+empty:'Pick a question or write your own. Every answer comes from my CV, with its source.',
+role:'Full stack engineer, backend-focused',loc:'Zaragoza, Spain',
+s_perfil:'Profile',
+perfil:'Full stack engineer with 8+ years building production systems, most recently at Allergan Data Labs (AbbVie) and Intel. My strength is the backend: event-driven architectures on AWS, REST and GraphQL APIs, and on-call rotations with Datadog. Two years leading and mentoring teams. AI-assisted development in my daily workflow.',
+disp:'I live in Zaragoza, Spain. I am looking for a permanent role as a backend or full stack engineer: hybrid in Zaragoza or remote from Spain. Available immediately.',
+s_exp:'Experience',hoy:'today',x0_t:'Career break (parenting)',
+x0_1:'Full-time parenting after a company-wide layoff. During this time I have published my own backend projects on GitHub.',
+x1_1:'End-to-end features with Node.js, GraphQL and TypeScript on the clinic marketing platform.',
+x1_2:'High-volume email delivery on an event-driven architecture on AWS (SNS, SQS, Lambda).',
+x1_3:'Batch endpoint with multi-tenant, role-based permissions that automated the initial clinic setup.',
+x1_4:'Campaign reporting in Snowflake and on-call rotations with Datadog.',
+x2_1:'Full stack development (Angular, Node.js) on an internal engineering platform.',
+x2_2:"Led the team's CI/CD with Docker, GitHub Actions and Kubernetes.",
+x2_3:'Mentoring and onboarding of new engineers, code review practices and test automation with Cypress.',
+x3_1:'GraphQL services with Apollo Server, TypeScript and Express for the financing flows; promoted to Senior.',
+x3_2:'Asynchronous service-to-service messaging with RabbitMQ and Jest tests on the critical paths.',
+x4_1:'Identity verification with AWS Rekognition on a remote-proctoring platform, on a serverless architecture (Lambda, S3, DynamoDB).',
+x4_2:'Blackboard LMS integrations in Java EE and MongoDB.',
+x5_1:'Node.js services on SAP HANA, automated testing with Selenium and full stack development with C#, PHP and JSP.',
+s_proj:'Projects',
+p1_1:'Workout planning over Telegram where AI proposes and the trainer decides: a state machine with no path to the client without human approval, idempotent webhooks and 100% coverage on the critical modules.',
+p2_1:'MCP server that gives AI agents keyword search over markdown documentation, with an evaluation harness that publishes its metrics. It is the same idea behind the search in my interactive CV.',
+p3_1:'Web platform for Latin American students and professionals who migrate: scholarships, an AI assistant (Gemini) and forums, with a proxy that keeps keys out of the browser.',
+s_sk:'Skills',yrs_k:'Years of experience per technology',k2:'Messaging',v2:'SNS, SQS and RabbitMQ: queues, events and asynchronous messaging',k4:'Data',k5:'Frontend, testing',k6:'AI',
+v6:'Gemini API, MCP and development with coding agents (Claude Code, OpenCode)',
+s_contact:'Contact',p_contact:'I am looking for a permanent role as a backend or full stack engineer, hybrid in Zaragoza or remote from Spain. Available immediately.',c_mail:'Open in mail app',fab:'Contact',pop_t:'Available to start now',pop_d:'Permanent full stack or backend role: hybrid in Zaragoza or remote from Spain.',c_copy:'Copy email',c_done:'Copied',oops:'Something went wrong with the search. Write to me and I will answer myself:',s_edu:'Education and languages',k_edu:'Education',
+e1:"Master's in High Performance Computing, Universidade da Coruña (2022–2026).",
+e2:"Bachelor's in Computer Science, UNAH (2010–2015).",
+k_lang:'Languages',l1:'Native Spanish. Professional English: 6+ years with US engineering teams. Basic Portuguese.',
+foot:'© 2026 Ana Izaguirre. Handmade: one HTML file, no frameworks, no trackers.'
+};
+Object.assign(EN,{
+lead:'8+ years in production with Node.js and TypeScript: REST and GraphQL APIs, event-driven architectures on AWS and on-call rotations. React on the front end too.',
+rp_h:'My career in six scenes',
+rp_note:'At every stop: who, which sector, how long and with which technologies.',
+rp_see:'See this stage in the CV',to_top:'Back to top',clear:'Clear the search',rp_step:'Step',rp_prev:'Previous step',rp_next:'Next step',rp_aria:'Timeline year',k_co:'companies',k_te:'technologies',k_pr:'own projects',
+c7:'Have you designed APIs with GraphQL?',c8:'How do you approach testing?',c9:'Do you use Docker and Kubernetes?',c10:'Have you been on call?',c11:'Which databases have you used?',c12:'What have you done since 2025?'
+});
+const SEC={es:{perfil:'Perfil',disp:'Disponibilidad',exp:'Experiencia',proj:'Proyectos',skills:'Competencias',edu:'Formación',lang:'Idiomas'},
+           en:{perfil:'Profile',disp:'Availability',exp:'Experience',proj:'Projects',skills:'Skills',edu:'Education',lang:'Languages'}};
+const num=(ms,l)=>{const s=ms<10?ms.toFixed(1):String(Math.round(ms));return l==='es'?s.replace('.',','):s};
+const UI={
+es:{meta:(n,ms)=>`${n===1?'1 fragmento':n+' fragmentos'} del CV, búsqueda en ${ms} ms`,none:'Eso no aparece en mi CV. Escríbeme y te lo cuento:',
+ see:'Ver en el CV',hist:'Ya preguntado:',play:'Reproducir',pause:'Pausar',again:'Reproducir de nuevo',light:'Claro',dark:'Oscuro'},
+en:{meta:(n,ms)=>`${n===1?'1 passage':n+' passages'} from the CV, search took ${ms} ms`,none:'That is not in my CV. Email me and I will tell you:',
+ see:'See it in the CV',hist:'Already asked:',play:'Replay',pause:'Pause',again:'Replay again',light:'Light',dark:'Dark'}};
+const META={es:{t:document.title,d:$('meta[name=description]').content},
+ en:{t:'Ana Izaguirre, full stack and backend engineer in Zaragoza | Node.js, TypeScript, AWS',d:'Interactive CV of Ana Izaguirre, full stack engineer specialising in backend, based in Zaragoza, with 8+ years in production: Node.js, TypeScript, React and AWS.'}};
+let lang='es';
+function flash(el){el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash')}
+function mk(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
+
+const ICONS=JSON.parse('{"C#":{"p":"M14.2209.0875v5.9613l-3.7433.5012v3.5233l3.7433-.5012v3.5735l3.492-.4672V9.1047L24 8.2634l-.4631-3.4613-5.824.7794V.0875zM6.287 1.145v5.9618L0 7.9483l.4634 3.4613 5.8514-.7834 3.4644-.4637V1.145zm3.5198 9.7185l-3.492.4675v3.578l-6.183.8276.4633 3.4613 5.8239-.7796v5.4942h3.492v-5.962l3.6114-.4834V13.944l-3.7156.4973zm13.73 1.7405l-5.824.779-3.492.4673v9.0179h3.492v-5.9618L24 16.0652Z","h":"#99CC00"},"PHP":{"p":"M7.01 10.207h-.944l-.515 2.648h.838c.556 0 .97-.105 1.242-.314.272-.21.455-.559.55-1.049.092-.47.05-.802-.124-.995-.175-.193-.523-.29-1.047-.29zM12 5.688C5.373 5.688 0 8.514 0 12s5.373 6.313 12 6.313S24 15.486 24 12c0-3.486-5.373-6.312-12-6.312zm-3.26 7.451c-.261.25-.575.438-.917.551-.336.108-.765.164-1.285.164H5.357l-.327 1.681H3.652l1.23-6.326h2.65c.797 0 1.378.209 1.744.628.366.418.476 1.002.33 1.752a2.836 2.836 0 0 1-.305.847c-.143.255-.33.49-.561.703zm4.024.715l.543-2.799c.063-.318.039-.536-.068-.651-.107-.116-.336-.174-.687-.174H11.46l-.704 3.625H9.388l1.23-6.327h1.367l-.327 1.682h1.218c.767 0 1.295.134 1.586.401s.378.7.263 1.299l-.572 2.944h-1.389zm7.597-2.265a2.782 2.782 0 0 1-.305.847c-.143.255-.33.49-.561.703a2.44 2.44 0 0 1-.917.551c-.336.108-.765.164-1.286.164h-1.18l-.327 1.682h-1.378l1.23-6.326h2.649c.797 0 1.378.209 1.744.628.366.417.477 1.001.331 1.751zM17.766 10.207h-.943l-.516 2.648h.838c.557 0 .971-.105 1.242-.314.272-.21.455-.559.551-1.049.092-.47.049-.802-.125-.995s-.524-.29-1.047-.29z","h":"#777BB4"},"Java EE":{"p":"M11.915 0 11.7.215C9.515 2.4 7.47 6.39 6.046 10.483c-1.064 1.024-3.633 2.81-3.711 3.551-.093.87 1.746 2.611 1.55 3.235-.198.625-1.304 1.408-1.014 1.939.1.188.823.011 1.277-.491a13.389 13.389 0 0 0-.017 2.14c.076.906.27 1.668.643 2.232.372.563.956.911 1.667.911.397 0 .727-.114 1.024-.264.298-.149.571-.33.91-.5.68-.34 1.634-.666 3.53-.604 1.903.062 2.872.39 3.559.704.687.314 1.15.664 1.925.664.767 0 1.395-.336 1.807-.9.412-.563.631-1.33.72-2.24.06-.623.055-1.32 0-2.066.454.45 1.117.604 1.213.424.29-.53-.816-1.314-1.013-1.937-.198-.624 1.642-2.366 1.549-3.236-.08-.748-2.707-2.568-3.748-3.586C16.428 6.374 14.308 2.394 12.13.215zm.175 6.038a2.95 2.95 0 0 1 2.943 2.942 2.95 2.95 0 0 1-2.943 2.943A2.95 2.95 0 0 1 9.148 8.98a2.95 2.95 0 0 1 2.942-2.942zM8.685 7.983a3.515 3.515 0 0 0-.145.997c0 1.951 1.6 3.55 3.55 3.55 1.95 0 3.55-1.598 3.55-3.55 0-.329-.046-.648-.132-.951.334.095.64.208.915.336a42.699 42.699 0 0 1 2.042 5.829c.678 2.545 1.01 4.92.846 6.607-.082.844-.29 1.51-.606 1.94-.315.431-.713.651-1.315.651-.593 0-.932-.27-1.673-.61-.741-.338-1.825-.694-3.792-.758-1.974-.064-3.073.293-3.821.669-.375.188-.659.373-.911.5s-.466.2-.752.2c-.53 0-.876-.209-1.16-.64-.285-.43-.474-1.101-.545-1.948-.141-1.693.176-4.069.823-6.614a43.155 43.155 0 0 1 1.934-5.783c.348-.167.749-.31 1.192-.425zm-3.382 4.362a.216.216 0 0 1 .13.031c-.166.56-.323 1.116-.463 1.665a33.849 33.849 0 0 0-.547 2.555 3.9 3.9 0 0 0-.2-.39c-.58-1.012-.914-1.642-1.16-2.08.315-.24 1.679-1.755 2.24-1.781zm13.394.01c.562.027 1.926 1.543 2.24 1.783-.246.438-.58 1.068-1.16 2.08a4.428 4.428 0 0 0-.163.309 32.354 32.354 0 0 0-.562-2.49 40.579 40.579 0 0 0-.482-1.652.216.216 0 0 1 .127-.03z","h":"#000000"},"JSP":{"p":"M11.915 0 11.7.215C9.515 2.4 7.47 6.39 6.046 10.483c-1.064 1.024-3.633 2.81-3.711 3.551-.093.87 1.746 2.611 1.55 3.235-.198.625-1.304 1.408-1.014 1.939.1.188.823.011 1.277-.491a13.389 13.389 0 0 0-.017 2.14c.076.906.27 1.668.643 2.232.372.563.956.911 1.667.911.397 0 .727-.114 1.024-.264.298-.149.571-.33.91-.5.68-.34 1.634-.666 3.53-.604 1.903.062 2.872.39 3.559.704.687.314 1.15.664 1.925.664.767 0 1.395-.336 1.807-.9.412-.563.631-1.33.72-2.24.06-.623.055-1.32 0-2.066.454.45 1.117.604 1.213.424.29-.53-.816-1.314-1.013-1.937-.198-.624 1.642-2.366 1.549-3.236-.08-.748-2.707-2.568-3.748-3.586C16.428 6.374 14.308 2.394 12.13.215zm.175 6.038a2.95 2.95 0 0 1 2.943 2.942 2.95 2.95 0 0 1-2.943 2.943A2.95 2.95 0 0 1 9.148 8.98a2.95 2.95 0 0 1 2.942-2.942zM8.685 7.983a3.515 3.515 0 0 0-.145.997c0 1.951 1.6 3.55 3.55 3.55 1.95 0 3.55-1.598 3.55-3.55 0-.329-.046-.648-.132-.951.334.095.64.208.915.336a42.699 42.699 0 0 1 2.042 5.829c.678 2.545 1.01 4.92.846 6.607-.082.844-.29 1.51-.606 1.94-.315.431-.713.651-1.315.651-.593 0-.932-.27-1.673-.61-.741-.338-1.825-.694-3.792-.758-1.974-.064-3.073.293-3.821.669-.375.188-.659.373-.911.5s-.466.2-.752.2c-.53 0-.876-.209-1.16-.64-.285-.43-.474-1.101-.545-1.948-.141-1.693.176-4.069.823-6.614a43.155 43.155 0 0 1 1.934-5.783c.348-.167.749-.31 1.192-.425zm-3.382 4.362a.216.216 0 0 1 .13.031c-.166.56-.323 1.116-.463 1.665a33.849 33.849 0 0 0-.547 2.555 3.9 3.9 0 0 0-.2-.39c-.58-1.012-.914-1.642-1.16-2.08.315-.24 1.679-1.755 2.24-1.781zm13.394.01c.562.027 1.926 1.543 2.24 1.783-.246.438-.58 1.068-1.16 2.08a4.428 4.428 0 0 0-.163.309 32.354 32.354 0 0 0-.562-2.49 40.579 40.579 0 0 0-.482-1.652.216.216 0 0 1 .127-.03z","h":"#000000"},"Node.js":{"p":"M11.998,24c-0.321,0-0.641-0.084-0.922-0.247l-2.936-1.737c-0.438-0.245-0.224-0.332-0.08-0.383 c0.585-0.203,0.703-0.25,1.328-0.604c0.065-0.037,0.151-0.023,0.218,0.017l2.256,1.339c0.082,0.045,0.197,0.045,0.272,0l8.795-5.076 c0.082-0.047,0.134-0.141,0.134-0.238V6.921c0-0.099-0.053-0.192-0.137-0.242l-8.791-5.072c-0.081-0.047-0.189-0.047-0.271,0 L3.075,6.68C2.99,6.729,2.936,6.825,2.936,6.921v10.15c0,0.097,0.054,0.189,0.139,0.235l2.409,1.392 c1.307,0.654,2.108-0.116,2.108-0.89V7.787c0-0.142,0.114-0.253,0.256-0.253h1.115c0.139,0,0.255,0.112,0.255,0.253v10.021 c0,1.745-0.95,2.745-2.604,2.745c-0.508,0-0.909,0-2.026-0.551L2.28,18.675c-0.57-0.329-0.922-0.945-0.922-1.604V6.921 c0-0.659,0.353-1.275,0.922-1.603l8.795-5.082c0.557-0.315,1.296-0.315,1.848,0l8.794,5.082c0.57,0.329,0.924,0.944,0.924,1.603 v10.15c0,0.659-0.354,1.273-0.924,1.604l-8.794,5.078C12.643,23.916,12.324,24,11.998,24z M19.099,13.993 c0-1.9-1.284-2.406-3.987-2.763c-2.731-0.361-3.009-0.548-3.009-1.187c0-0.528,0.235-1.233,2.258-1.233 c1.807,0,2.473,0.389,2.747,1.607c0.024,0.115,0.129,0.199,0.247,0.199h1.141c0.071,0,0.138-0.031,0.186-0.081 c0.048-0.054,0.074-0.123,0.067-0.196c-0.177-2.098-1.571-3.076-4.388-3.076c-2.508,0-4.004,1.058-4.004,2.833 c0,1.925,1.488,2.457,3.895,2.695c2.88,0.282,3.103,0.703,3.103,1.269c0,0.983-0.789,1.402-2.642,1.402 c-2.327,0-2.839-0.584-3.011-1.742c-0.02-0.124-0.126-0.215-0.253-0.215h-1.137c-0.141,0-0.254,0.112-0.254,0.253 c0,1.482,0.806,3.248,4.655,3.248C17.501,17.007,19.099,15.91,19.099,13.993z","h":"#5FA04E"},"SAP HANA":{"p":"M0 6.064v11.872h12.13L24 6.064zm3.264 2.208h.005c.863.001 1.915.245 2.676.633l-.82 1.43c-.835-.404-1.255-.442-1.73-.467-.708-.038-1.064.215-1.069.488-.007.332.669.633 1.305.838.964.306 2.19.715 2.377 1.9L7.77 8.437h2.046l2.064 5.576-.007-5.575h2.37c2.257 0 3.318.764 3.318 2.519 0 1.575-1.09 2.514-2.936 2.514h-.763l-.01 2.094-3.588-.003-.25-.908c-.37.122-.787.189-1.23.189-.456 0-.885-.071-1.263-.2l-.358.919-2 .006.09-.462c-.029.025-.057.05-.087.074-.535.43-1.208.629-2.037.644l-.213.002a5.075 5.075 0 0 1-2.581-.675l.73-1.448c.79.467 1.286.572 1.956.558.347-.007.598-.07.761-.239a.557.557 0 0 0 .156-.369c.007-.376-.53-.553-1.185-.756-.531-.164-1.135-.389-1.606-.735-.559-.41-.825-.924-.812-1.65a1.99 1.99 0 0 1 .566-1.377c.519-.537 1.357-.863 2.363-.863zm10.597 1.67v1.904h.521c.694 0 1.247-.23 1.248-.964 0-.709-.554-.94-1.248-.94zm-5.087.767l-.748 2.362c.223.085.481.133.757.133.268 0 .52-.047.742-.126l-.736-2.37z","h":"#0FAAFF"},"Selenium":{"p":"M23.174 3.468l-7.416 8.322a.228.228 0 0 1-.33 0l-3.786-3.9a.228.228 0 0 1 0-.282L12.872 6a.228.228 0 0 1 .366 0l2.106 2.346a.228.228 0 0 0 .342 0l5.94-8.094A.162.162 0 0 0 21.5 0H.716a.174.174 0 0 0-.174.174v23.652A.174.174 0 0 0 .716 24h22.566a.174.174 0 0 0 .174-.174V3.6a.162.162 0 0 0-.282-.132zM6.932 21.366a5.706 5.706 0 0 1-4.05-1.44.222.222 0 0 1 0-.288l.882-1.236a.222.222 0 0 1 .33-.036 4.338 4.338 0 0 0 2.964 1.158c1.158 0 1.722-.534 1.722-1.098 0-1.752-5.7-.552-5.7-4.278 0-1.65 1.428-3 3.756-3a5.568 5.568 0 0 1 3.708 1.242.222.222 0 0 1 0 .3l-.906 1.2a.222.222 0 0 1-.318.036 4.29 4.29 0 0 0-2.706-.936c-.906 0-1.41.402-1.41.996 0 1.572 5.688.522 5.688 4.2.006 1.812-1.284 3.18-3.96 3.18zm12.438-3.432a.192.192 0 0 1-.192.192h-5.202a.06.06 0 0 0-.06.066 1.986 1.986 0 0 0 2.106 1.638 3.264 3.264 0 0 0 1.8-.6.192.192 0 0 1 .276.042l.636.93a.198.198 0 0 1-.042.264 4.71 4.71 0 0 1-2.892.9 3.726 3.726 0 0 1-3.93-3.87 3.744 3.744 0 0 1 3.81-3.852c2.196 0 3.684 1.644 3.684 4.05zm-3.684-2.748a1.758 1.758 0 0 0-1.8 1.56.06.06 0 0 0 .06.066h3.492a.06.06 0 0 0 .06-.066 1.698 1.698 0 0 0-1.812-1.56Z","h":"#43B02A"},"MongoDB":{"p":"M17.193 9.555c-1.264-5.58-4.252-7.414-4.573-8.115-.28-.394-.53-.954-.735-1.44-.036.495-.055.685-.523 1.184-.723.566-4.438 3.682-4.74 10.02-.282 5.912 4.27 9.435 4.888 9.884l.07.05A73.49 73.49 0 0111.91 24h.481c.114-1.032.284-2.056.51-3.07.417-.296.604-.463.85-.693a11.342 11.342 0 003.639-8.464c.01-.814-.103-1.662-.197-2.218zm-5.336 8.195s0-8.291.275-8.29c.213 0 .49 10.695.49 10.695-.381-.045-.765-1.76-.765-2.405z","h":"#47A248"},"GraphQL":{"p":"M12.002 0a2.138 2.138 0 1 0 0 4.277 2.138 2.138 0 1 0 0-4.277zm8.54 4.931a2.138 2.138 0 1 0 0 4.277 2.138 2.138 0 1 0 0-4.277zm0 9.862a2.138 2.138 0 1 0 0 4.277 2.138 2.138 0 1 0 0-4.277zm-8.54 4.931a2.138 2.138 0 1 0 0 4.276 2.138 2.138 0 1 0 0-4.276zm-8.542-4.93a2.138 2.138 0 1 0 0 4.276 2.138 2.138 0 1 0 0-4.277zm0-9.863a2.138 2.138 0 1 0 0 4.277 2.138 2.138 0 1 0 0-4.277zm8.542-3.378L2.953 6.777v10.448l9.049 5.224 9.047-5.224V6.777zm0 1.601 7.66 13.27H4.34zm-1.387.371L3.97 15.037V7.363zm2.774 0 6.646 3.838v7.674zM5.355 17.44h13.293l-6.646 3.836z","h":"#E10098"},"Apollo":{"p":"M12,0C5.372,0 0,5.373 0,12 0,18.628 5.372,24 12,24 18.627,24 24,18.628 24,12A12.014,12.014 0 0 0 23.527,8.657 0.6,0.6 0 0 0 22.4,9.066H22.398C22.663,10.009 22.8,10.994 22.8,12A10.73,10.73 0 0 1 19.637,19.637 10.729,10.729 0 0 1 12,22.8 10.73,10.73 0 0 1 4.363,19.637 10.728,10.728 0 0 1 1.2,12 10.73,10.73 0 0 1 4.363,4.363 10.728,10.728 0 0 1 12,1.2C14.576,1.2 17.013,2.096 18.958,3.74A1.466,1.466 0 1 0 19.82,2.9 11.953,11.953 0 0 0 12,0ZM10.56,5.88 6.36,16.782H8.99L9.677,14.934H13.646L12.927,12.892H10.314L12.014,8.201 15.038,16.781H17.669L13.47,5.88Z","h":"#311C87"},"TypeScript":{"p":"M1.125 0C.502 0 0 .502 0 1.125v21.75C0 23.498.502 24 1.125 24h21.75c.623 0 1.125-.502 1.125-1.125V1.125C24 .502 23.498 0 22.875 0zm17.363 9.75c.612 0 1.154.037 1.627.111a6.38 6.38 0 0 1 1.306.34v2.458a3.95 3.95 0 0 0-.643-.361 5.093 5.093 0 0 0-.717-.26 5.453 5.453 0 0 0-1.426-.2c-.3 0-.573.028-.819.086a2.1 2.1 0 0 0-.623.242c-.17.104-.3.229-.393.374a.888.888 0 0 0-.14.49c0 .196.053.373.156.529.104.156.252.304.443.444s.423.276.696.41c.273.135.582.274.926.416.47.197.892.407 1.266.628.374.222.695.473.963.753.268.279.472.598.614.957.142.359.214.776.214 1.253 0 .657-.125 1.21-.373 1.656a3.033 3.033 0 0 1-1.012 1.085 4.38 4.38 0 0 1-1.487.596c-.566.12-1.163.18-1.79.18a9.916 9.916 0 0 1-1.84-.164 5.544 5.544 0 0 1-1.512-.493v-2.63a5.033 5.033 0 0 0 3.237 1.2c.333 0 .624-.03.872-.09.249-.06.456-.144.623-.25.166-.108.29-.234.373-.38a1.023 1.023 0 0 0-.074-1.089 2.12 2.12 0 0 0-.537-.5 5.597 5.597 0 0 0-.807-.444 27.72 27.72 0 0 0-1.007-.436c-.918-.383-1.602-.852-2.053-1.405-.45-.553-.676-1.222-.676-2.005 0-.614.123-1.141.369-1.582.246-.441.58-.804 1.004-1.089a4.494 4.494 0 0 1 1.47-.629 7.536 7.536 0 0 1 1.77-.201zm-15.113.188h9.563v2.166H9.506v9.646H6.789v-9.646H3.375z","h":"#3178C6"},"Express":{"p":"M12.262 16.666h1.146l6.975-9.325H19.22zm9.778 1.441v.004l-4.334-5.706-.557.74 4.873 6.682H.945V4.173h9.505l5.026 6.7.574-.772-4.374-5.928h.003l-.719-.945H0v17.544h24zM10.917 8.705a3.8 3.8 0 0 0-1.292-1.183q-.796-.45-1.916-.45c-.746 0-1.37.14-1.906.424a3.76 3.76 0 0 0-1.31 1.12 4.9 4.9 0 0 0-.75 1.581 7.17 7.17 0 0 0 0 3.696c.148.567.402 1.101.75 1.573a3.5 3.5 0 0 0 1.31 1.066q.803.39 1.906.389 1.77 0 2.739-.868.966-.867 1.328-2.457h-1.139q-.271 1.084-.977 1.734-.704.651-1.952.65-.812 0-1.392-.342a3.1 3.1 0 0 1-.957-.869 3.5 3.5 0 0 1-.551-1.182 5 5 0 0 1-.17-1.133 9 9 0 0 0-.015-.286 4.5 4.5 0 0 1 .015-.829c.047-.418.147-.83.296-1.223A3.7 3.7 0 0 1 5.54 9.05a2.9 2.9 0 0 1 .922-.742q.541-.28 1.246-.28c.47 0 .869.093 1.23.28q.541.281.922.742.379.461.587 1.057t.225 1.246H5.625l.004.957h6.182a7.3 7.3 0 0 0-.18-1.924 4.9 4.9 0 0 0-.715-1.68z","h":"#0A0A0A"},"RabbitMQ":{"p":"M23.035 9.601h-7.677a.956.956 0 01-.962-.962V.962a.956.956 0 00-.962-.956H10.56a.956.956 0 00-.962.956V8.64a.956.956 0 01-.962.962H5.762a.956.956 0 01-.961-.962V.962A.956.956 0 003.839 0H.959a.956.956 0 00-.956.962v22.076A.956.956 0 00.965 24h22.07a.956.956 0 00.962-.962V10.58a.956.956 0 00-.962-.98zm-3.86 8.152a1.437 1.437 0 01-1.437 1.443h-1.924a1.437 1.437 0 01-1.436-1.443v-1.917a1.437 1.437 0 011.436-1.443h1.924a1.437 1.437 0 011.437 1.443z","h":"#FF6600"},"Jest":{"p":"M22.251 11.82a3.117 3.117 0 0 0-2.328-3.01L22.911 0H8.104L11.1 8.838a3.116 3.116 0 0 0-2.244 2.988c0 1.043.52 1.967 1.313 2.536a8.279 8.279 0 0 1-1.084 1.244 8.14 8.14 0 0 1-2.55 1.647c-.834-.563-1.195-1.556-.869-2.446a3.11 3.11 0 0 0-.91-6.08 3.117 3.117 0 0 0-3.113 3.113c0 .848.347 1.626.903 2.182-.048.097-.097.195-.146.299-.465.959-.993 2.043-1.195 3.259-.403 2.432.257 4.384 1.849 5.489A5.093 5.093 0 0 0 5.999 24c1.827 0 3.682-.917 5.475-1.807 1.279-.632 2.599-1.292 3.898-1.612.48-.118.98-.187 1.508-.264 1.07-.153 2.175-.312 3.168-.89a4.482 4.482 0 0 0 2.182-3.091c.174-.994 0-1.994-.444-2.87.298-.48.465-1.042.465-1.647zm-1.355 0c0 .965-.785 1.75-1.75 1.75a1.753 1.753 0 0 1-1.085-3.126l.007-.007c.056-.042.118-.084.18-.125 0 0 .008 0 .008-.007.028-.014.055-.035.083-.05.007 0 .014-.006.021-.006.028-.014.063-.028.097-.042.035-.014.07-.027.098-.041.007 0 .013-.007.02-.007.028-.007.056-.021.084-.028.007 0 .02-.007.028-.007.034-.007.062-.014.097-.02h.007l.104-.022c.007 0 .02 0 .028-.007.028 0 .055-.007.083-.007h.035c.035 0 .07-.007.111-.007h.09c.028 0 .05 0 .077.007h.014c.055.007.111.014.167.028a1.766 1.766 0 0 1 1.396 1.723zM10.043 1.39h10.93l-2.509 7.4c-.104.02-.208.055-.312.09l-2.64-5.385-2.648 5.35c-.104-.034-.216-.055-.327-.076l-2.494-7.38zm4.968 9.825a3.083 3.083 0 0 0-.938-1.668l1.438-2.904 1.452 2.967c-.43.43-.743.98-.868 1.605H15.01zm-3.481-1.098c.034-.007.062-.014.097-.02h.02c.029-.008.056-.008.084-.015h.028c.028 0 .049-.007.076-.007h.271c.028 0 .049.007.07.007.014 0 .02 0 .035.007.027.007.048.007.076.014.007 0 .014 0 .028.007l.097.02h.007c.028.008.056.015.083.029.007 0 .014.007.028.007.021.007.049.014.07.027.007 0 .014.007.02.007.028.014.056.021.084.035h.007a.374.374 0 0 1 .09.049h.007c.028.014.056.034.084.048.007 0 .007.007.013.007.028.014.05.035.077.049l.007.007c.083.062.16.132.236.201l.007.007a1.747 1.747 0 0 1 .48 1.209 1.752 1.752 0 0 1-3.502 0 1.742 1.742 0 0 1 1.32-1.695zm-6.838-.049c.966 0 1.751.786 1.751 1.751s-.785 1.751-1.75 1.751-1.752-.785-1.752-1.75.786-1.752 1.751-1.752zm16.163 6.025a3.07 3.07 0 0 1-1.508 2.133c-.758.438-1.689.577-2.669.716a17.29 17.29 0 0 0-1.64.291c-1.445.355-2.834 1.05-4.182 1.717-1.724.854-3.35 1.66-4.857 1.66a3.645 3.645 0 0 1-2.154-.688c-1.529-1.056-1.453-3.036-1.272-4.12.167-1.015.632-1.966 1.077-2.877.028-.055.049-.104.077-.16.152.056.312.098.479.126-.264 1.473.486 2.994 1.946 3.745l.264.139.284-.104c1.216-.431 2.342-1.133 3.336-2.071a9.334 9.334 0 0 0 1.445-1.716c.16.027.32.034.48.034a3.117 3.117 0 0 0 3.008-2.327h1.167a3.109 3.109 0 0 0 3.01 2.327c.576 0 1.11-.16 1.57-.43.18.52.236 1.063.139 1.605z","h":"#C21325"},"React":{"p":"M14.23 12.004a2.236 2.236 0 0 1-2.235 2.236 2.236 2.236 0 0 1-2.236-2.236 2.236 2.236 0 0 1 2.235-2.236 2.236 2.236 0 0 1 2.236 2.236zm2.648-10.69c-1.346 0-3.107.96-4.888 2.622-1.78-1.653-3.542-2.602-4.887-2.602-.41 0-.783.093-1.106.278-1.375.793-1.683 3.264-.973 6.365C1.98 8.917 0 10.42 0 12.004c0 1.59 1.99 3.097 5.043 4.03-.704 3.113-.39 5.588.988 6.38.32.187.69.275 1.102.275 1.345 0 3.107-.96 4.888-2.624 1.78 1.654 3.542 2.603 4.887 2.603.41 0 .783-.09 1.106-.275 1.374-.792 1.683-3.263.973-6.365C22.02 15.096 24 13.59 24 12.004c0-1.59-1.99-3.097-5.043-4.032.704-3.11.39-5.587-.988-6.38-.318-.184-.688-.277-1.092-.278zm-.005 1.09v.006c.225 0 .406.044.558.127.666.382.955 1.835.73 3.704-.054.46-.142.945-.25 1.44-.96-.236-2.006-.417-3.107-.534-.66-.905-1.345-1.727-2.035-2.447 1.592-1.48 3.087-2.292 4.105-2.295zm-9.77.02c1.012 0 2.514.808 4.11 2.28-.686.72-1.37 1.537-2.02 2.442-1.107.117-2.154.298-3.113.538-.112-.49-.195-.964-.254-1.42-.23-1.868.054-3.32.714-3.707.19-.09.4-.127.563-.132zm4.882 3.05c.455.468.91.992 1.36 1.564-.44-.02-.89-.034-1.345-.034-.46 0-.915.01-1.36.034.44-.572.895-1.096 1.345-1.565zM12 8.1c.74 0 1.477.034 2.202.093.406.582.802 1.203 1.183 1.86.372.64.71 1.29 1.018 1.946-.308.655-.646 1.31-1.013 1.95-.38.66-.773 1.288-1.18 1.87-.728.063-1.466.098-2.21.098-.74 0-1.477-.035-2.202-.093-.406-.582-.802-1.204-1.183-1.86-.372-.64-.71-1.29-1.018-1.946.303-.657.646-1.313 1.013-1.954.38-.66.773-1.286 1.18-1.868.728-.064 1.466-.098 2.21-.098zm-3.635.254c-.24.377-.48.763-.704 1.16-.225.39-.435.782-.635 1.174-.265-.656-.49-1.31-.676-1.947.64-.15 1.315-.283 2.015-.386zm7.26 0c.695.103 1.365.23 2.006.387-.18.632-.405 1.282-.66 1.933-.2-.39-.41-.783-.64-1.174-.225-.392-.465-.774-.705-1.146zm3.063.675c.484.15.944.317 1.375.498 1.732.74 2.852 1.708 2.852 2.476-.005.768-1.125 1.74-2.857 2.475-.42.18-.88.342-1.355.493-.28-.958-.646-1.956-1.1-2.98.45-1.017.81-2.01 1.085-2.964zm-13.395.004c.278.96.645 1.957 1.1 2.98-.45 1.017-.812 2.01-1.086 2.964-.484-.15-.944-.318-1.37-.5-1.732-.737-2.852-1.706-2.852-2.474 0-.768 1.12-1.742 2.852-2.476.42-.18.88-.342 1.356-.494zm11.678 4.28c.265.657.49 1.312.676 1.948-.64.157-1.316.29-2.016.39.24-.375.48-.762.705-1.158.225-.39.435-.788.636-1.18zm-9.945.02c.2.392.41.783.64 1.175.23.39.465.772.705 1.143-.695-.102-1.365-.23-2.006-.386.18-.63.406-1.282.66-1.933zM17.92 16.32c.112.493.2.968.254 1.423.23 1.868-.054 3.32-.714 3.708-.147.09-.338.128-.563.128-1.012 0-2.514-.807-4.11-2.28.686-.72 1.37-1.536 2.02-2.44 1.107-.118 2.154-.3 3.113-.54zm-11.83.01c.96.234 2.006.415 3.107.532.66.905 1.345 1.727 2.035 2.446-1.595 1.483-3.092 2.295-4.11 2.295-.22-.005-.406-.05-.553-.132-.666-.38-.955-1.834-.73-3.703.054-.46.142-.944.25-1.438zm4.56.64c.44.02.89.034 1.345.034.46 0 .915-.01 1.36-.034-.44.572-.895 1.095-1.345 1.565-.455-.47-.91-.993-1.36-1.565z","h":"#61DAFB"},"Angular":{"p":"M16.712 17.711H7.288l-1.204 2.916L12 24l5.916-3.373-1.204-2.916ZM14.692 0l7.832 16.855.814-12.856L14.692 0ZM9.308 0 .662 3.999l.814 12.856L9.308 0Zm-.405 13.93h6.198L12 6.396 8.903 13.93Z","h":"#0F0F11"},"Docker":{"p":"M13.983 11.078h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185m-2.954-5.43h2.118a.186.186 0 00.186-.186V3.574a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m0 2.716h2.118a.187.187 0 00.186-.186V6.29a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.887c0 .102.082.185.185.186m-2.93 0h2.12a.186.186 0 00.184-.186V6.29a.185.185 0 00-.185-.185H8.1a.185.185 0 00-.185.185v1.887c0 .102.083.185.185.186m-2.964 0h2.119a.186.186 0 00.185-.186V6.29a.185.185 0 00-.185-.185H5.136a.186.186 0 00-.186.185v1.887c0 .102.084.185.186.186m5.893 2.715h2.118a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m-2.93 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.184.185v1.888c0 .102.083.185.185.185m-2.964 0h2.119a.185.185 0 00.185-.185V9.006a.185.185 0 00-.184-.186h-2.12a.186.186 0 00-.186.186v1.887c0 .102.084.185.186.185m-2.92 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.184.185v1.888c0 .102.082.185.185.185M23.763 9.89c-.065-.051-.672-.51-1.954-.51-.338.001-.676.03-1.01.087-.248-1.7-1.653-2.53-1.716-2.566l-.344-.199-.226.327c-.284.438-.49.922-.612 1.43-.23.97-.09 1.882.403 2.661-.595.332-1.55.413-1.744.42H.751a.751.751 0 00-.75.748 11.376 11.376 0 00.692 4.062c.545 1.428 1.355 2.48 2.41 3.124 1.18.723 3.1 1.137 5.275 1.137.983.003 1.963-.086 2.93-.266a12.248 12.248 0 003.823-1.389c.98-.567 1.86-1.288 2.61-2.136 1.252-1.418 1.998-2.997 2.553-4.4h.221c1.372 0 2.215-.549 2.68-1.009.309-.293.55-.65.707-1.046l.098-.288Z","h":"#2496ED"},"Kubernetes":{"p":"M10.204 14.35l.007.01-.999 2.413a5.171 5.171 0 0 1-2.075-2.597l2.578-.437.004.005a.44.44 0 0 1 .484.606zm-.833-2.129a.44.44 0 0 0 .173-.756l.002-.011L7.585 9.7a5.143 5.143 0 0 0-.73 3.255l2.514-.725.002-.009zm1.145-1.98a.44.44 0 0 0 .699-.337l.01-.005.15-2.62a5.144 5.144 0 0 0-3.01 1.442l2.147 1.523.004-.002zm.76 2.75l.723.349.722-.347.18-.78-.5-.623h-.804l-.5.623.179.779zm1.5-3.095a.44.44 0 0 0 .7.336l.008.003 2.134-1.513a5.188 5.188 0 0 0-2.992-1.442l.148 2.615.002.001zm10.876 5.97l-5.773 7.181a1.6 1.6 0 0 1-1.248.594l-9.261.003a1.6 1.6 0 0 1-1.247-.596l-5.776-7.18a1.583 1.583 0 0 1-.307-1.34L2.1 5.573c.108-.47.425-.864.863-1.073L11.305.513a1.606 1.606 0 0 1 1.385 0l8.345 3.985c.438.209.755.604.863 1.073l2.062 8.955c.108.47-.005.963-.308 1.34zm-3.289-2.057c-.042-.01-.103-.026-.145-.034-.174-.033-.315-.025-.479-.038-.35-.037-.638-.067-.895-.148-.105-.04-.18-.165-.216-.216l-.201-.059a6.45 6.45 0 0 0-.105-2.332 6.465 6.465 0 0 0-.936-2.163c.052-.047.15-.133.177-.159.008-.09.001-.183.094-.282.197-.185.444-.338.743-.522.142-.084.273-.137.415-.242.032-.024.076-.062.11-.089.24-.191.295-.52.123-.736-.172-.216-.506-.236-.745-.045-.034.027-.08.062-.111.088-.134.116-.217.23-.33.35-.246.25-.45.458-.673.609-.097.056-.239.037-.303.033l-.19.135a6.545 6.545 0 0 0-4.146-2.003l-.012-.223c-.065-.062-.143-.115-.163-.25-.022-.268.015-.557.057-.905.023-.163.061-.298.068-.475.001-.04-.001-.099-.001-.142 0-.306-.224-.555-.5-.555-.275 0-.499.249-.499.555l.001.014c0 .041-.002.092 0 .128.006.177.044.312.067.475.042.348.078.637.056.906a.545.545 0 0 1-.162.258l-.012.211a6.424 6.424 0 0 0-4.166 2.003 8.373 8.373 0 0 1-.18-.128c-.09.012-.18.04-.297-.029-.223-.15-.427-.358-.673-.608-.113-.12-.195-.234-.329-.349-.03-.026-.077-.062-.111-.088a.594.594 0 0 0-.348-.132.481.481 0 0 0-.398.176c-.172.216-.117.546.123.737l.007.005.104.083c.142.105.272.159.414.242.299.185.546.338.743.522.076.082.09.226.1.288l.16.143a6.462 6.462 0 0 0-1.02 4.506l-.208.06c-.055.072-.133.184-.215.217-.257.081-.546.11-.895.147-.164.014-.305.006-.48.039-.037.007-.09.02-.133.03l-.004.002-.007.002c-.295.071-.484.342-.423.608.061.267.349.429.645.365l.007-.001.01-.003.129-.029c.17-.046.294-.113.448-.172.33-.118.604-.217.87-.256.112-.009.23.069.288.101l.217-.037a6.5 6.5 0 0 0 2.88 3.596l-.09.218c.033.084.069.199.044.282-.097.252-.263.517-.452.813-.091.136-.185.242-.268.399-.02.037-.045.095-.064.134-.128.275-.034.591.213.71.248.12.556-.007.69-.282v-.002c.02-.039.046-.09.062-.127.07-.162.094-.301.144-.458.132-.332.205-.68.387-.897.05-.06.13-.082.215-.105l.113-.205a6.453 6.453 0 0 0 4.609.012l.106.192c.086.028.18.042.256.155.136.232.229.507.342.84.05.156.074.295.145.457.016.037.043.09.062.129.133.276.442.402.69.282.247-.118.341-.435.213-.71-.02-.039-.045-.096-.065-.134-.083-.156-.177-.261-.268-.398-.19-.296-.346-.541-.443-.793-.04-.13.007-.21.038-.294-.018-.022-.059-.144-.083-.202a6.499 6.499 0 0 0 2.88-3.622c.064.01.176.03.213.038.075-.05.144-.114.28-.104.266.039.54.138.87.256.154.06.277.128.448.173.036.01.088.019.13.028l.009.003.007.001c.297.064.584-.098.645-.365.06-.266-.128-.537-.423-.608zM16.4 9.701l-1.95 1.746v.005a.44.44 0 0 0 .173.757l.003.01 2.526.728a5.199 5.199 0 0 0-.108-1.674A5.208 5.208 0 0 0 16.4 9.7zm-4.013 5.325a.437.437 0 0 0-.404-.232.44.44 0 0 0-.372.233h-.002l-1.268 2.292a5.164 5.164 0 0 0 3.326.003l-1.27-2.296h-.01zm1.888-1.293a.44.44 0 0 0-.27.036.44.44 0 0 0-.214.572l-.003.004 1.01 2.438a5.15 5.15 0 0 0 2.081-2.615l-2.6-.44-.004.005z","h":"#326CE5"},"GitHub Actions":{"p":"M10.984 13.836a.5.5 0 0 1-.353-.146l-.745-.743a.5.5 0 1 1 .706-.708l.392.391 1.181-1.18a.5.5 0 0 1 .708.707l-1.535 1.533a.504.504 0 0 1-.354.146zm9.353-.147l1.534-1.532a.5.5 0 0 0-.707-.707l-1.181 1.18-.392-.391a.5.5 0 1 0-.706.708l.746.743a.497.497 0 0 0 .706-.001zM4.527 7.452l2.557-1.585A1 1 0 0 0 7.09 4.17L4.533 2.56A1 1 0 0 0 3 3.406v3.196a1.001 1.001 0 0 0 1.527.85zm2.03-2.436L4 6.602V3.406l2.557 1.61zM24 12.5c0 1.93-1.57 3.5-3.5 3.5a3.503 3.503 0 0 1-3.46-3h-2.08a3.503 3.503 0 0 1-3.46 3 3.502 3.502 0 0 1-3.46-3h-.558c-.972 0-1.85-.399-2.482-1.042V17c0 1.654 1.346 3 3 3h.04c.244-1.693 1.7-3 3.46-3 1.93 0 3.5 1.57 3.5 3.5S13.43 24 11.5 24a3.502 3.502 0 0 1-3.46-3H8c-2.206 0-4-1.794-4-4V9.899A5.008 5.008 0 0 1 0 5c0-2.757 2.243-5 5-5s5 2.243 5 5a5.005 5.005 0 0 1-4.952 4.998A2.482 2.482 0 0 0 7.482 12h.558c.244-1.693 1.7-3 3.46-3a3.502 3.502 0 0 1 3.46 3h2.08a3.503 3.503 0 0 1 3.46-3c1.93 0 3.5 1.57 3.5 3.5zm-15 8c0 1.378 1.122 2.5 2.5 2.5s2.5-1.122 2.5-2.5-1.122-2.5-2.5-2.5S9 19.122 9 20.5zM5 9c2.206 0 4-1.794 4-4S7.206 1 5 1 1 2.794 1 5s1.794 4 4 4zm9 3.5c0-1.378-1.122-2.5-2.5-2.5S9 11.122 9 12.5s1.122 2.5 2.5 2.5 2.5-1.122 2.5-2.5zm9 0c0-1.378-1.122-2.5-2.5-2.5S18 11.122 18 12.5s1.122 2.5 2.5 2.5 2.5-1.122 2.5-2.5zm-13 8a.5.5 0 1 0 1 0 .5.5 0 0 0-1 0zm2 0a.5.5 0 1 0 1 0 .5.5 0 0 0-1 0zm12 0c0 1.93-1.57 3.5-3.5 3.5a3.503 3.503 0 0 1-3.46-3.002c-.007.001-.013.005-.021.005l-.506.017h-.017a.5.5 0 0 1-.016-.999l.506-.017c.018-.002.035.006.052.007A3.503 3.503 0 0 1 20.5 17c1.93 0 3.5 1.57 3.5 3.5zm-1 0c0-1.378-1.122-2.5-2.5-2.5S18 19.122 18 20.5s1.122 2.5 2.5 2.5 2.5-1.122 2.5-2.5z","h":"#2088FF"},"Cypress":{"p":"M11.998.0195c-.8642 0-1.6816.1101-2.1445.1934v.002C4.1731 1.2283 0 6.1368 0 12.0018c0 1.1265.1573 2.2328.4648 3.3028.0387.1453.0915.2993.1368.4473 1.607 4.865 6.2245 8.226 11.3925 8.2285.0651 0 .2518-.0003.502-.0118.8564-.0353 1.6228-.5734 1.9512-1.369l.4736-1.1544L20.4258 8.043H18.621l-2.3164 5.871-2.334-5.871h-1.9082l3.2734 8.0117c-.8115 1.9702-1.6252 3.9395-2.4355 5.9101-.0808.1945-.2655.3284-.4727.336-.144.005-.285.0098-.4316.0098-4.5848 0-8.6672-3.0695-9.9277-7.4649a10.3058 10.3058 0 0 1-.3985-2.8437c0-5.0887 3.6521-9.3404 8.6035-10.164.2214-.037.8885-.1446 1.7246-.1446 4.4166 0 8.269 2.732 9.7305 6.8476.0558.144.0977.293.1465.4395.299.9746.4531 1.9887.4531 3.0215 0 4.5696-2.9413 8.5326-7.3164 9.8613l.4863 1.5996c5.085-1.546 8.4995-6.1518 8.502-11.459 0-1.5491-.2983-2.8706-.6504-3.8926-.0432-.1212-.0873-.2422-.1309-.3633h-.002C21.4577 3.0954 17.0444.0195 11.998.0195ZM8.4336 7.8906c-1.1999 0-2.1747.3852-2.9805 1.1758-.8007.7856-1.205 1.7736-1.205 2.9356 0 1.1544.4068 2.1368 1.205 2.9199.8058.7906 1.7806 1.1738 2.9805 1.1738 1.705 0 3.1556-.955 3.7871-2.4883l.0332-.082-1.6289-.5547c-.168.4563-.7552 1.4883-2.1914 1.4883-.6745 0-1.2437-.2344-1.6934-.6992-.4572-.4699-.6875-1.0632-.6875-1.7578 0-.6998.2253-1.2809.6875-1.7735.4522-.4648 1.019-.7012 1.6934-.7012 1.438 0 2.0238 1.0815 2.1934 1.4883l1.627-.5527-.0333-.084c-.629-1.5358-2.082-2.4883-3.7871-2.4883Z","h":"#69D3A7"},"Snowflake":{"p":"M24 3.459c0 .646-.418 1.18-1.141 1.18-.723 0-1.142-.534-1.142-1.18 0-.647.419-1.18 1.142-1.18.723 0 1.141.533 1.141 1.18zm-.228 0c0-.533-.38-.951-.913-.951s-.913.38-.913.95c0 .533.38.952.913.952.57 0 .913-.419.913-.951zm-1.37-.533h.495c.266 0 .456.152.456.38 0 .153-.076.229-.19.305l.19.266v.038h-.266l-.19-.266h-.229v.266h-.266zm.495.228h-.229v.267h.229c.114 0 .152-.038.152-.114.038-.077-.038-.153-.152-.153zM7.602 12.4c.038-.151.076-.304.076-.456 0-.114-.038-.228-.038-.342-.114-.343-.304-.647-.646-.838l-4.87-2.777c-.685-.38-1.56-.152-1.94.533-.381.685-.153 1.56.532 1.94l2.701 1.56-2.701 1.56c-.685.38-.913 1.256-.533 1.94.38.685 1.256.914 1.94.533l4.832-2.777c.343-.267.571-.533.647-.876zm1.332 2.626c-.266-.038-.57.038-.837.19l-4.832 2.777c-.685.38-.913 1.256-.532 1.94.38.686 1.255.914 1.94.533l2.701-1.56v3.12c0 .8.647 1.408 1.446 1.408.799 0 1.407-.647 1.407-1.408v-5.592c0-.761-.57-1.37-1.293-1.408zm4.946-6.088c.266.038.57-.038.837-.19l4.832-2.777c.685-.38.913-1.256.532-1.94-.38-.686-1.255-.914-1.94-.533l-2.701 1.56V1.975c0-.799-.647-1.408-1.446-1.408-.799 0-1.446.609-1.446 1.408V7.53c0 .76.609 1.37 1.332 1.407zM3.265 5.97l4.832 2.777c.266.152.533.19.837.19.723-.038 1.331-.684 1.331-1.407V1.975c0-.799-.646-1.408-1.407-1.408-.799 0-1.446.647-1.446 1.408v3.12l-2.701-1.56c-.685-.38-1.56-.152-1.94.533-.419.646-.19 1.521.494 1.902zm9.093 6.011a.412.412 0 00-.114-.266l-.57-.571a.346.346 0 00-.267-.114.412.412 0 00-.266.114l-.571.57a.411.411 0 00-.114.267c0 .076.038.19.114.267l.57.57a.345.345 0 00.267.114c.076 0 .19-.038.266-.114l.571-.57a.412.412 0 00.114-.267zm1.598.533L11.94 14.53c-.039.038-.153.114-.229.114h-.608a.411.411 0 01-.267-.114L8.82 12.514a.408.408 0 01-.076-.229v-.608c0-.076.038-.19.114-.267l2.016-2.016a.41.41 0 01.267-.114h.608a.41.41 0 01.267.114l2.016 2.016a.347.347 0 01.114.267v.608c-.076.077-.114.19-.19.229zm5.593 5.44l-4.832-2.777c-.266-.152-.57-.19-.837-.152-.723.038-1.332.684-1.332 1.408v5.554c0 .8.647 1.408 1.408 1.408.799 0 1.446-.647 1.446-1.408v-3.12l2.7 1.56c.686.38 1.561.152 1.941-.533.419-.646.19-1.521-.494-1.94zm2.549-7.533l-2.701 1.56 2.7 1.56c.686.38.914 1.256.533 1.94-.38.685-1.255.913-1.94.533l-4.832-2.778a1.644 1.644 0 01-.647-.798c-.037-.153-.076-.305-.076-.457 0-.114.039-.228.039-.342.114-.343.342-.647.646-.837l4.832-2.778c.685-.38 1.56-.152 1.94.533.457.609.19 1.484-.494 1.864","h":"#29B5E8"},"Datadog":{"p":"M19.57 17.04l-1.997-1.316-1.665 2.782-1.937-.567-1.706 2.604.087.82 9.274-1.71-.538-5.794zm-8.649-2.498l1.488-.204c.241.108.409.15.697.223.45.117.97.23 1.741-.16.18-.088.553-.43.704-.625l6.096-1.106.622 7.527-10.444 1.882zm11.325-2.712l-.602.115L20.488 0 .789 2.285l2.427 19.693 2.306-.334c-.184-.263-.471-.581-.96-.989-.68-.564-.44-1.522-.039-2.127.53-1.022 3.26-2.322 3.106-3.956-.056-.594-.15-1.368-.702-1.898-.02.22.017.432.017.432s-.227-.289-.34-.683c-.112-.15-.2-.199-.319-.4-.085.233-.073.503-.073.503s-.186-.437-.216-.807c-.11.166-.137.48-.137.48s-.241-.69-.186-1.062c-.11-.323-.436-.965-.343-2.424.6.421 1.924.321 2.44-.439.171-.251.288-.939-.086-2.293-.24-.868-.835-2.16-1.066-2.651l-.028.02c.122.395.374 1.223.47 1.625.293 1.218.372 1.642.234 2.204-.116.488-.397.808-1.107 1.165-.71.358-1.653-.514-1.713-.562-.69-.55-1.224-1.447-1.284-1.883-.062-.477.275-.763.445-1.153-.243.07-.514.192-.514.192s.323-.334.722-.624c.165-.109.262-.178.436-.323a9.762 9.762 0 0 0-.456.003s.42-.227.855-.392c-.318-.014-.623-.003-.623-.003s.937-.419 1.678-.727c.509-.208 1.006-.147 1.286.257.367.53.752.817 1.569.996.501-.223.653-.337 1.284-.509.554-.61.99-.688.99-.688s-.216.198-.274.51c.314-.249.66-.455.66-.455s-.134.164-.259.426l.03.043c.366-.22.797-.394.797-.394s-.123.156-.268.358c.277-.002.838.012 1.056.037 1.285.028 1.552-1.374 2.045-1.55.618-.22.894-.353 1.947.68.903.888 1.609 2.477 1.259 2.833-.294.295-.874-.115-1.516-.916a3.466 3.466 0 0 1-.716-1.562 1.533 1.533 0 0 0-.497-.85s.23.51.23.96c0 .246.03 1.165.424 1.68-.039.076-.057.374-.1.43-.458-.554-1.443-.95-1.604-1.067.544.445 1.793 1.468 2.273 2.449.453.927.186 1.777.416 1.997.065.063.976 1.197 1.15 1.767.306.994.019 2.038-.381 2.685l-1.117.174c-.163-.045-.273-.068-.42-.153.08-.143.241-.5.243-.572l-.063-.111c-.348.492-.93.97-1.414 1.245-.633.359-1.363.304-1.838.156-1.348-.415-2.623-1.327-2.93-1.566 0 0-.01.191.048.234.34.383 1.119 1.077 1.872 1.56l-1.605.177.759 5.908c-.337.048-.39.071-.757.124-.325-1.147-.946-1.895-1.624-2.332-.599-.384-1.424-.47-2.214-.314l-.05.059a2.851 2.851 0 0 1 1.863.444c.654.413 1.181 1.481 1.375 2.124.248.822.42 1.7-.248 2.632-.476.662-1.864 1.028-2.986.237.3.481.705.876 1.25.95.809.11 1.577-.03 2.106-.574.452-.464.69-1.434.628-2.456l.714-.104.258 1.834 11.827-1.424zM15.05 6.848c-.034.075-.085.125-.007.37l.004.014.013.032.032.073c.14.287.295.558.552.696.067-.011.136-.019.207-.023.242-.01.395.028.492.08.009-.048.01-.119.005-.222-.018-.364.072-.982-.626-1.308-.264-.122-.634-.084-.757.068a.302.302 0 0 1 .058.013c.186.066.06.13.027.207m1.958 3.392c-.092-.05-.52-.03-.821.005-.574.068-1.193.267-1.328.372-.247.191-.135.523.047.66.511.382.96.638 1.432.575.29-.038.546-.497.728-.914.124-.288.124-.598-.058-.698m-5.077-2.942c.162-.154-.805-.355-1.556.156-.554.378-.571 1.187-.041 1.646.053.046.096.078.137.104a4.77 4.77 0 0 1 1.396-.412c.113-.125.243-.345.21-.745-.044-.542-.455-.456-.146-.749","h":"#632CA6"},"Python":{"p":"M11.858 0c-.978.005-1.913.088-2.736.234C6.7.662 6.26 1.558 6.26 3.21v2.182h5.725v.727H4.111c-1.664 0-3.121 1-3.577 2.903-.526 2.181-.549 3.542 0 5.82.407 1.694 1.379 2.902 3.043 2.902h1.969v-2.616c0-1.89 1.635-3.557 3.576-3.557h5.72c1.591 0 2.862-1.31 2.862-2.91v-5.45c0-1.553-1.309-2.718-2.863-2.977A18 18 0 0 0 11.858 0M8.762 1.755c.591 0 1.074.491 1.074 1.095 0 .601-.483 1.087-1.074 1.087A1.08 1.08 0 0 1 7.688 2.85c0-.604.48-1.095 1.074-1.095m9.656 4.364v2.543c0 1.971-1.671 3.63-3.577 3.63H9.122c-1.566 0-2.862 1.34-2.862 2.91v5.452c0 1.551 1.349 2.464 2.862 2.91 1.813.532 3.55.628 5.72 0 1.44-.418 2.862-1.258 2.862-2.91V18.47h-5.719v-.727h8.582c1.664 0 2.284-1.16 2.862-2.903.598-1.793.573-3.518 0-5.819-.41-1.656-1.196-2.903-2.862-2.903zm-3.216 13.807a1.08 1.08 0 0 1 1.074 1.088c0 .604-.48 1.094-1.074 1.094-.592 0-1.075-.49-1.075-1.094 0-.601.483-1.088 1.075-1.088","h":"#3776AB"},"MCP":{"p":"M13.85 0a4.16 4.16 0 0 0-2.95 1.217L1.456 10.66a.835.835 0 0 0 0 1.18.835.835 0 0 0 1.18 0l9.442-9.442a2.49 2.49 0 0 1 3.541 0 2.49 2.49 0 0 1 0 3.541L8.59 12.97l-.1.1a.835.835 0 0 0 0 1.18.835.835 0 0 0 1.18 0l.1-.098 7.03-7.034a2.49 2.49 0 0 1 3.542 0l.049.05a2.49 2.49 0 0 1 0 3.54l-8.54 8.54a1.96 1.96 0 0 0 0 2.755l1.753 1.753a.835.835 0 0 0 1.18 0 .835.835 0 0 0 0-1.18l-1.753-1.753a.266.266 0 0 1 0-.394l8.54-8.54a4.185 4.185 0 0 0 0-5.9l-.05-.05a4.16 4.16 0 0 0-2.95-1.218c-.2 0-.401.02-.6.048a4.17 4.17 0 0 0-1.17-3.552A4.16 4.16 0 0 0 13.85 0m0 3.333a.84.84 0 0 0-.59.245L6.275 10.56a4.186 4.186 0 0 0 0 5.902 4.186 4.186 0 0 0 5.902 0L19.16 9.48a.835.835 0 0 0 0-1.18.835.835 0 0 0-1.18 0l-6.985 6.984a2.49 2.49 0 0 1-3.54 0 2.49 2.49 0 0 1 0-3.54l6.983-6.985a.835.835 0 0 0 0-1.18.84.84 0 0 0-.59-.245","h":"#000000"},"SQLite FTS5":{"p":"M21.678.521c-1.032-.92-2.28-.55-3.513.544a8.71 8.71 0 0 0-.547.535c-2.109 2.237-4.066 6.38-4.674 9.544.237.48.422 1.093.544 1.561a13.044 13.044 0 0 1 .164.703s-.019-.071-.096-.296l-.05-.146a1.689 1.689 0 0 0-.033-.08c-.138-.32-.518-.995-.686-1.289-.143.423-.27.818-.376 1.176.484.884.778 2.4.778 2.4s-.025-.099-.147-.442c-.107-.303-.644-1.244-.772-1.464-.217.804-.304 1.346-.226 1.478.152.256.296.698.422 1.186.286 1.1.485 2.44.485 2.44l.017.224a22.41 22.41 0 0 0 .056 2.748c.095 1.146.273 2.13.5 2.657l.155-.084c-.334-1.038-.47-2.399-.41-3.967.09-2.398.642-5.29 1.661-8.304 1.723-4.55 4.113-8.201 6.3-9.945-1.993 1.8-4.692 7.63-5.5 9.788-.904 2.416-1.545 4.684-1.931 6.857.666-2.037 2.821-2.912 2.821-2.912s1.057-1.304 2.292-3.166c-.74.169-1.955.458-2.362.629-.6.251-.762.337-.762.337s1.945-1.184 3.613-1.72C21.695 7.9 24.195 2.767 21.678.521m-18.573.543A1.842 1.842 0 0 0 1.27 2.9v16.608a1.84 1.84 0 0 0 1.835 1.834h9.418a22.953 22.953 0 0 1-.052-2.707c-.006-.062-.011-.141-.016-.2a27.01 27.01 0 0 0-.473-2.378c-.121-.47-.275-.898-.369-1.057-.116-.197-.098-.31-.097-.432 0-.12.015-.245.037-.386a9.98 9.98 0 0 1 .234-1.045l.217-.028c-.017-.035-.014-.065-.031-.097l-.041-.381a32.8 32.8 0 0 1 .382-1.194l.2-.019c-.008-.016-.01-.038-.018-.053l-.043-.316c.63-3.28 2.587-7.443 4.8-9.791.066-.069.133-.128.198-.194Z","h":"#003B57"},"Deno":{"p":"M1.105 18.02A11.9 11.9 0 0 1 0 12.985q0-.698.078-1.376a12 12 0 0 1 .231-1.34A12 12 0 0 1 4.025 4.02a12 12 0 0 1 5.46-2.771 12 12 0 0 1 3.428-.23c1.452.112 2.825.477 4.077 1.05a12 12 0 0 1 2.78 1.774 12.02 12.02 0 0 1 4.053 7.078A12 12 0 0 1 24 12.985q0 .454-.036.914a12 12 0 0 1-.728 3.305 12 12 0 0 1-2.38 3.875c-1.33 1.357-3.02 1.962-4.43 1.936a4.4 4.4 0 0 1-2.724-1.024c-.99-.853-1.391-1.83-1.53-2.919a5 5 0 0 1 .128-1.518c.105-.38.37-1.116.76-1.437-.455-.197-1.04-.624-1.226-.829-.045-.05-.04-.13 0-.183a.155.155 0 0 1 .177-.053c.392.134.869.267 1.372.35.66.111 1.484.25 2.317.292 2.03.1 4.153-.813 4.812-2.627s.403-3.609-1.96-4.685-3.454-2.356-5.363-3.128c-1.247-.505-2.636-.205-4.06.582-3.838 2.121-7.277 8.822-5.69 15.032a.191.191 0 0 1-.315.19 12 12 0 0 1-1.25-1.634 12 12 0 0 1-.769-1.404M11.57 6.087c.649-.051 1.214.501 1.31 1.236.13.979-.228 1.99-1.41 2.013-1.01.02-1.315-.997-1.248-1.614.066-.616.574-1.575 1.35-1.635","h":"#000000"},"Supabase":{"p":"M11.9 1.036c-.015-.986-1.26-1.41-1.874-.637L.764 12.05C-.33 13.427.65 15.455 2.409 15.455h9.579l.113 7.51c.014.985 1.259 1.408 1.873.636l9.262-11.653c1.093-1.375.113-3.403-1.645-3.403h-9.642z","h":"#3FCF8E"},"Gemini":{"p":"M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81","h":"#8E75B2"}}');
+/* ---------- la historia: una cámara que recorre la línea de tiempo y para en cada etapa ---------- */
+const NS='http://www.w3.org/2000/svg';
+const scene=$('#scene'),card=$('#card'),wire=$('#wire'),segsEl=$('#segs'),yearsEl=$('#years'),fillEl=$('#rail-fill'),knob=$('#knob'),railLine=$('.rail-line'),playBtn=$('#rp-play'),logosEl=$('#c-logos');
+const BEATS=4,HOLD=[1450,2400,1600,2900];
+const T0=2015,T1=2027;
+const X=v=>(v-T0)/(T1-T0)*100;
+const evs=$$('[data-co-name]').map(el=>({el,s:+el.dataset.s,e:+el.dataset.e})).sort((a,b)=>a.s-b.s);
+for(let y=T0;y<T1;y++){const t=mk('span',null,y);t.style.left=X(y+.5)+'%';yearsEl.appendChild(t)}
+evs.forEach((ev,i)=>{
+  const g=mk('button','seg');g.type='button';g.style.left=`calc(${X(ev.s)}% - 10px)`;
+  g.addEventListener('click',()=>{pause();go(i,BEATS)});
+  segsEl.appendChild(g);ev.seg=g;
+  ev.btns=null;
+});
+let idx=evs.length-1,beat=BEATS,playing=false,timer=null,shown=-1;
+function logosOf(ev){
+  if(ev.btns)return ev.btns;
+  ev.btns=ev.el.dataset.tech.split(',').map((name,j)=>{
+    const b=mk('button','lg');b.type='button';b.style.setProperty('--i',j);
+    const ic=ICONS[name];
+    if(ic){const svg=document.createElementNS(NS,'svg');svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('aria-hidden','true');
+      const n=parseInt(ic.h.slice(1),16),lum=(.2126*(n>>16)+.7152*(n>>8&255)+.0722*(n&255))/255;
+      const pa=document.createElementNS(NS,'path');pa.setAttribute('d',ic.p);pa.setAttribute('fill',lum<.22||lum>.86?'currentColor':ic.h);svg.appendChild(pa);b.appendChild(svg);}
+    else b.appendChild(mk('b',null,name.replace(/[^A-Za-z0-9]/g,'').slice(0,2).toUpperCase()));
+    b.appendChild(mk('span',null,name));
+    b.addEventListener('click',()=>{ask(name);answer.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'})});
+    return b;
+  });
+  return ev.btns;
+}
+function fillCard(ev){
+  const L=lang==='en'?'En':'Es';
+  $('#c-year').textContent=ev.el.querySelector('.when').textContent;
+  $('#c-co').textContent=(lang==='en'&&ev.el.dataset.coNameEn)||ev.el.dataset.coName;
+  $('#c-role').textContent=ev.el.dataset['role'+L];
+  $('#c-sector').textContent=ev.el.dataset['n2'+L];
+  $('#c-dur').textContent=ev.el.dataset['n3'+L];
+  logosEl.replaceChildren(...logosOf(ev));
+}
+let measured=0;
+function measure(){
+  const keep=card.className;card.style.visibility='hidden';card.className='card b4';
+  const cand=[...evs].sort((x,y)=>(y.el.dataset.tech.split(',').length*40+y.el.dataset['n2'+(lang==='en'?'En':'Es')].length)-(x.el.dataset.tech.split(',').length*40+x.el.dataset['n2'+(lang==='en'?'En':'Es')].length)).slice(0,2);
+  let max=0;cand.forEach(ev=>{fillCard(ev);max=Math.max(max,card.offsetHeight)});
+  card.className=keep;card.style.visibility='';shown=-1;
+  if(Math.abs(max-measured)>2){measured=max;scene.style.minHeight=max+'px'}
+  paint(false);
+}
+function place(){
+  const W=scene.clientWidth,cw=card.offsetWidth,ev=evs[idx];
+  const mid=(X(ev.s)+X(ev.e))/2/100*W;
+  card.style.setProperty('--x',Math.round(Math.max(0,Math.min(W-cw,mid-cw/2)))+'px');
+  wire.style.setProperty('--wx',Math.round(mid)+'px');
+}
+function paint(anim){
+  const ev=evs[idx],L=lang==='en'?'En':'Es',D=lang==='es'?ES:EN;let fresh=false;
+  if(shown!==idx){
+    fillCard(ev);
+    shown=idx;fresh=true;
+  }
+  card.className='card b'+beat;
+  if(fresh&&anim&&!reduce){void card.offsetWidth;card.classList.add('enter')}
+  place();
+  const upto=evs.slice(0,idx+1);
+  evs.forEach((e,i)=>{e.seg.classList.toggle('seen',i<=idx);e.seg.classList.toggle('on',i===idx);if(i===idx)e.seg.setAttribute('aria-current','true');else e.seg.removeAttribute('aria-current');
+    e.seg.textContent=(lang==='en'&&e.el.dataset.shortEn)||e.el.dataset.short});
+  const prog=X(ev.s+(ev.e-ev.s)*(beat/BEATS));
+  fillEl.style.width=prog+'%';
+  knob.style.setProperty('--kx',(prog/100*railLine.clientWidth).toFixed(1)+'px');
+  $('#rp-step').textContent=`${D.rp_step} ${beat}/${BEATS} · ${idx+1}/${evs.length}`;
+  $('#k-co').textContent=upto.reduce((a,e)=>a+(+e.el.dataset.co||0),0);
+  $('#k-pr').textContent=upto.reduce((a,e)=>a+(+e.el.dataset.pr||0),0);
+  const t=new Set();upto.forEach((e,i)=>{if(i<idx||beat===BEATS)e.el.dataset.tech.split(',').forEach(x=>t.add(x))});
+  $('#k-te').textContent=t.size;
+  logosEl.querySelectorAll('button').forEach(b=>b.tabIndex=beat===BEATS?0:-1);
+}
+function go(i,b){idx=Math.max(0,Math.min(evs.length-1,i));beat=b;paint(true)}
+function step(n){
+  pause();let b=beat+n,i=idx;
+  if(b>BEATS){if(i>=evs.length-1){go(i,BEATS);return}i++;b=1}
+  if(b<1){if(i<=0){go(0,1);return}i--;b=BEATS}
+  go(i,b);
+}
+function label(){
+  const st=playing?'pause':((idx>=evs.length-1&&beat>=BEATS)?'replay':'play');
+  playBtn.className='btn red ic '+st;
+  const t=playing?UI[lang].pause:(st==='replay'?UI[lang].again:UI[lang].play);
+  playBtn.setAttribute('aria-label',t);playBtn.setAttribute('title',t);
+}
+function pause(){playing=false;clearTimeout(timer);label()}
+function tick(){
+  timer=setTimeout(()=>{
+    if(!playing)return;
+    if(idx>=evs.length-1&&beat>=BEATS){pause();return}
+    if(beat>=BEATS){idx++;beat=1}else beat++;
+    paint(true);tick();
+  },HOLD[beat-1]);
+}
+function play(){
+  if(playing){pause();return}
+  if(idx>=evs.length-1&&beat>=BEATS){idx=0;beat=1;shown=-1;paint(true)}
+  playing=true;label();tick();
+}
+const loader=$('#loader');
+const killLoader=()=>loader.classList.add('gone');
+if(reduce)killLoader();else{setTimeout(killLoader,1900);addEventListener('pointerdown',killLoader,{once:true})}
+const idle=window.requestIdleCallback||(f=>setTimeout(f,220));
+idle(()=>{const f=document.createDocumentFragment();
+ for(let i=0,N=innerWidth<700?14:34;i<N;i++){const t=mk('i');t.style.left=(Math.random()*100).toFixed(2)+'%';t.style.top=(Math.random()*100).toFixed(2)+'%';
+ t.style.animationDelay=(Math.random()*4).toFixed(2)+'s';t.style.transform=`scale(${(.6+Math.random()*1.1).toFixed(2)})`;f.appendChild(t)}
+ $('#stars').appendChild(f);
+ if(reduce)return;
+ const SP='<svg viewBox="0 0 34 46" aria-hidden="true"><g class="leg l"><rect x="10" y="36" width="4.4" height="10" rx="2.2"/></g><g class="leg r"><rect x="19.6" y="36" width="4.4" height="10" rx="2.2"/></g><path class="body" d="M17 2c6.5 0 11.4 4.8 11.4 11 0 3.6-1.5 6.3-1.5 9.4 0 2.2.9 3.6.9 6 0 5-4.6 8.2-10.8 8.2S6.2 33.4 6.2 28.4c0-2.4.9-3.8.9-6 0-3.1-1.5-5.8-1.5-9.4C5.6 6.8 10.5 2 17 2z"/></svg>',
+   small=innerWidth<700;
+ const BANDS=[[1,14],[46,62],[64,78],[16,30]];
+ const make=(host,n,minW,maxW,loOp,hiOp)=>{
+   const g=document.createDocumentFragment();
+   for(let i=0;i<n;i++){
+     const d=Math.random(),box=mk('span','sp'),in_=mk('span','sp-b');
+     const band=BANDS[i%BANDS.length],dur=56-d*20+Math.random()*24;
+     box.style.width=(minW+d*(maxW-minW)).toFixed(0)+'px';
+     box.style.bottom=(band[0]+Math.random()*(band[1]-band[0])).toFixed(1)+'%';
+     box.style.opacity=(loOp+d*(hiOp-loOp)).toFixed(2);
+     box.style.animationDuration=dur.toFixed(0)+'s';
+     box.style.animationDelay=(-((i+Math.random()*.6)/n)*dur).toFixed(1)+'s';
+     in_.innerHTML=SP;in_.style.animationDuration=(.75+Math.random()*.5).toFixed(2)+'s';
+     box.appendChild(in_);g.appendChild(box);
+   }
+   host.appendChild(g);
+ };
+ make($('#spirits'),small?8:12,22,46,.4,.85);
+ make($('#spirits-f'),small?2:4,15,26,.5,.8);});
+const factsEl=$('#facts');
+function factsTab(){const sc=factsEl.scrollWidth>factsEl.clientWidth+2;if(sc)factsEl.tabIndex=0;else factsEl.removeAttribute('tabindex')}
+addEventListener('resize',factsTab);factsTab();
+const fab=$('#fab'),pop=$('#pop');
+function setPop(open){
+  pop.hidden=!open;fab.setAttribute('aria-expanded',String(open));
+  if(open)pop.querySelector('.pop-a').focus({preventScroll:true});
+}
+fab.addEventListener('click',()=>setPop(pop.hidden));
+addEventListener('keydown',e=>{if(e.key==='Escape'&&!pop.hidden){setPop(false);fab.focus()}});
+addEventListener('pointerdown',e=>{if(!pop.hidden&&!e.target.closest('.dock'))setPop(false)});
+const copyBtn=$('#copy');
+const popCopy=$('#pop-copy');
+[copyBtn,popCopy].filter(Boolean).forEach(btn=>btn.addEventListener('click',async()=>{
+  const mail='ana.izaguirrematamoros@gmail.com';
+  try{await navigator.clipboard.writeText(mail)}catch(e){const t=mk('input');t.value=mail;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(_){}t.remove()}
+  btn.textContent=(lang==='es'?ES:EN).c_done;setTimeout(()=>{btn.textContent=(lang==='es'?ES:EN).c_copy},1800);
+}));
+const narrow=matchMedia('(max-width:430px)');
+const toTop=$('#to-top');
+addEventListener('scroll',()=>{toTop.classList.toggle('show',scrollY>innerHeight*.75)},{passive:true});
+narrow.addEventListener('change',()=>applyLang(lang));
+toTop.addEventListener('click',()=>{scrollTo({top:0,behavior:reduce?'auto':'smooth'});pause();go(0,1)});
+playBtn.addEventListener('click',play);
+$('#rp-prev').addEventListener('click',()=>step(-1));
+$('#rp-next').addEventListener('click',()=>step(1));
+scene.addEventListener('click',e=>{if(!e.target.closest('button'))step(1)});
+let sx=null;
+scene.addEventListener('pointerdown',e=>{sx=e.clientX});
+scene.addEventListener('pointerup',e=>{if(sx!==null&&Math.abs(e.clientX-sx)>45){step(e.clientX<sx?1:-1)}sx=null});
+addEventListener('keydown',e=>{if(e.target.matches('input,textarea'))return;if(e.key==='ArrowRight')step(1);if(e.key==='ArrowLeft')step(-1)});
+let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(measure,150)});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(measure);
+
+/* ---------- índice: el CV de abajo es el corpus ---------- */
+const STOP=new Set('de la el en y a que los las con por para un una es su se al lo como mas o tu tus tienes tiene has ha he mi mis sobre cual cuales del te usas usa sabes trabajado hecho hace haces puedes cuanto cuanta cuantos cuantas eres soy esta estas tipo nivel algo alguna vez desde usado the an of in on and or to is are do does you your have has with what which how for about tell me i my can did any it at as be been that this level kind ever since used use approach'.split(' '));
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+const stem=w=>w.length>3&&w.endsWith('s')?w.slice(0,-1):w;
+const toks=s=>(norm(s).match(/[a-z0-9#+]+/g)||[]).filter(w=>!STOP.has(w)).map(stem);
+const GROUPS=[
+ 'aws lambda sqs sns s3 dynamodb cloud nube serverless rekognition',
+ 'cola queue mensajeria messaging evento event sqs sns rabbitmq asincrona asynchronous',
+ 'ia ai inteligencia artificial llm gemini mcp agente agent',
+ 'liderazgo lider liderado liderar lidere liderando leadership lead led leading mentoria mentoreado mentoreando mentoring mentored mentor onboarding equipo team',
+ 'ingles english idioma language portugues portuguese espanol spanish',
+ 'vives vive vivo ubicacion location live based donde where zaragoza remoto remote hibrido hybrid puesto role contrato contract indefinido permanent busca buscas busco looking disponibilidad availability inmediata available',
+ 'test testing prueba calidad quality jest cypress cobertura coverage pytest selenium',
+ 'frontend front react angular',
+ 'dato data base database sql postgresql mongodb snowflake dynamodb firestore',
+ 'devops ci cd docker kubernetes pipeline actions despliegue deploy',
+ 'estudio estudiaste estudiar estudiado carrera study studied studies formacion education universidad university master licenciatura degree titulo bachelor',
+ 'guardia oncall call incidente incident datadog observabilidad observability monitoring',
+ 'api graphql apollo endpoint disenado designed',
+ 'pausa break hueco gap crianza parenting ahora now actualmente currently',
+ 'backend back node nodejs typescript express',
+ 'proyecto project github portfolio portafolio trainer flow latino migra'
+].map(g=>g.split(' ').map(stem));
+const SYN=new Map();GROUPS.forEach(g=>g.forEach(w=>{if(!SYN.has(w))SYN.set(w,new Set());g.forEach(x=>x!==w&&SYN.get(w).add(x))}));
+const BOOST={exp:1.3,proj:1.15,skills:.55};
+let chunks=[],avg=1,df=new Map(),indexReady=false;
+function buildIndex(){
+  df=new Map();
+  chunks=$$('[data-chunk]').map(el=>{
+    const t=toks(el.textContent),tf=new Map();t.forEach(w=>tf.set(w,(tf.get(w)||0)+1));
+    tf.forEach((_,w)=>df.set(w,(df.get(w)||0)+1));
+    const lines=el.matches('[data-line]')?[el]:[...el.querySelectorAll('[data-line]')];
+    return{el,tf,len:t.length,lines:lines.map(l=>({el:l,set:new Set(toks(l.textContent))}))};
+  });
+  avg=chunks.reduce((a,c)=>a+c.len,0)/chunks.length;indexReady=true;
+}
+function search(q){
+  if(!indexReady)buildIndex();
+  const w=new Map();toks(q).forEach(t=>{w.set(t,1);(SYN.get(t)||[]).forEach(x=>{if(!w.has(x))w.set(x,.55)})});
+  const N=chunks.length,k1=1.4,b=.6;
+  const hits=chunks.map(c=>{
+    let s=0;w.forEach((wt,t)=>{const f=c.tf.get(t);if(!f)return;const idf=Math.log(1+(N-df.get(t)+.5)/(df.get(t)+.5));s+=wt*idf*f*(k1+1)/(f+k1*(1-b+b*c.len/avg))});
+    return{c,s:s*(BOOST[c.el.dataset.sec]||1)};
+  }).filter(h=>h.s>0).sort((a,b)=>b.s-a.s).filter((h,i,all)=>h.s>=all[0].s*.35).slice(0,3);
+  return{terms:new Set(toks(q)),hits:hits.map(h=>{
+    const ranked=h.c.lines.map((l,i)=>({l,i,n:[...l.set].filter(t=>w.has(t)).length})).filter(x=>x.n>0).sort((a,b)=>b.n-a.n).slice(0,2).sort((a,b)=>a.i-b.i);
+    return{el:h.c.el,lines:(ranked.length?ranked.map(x=>x.l.el):h.c.lines.slice(0,1).map(l=>l.el))};
+  })};
+}
+
+/* ---------- preguntas ---------- */
+const answer=$('#answer'),hist=$('#hist'),asked=[];
+function isHit(t,terms){
+  if(!t)return false;
+  for(const q of terms){if(t===q)return true;if(q.length>=3&&(t.includes(q)||q.includes(t)))return true}
+  return false;
+}
+function marked(text,terms){
+  const p=mk('p','hit-txt');
+  text.split(/([\p{L}\p{N}#+]+)/u).forEach(piece=>{
+    if(!piece)return;const t=toks(piece)[0];
+    p.appendChild(isHit(t,terms)?mk('mark',null,piece):document.createTextNode(piece));
+  });return p;
+}
+function titleOf(c){
+  const sec=SEC[lang][c.dataset.sec],h=c.querySelector('h3'),w=c.querySelector('.when');
+  if(w&&w.classList.contains('k'))return `${sec}: ${w.textContent}`;
+  if(!h)return sec;
+  return `${sec}: ${h.textContent}`+(w?`, ${w.textContent}`:'');
+}
+function fail(text,err){
+  const D=lang==='es'?ES:EN,box=mk('div','ans in');
+  box.appendChild(mk('h3','ans-q',text||''));
+  const p=mk('p','none',D.oops+' '),a=mk('a',null,'ana.izaguirrematamoros@gmail.com');
+  a.href='mailto:ana.izaguirrematamoros@gmail.com';p.appendChild(a);box.appendChild(p);
+  if(err)box.appendChild(mk('p','ans-meta',String(err).slice(0,120)));
+  answer.replaceChildren(box);
+}
+addEventListener('error',e=>{try{if(!answer.children.length)fail('',e.message)}catch(_){}});
+function ask(text,silent){
+  try{askInner(text,silent)}catch(err){fail(text,err&&err.message)}
+}
+function askInner(text,silent){
+  text=(text||'').trim();if(!text){$('#q').focus();return}
+  const t0=performance.now(),res=search(text),ms=performance.now()-t0;
+  const box=mk('div','ans'+(silent?'':' in'));
+  if(!silent){const x=mk('button','ans-x','×');x.type='button';x.setAttribute('aria-label',(lang==='es'?ES:EN).clear);x.addEventListener('click',clearAsk);box.appendChild(x)}
+  box.appendChild(mk('h3','ans-q',text));box.appendChild(mk('p','ans-meta',UI[lang].meta(res.hits.length,num(ms,lang))));
+  if(!res.hits.length){
+    const p=mk('p','none',UI[lang].none+' '),a=mk('a',null,'ana.izaguirrematamoros@gmail.com');a.href='mailto:ana.izaguirrematamoros@gmail.com';p.appendChild(a);box.appendChild(p);
+  }
+  res.hits.forEach(h=>{
+    const art=mk('article','hit');art.appendChild(mk('p','hit-src',titleOf(h.el)));
+    h.lines.forEach(l=>art.appendChild(marked(l.textContent,res.terms)));
+    const a=mk('a',null,UI[lang].see);a.href='#'+h.el.id;a.addEventListener('click',e=>{e.preventDefault();flash(h.el)});
+    art.appendChild(a);box.appendChild(art);
+  });
+  answer.replaceChildren(box);
+  if(!silent){
+    const k=norm(text);if(!asked.some(a=>norm(a)===k)){asked.unshift(text);asked.length=Math.min(asked.length,5)}
+    hist.hidden=false;hist.replaceChildren(mk('span',null,UI[lang].hist));
+    asked.forEach(a=>{const b=mk('button','chip',a);b.type='button';b.addEventListener('click',()=>ask(a));hist.appendChild(b)});
+    const rb=answer.getBoundingClientRect();
+    if(rb.top<70||rb.bottom>innerHeight)answer.scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'});
+    box.classList.remove('in');void box.offsetWidth;box.classList.add('in');
+  }
+}
+const qEl=$('#q'),qX=$('#q-clear');
+function qToggle(){qX.hidden=!qEl.value}
+qEl.addEventListener('input',qToggle);
+function clearAsk(){qEl.value='';qToggle();asked.length=0;hist.hidden=true;answer.replaceChildren();ask($('#chips .chip').textContent,true);qEl.focus()}
+qX.addEventListener('click',clearAsk);
+answer.addEventListener('keydown',e=>{if(e.key==='Escape')clearAsk()});
+qEl.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();clearAsk()}});
+function submitAsk(){const v=qEl.value;qEl.value='';qToggle();ask(v)}
+$('#ask').addEventListener('submit',e=>{e.preventDefault();submitAsk()});
+$('#q').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();submitAsk()}});
+$('#ask button[type=submit]').addEventListener('click',e=>{e.preventDefault();submitAsk()});
+$('#chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(b)ask(b.textContent)});
+
+/* ---------- tema ---------- */
+const themeBtn=$('#theme'),root=document.documentElement;
+function paintTheme(){
+  const dark=root.dataset.theme!=='light';
+  const tl=dark?UI[lang].light:UI[lang].dark;
+  themeBtn.setAttribute('aria-label',tl);themeBtn.setAttribute('title',tl);
+  $('meta[name=theme-color]').content=dark?'#101A2E':'#DCEDF4';
+}
+themeBtn.addEventListener('click',()=>{root.dataset.theme=root.dataset.theme==='light'?'dark':'light';try{localStorage.setItem('theme',root.dataset.theme)}catch(e){}paintTheme()});
+if(qs.get('theme')==='light'||qs.get('theme')==='dark')root.dataset.theme=qs.get('theme');
+
+/* ---------- idioma ---------- */
+const langBtn=$('#lang');
+function applyLang(l){
+  lang=l;const D=l==='es'?ES:EN;
+  root.lang=l;
+  $$('[data-i18n]').forEach(e=>{const v=D[e.dataset.i18n];if(v!=null)e.textContent=v});
+  $$('[data-i18n-aria]').forEach(e=>e.setAttribute('aria-label',D[e.dataset.i18nAria]));
+  $('#q').placeholder=D.ph;
+  document.title=META[l].t;$('meta[name=description]').content=META[l].d;
+  $('meta[property="og:locale"]').content=l==='es'?'es_ES':'en_US';
+  const full=l==='es'?'English':'Español',code=l==='es'?'EN':'ES';
+  langBtn.textContent=code;
+  langBtn.setAttribute('aria-label',code+', '+full);langBtn.setAttribute('title',full);langBtn.lang=l==='es'?'en':'es';
+  $$('a.dl').forEach(a=>{if(a.dataset.i18n==='dl')a.textContent=narrow.matches?'CV':D.dl});
+  $$('a.dl').forEach(a=>a.href=`Ana-Izaguirre-CV-${l.toUpperCase()}.pdf`);
+  indexReady=false;paintTheme();shown=-1;paint(false);measure();label();
+  asked.length=0;hist.hidden=true;
+  const first=$('#chips .chip').textContent;
+  (window.requestIdleCallback||(f=>setTimeout(f,200)))(()=>ask(first,true));
+  try{localStorage.setItem('lang',l)}catch(e){}
+}
+langBtn.addEventListener('click',()=>applyLang(lang==='es'?'en':'es'));
+let want=qs.get('lang');
+if(want!=='es'&&want!=='en'){try{want=localStorage.getItem('lang')}catch(e){want=null}}
+if(want!=='es'&&want!=='en')want=(navigator.language||'es').toLowerCase().startsWith('es')?'es':'en';
+applyLang(want);
+
+/* un solo momento orquestado al llegar: la carrera se reproduce una vez */
+function wake(){
+  document.documentElement.classList.remove('boot');
+  if(!quiet&&!reduce)play();
+}
+if(reduce||quiet)document.documentElement.classList.remove('boot');
+else if(document.readyState==='complete')idle(()=>setTimeout(wake,120));
+else addEventListener('load',()=>idle(()=>setTimeout(wake,120)),{once:true});
+window.__cv={search,ask};
+})();
+</script>
+</body>
+</html>
