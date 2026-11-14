@@ -2,6 +2,15 @@
 
 [English](README.md) · **Español**
 
+[![Deploy](https://github.com/ana-izaguirre/ana-izaguirre.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/ana-izaguirre/ana-izaguirre.github.io/actions/workflows/deploy.yml)
+[![Quality](https://github.com/ana-izaguirre/ana-izaguirre.github.io/actions/workflows/quality.yml/badge.svg)](https://github.com/ana-izaguirre/ana-izaguirre.github.io/actions/workflows/quality.yml)
+[![Live](https://img.shields.io/badge/en%20vivo-ana--izaguirre.github.io-E4674A)](https://ana-izaguirre.github.io/)
+
+[![Lighthouse](https://img.shields.io/badge/Lighthouse-100%20%C2%B7%20100%20%C2%B7%20100%20%C2%B7%20100-success)](#mediciones)
+[![axe-core](https://img.shields.io/badge/axe--core-0%20violaciones-success)](#mediciones)
+[![Tests](https://img.shields.io/badge/Playwright-41%20pruebas-success)](#compuertas-de-calidad)
+[![Dependencias](https://img.shields.io/badge/dependencias%20en%20runtime-ninguna-success)](#notas-de-ingenier%C3%ADa)
+
 Un CV y portafolio interactivo, construido como una sola página autocontenida.
 
 **En vivo:** https://ana-izaguirre.github.io/
@@ -41,6 +50,33 @@ Lighthouse; el móvil se mide con la CPU frenada 4 veces y red 4G lenta:
 
 `axe-core` no reporta violaciones en oscuro, claro ni móvil. La página se maneja por completo con teclado, respeta `prefers-reduced-motion`, y el diseño aguanta de 360 px a 1920 px sin scroll horizontal.
 
+## Compuertas de calidad
+
+Nada llega a producción sin medirse. Cada push a `main` corre la suite completa primero, y el trabajo de despliegue solo arranca cuando está en verde.
+
+| Capa | Qué comprueba | Herramienta |
+|---|---|---|
+| End-to-end | Buscador, historia de carrera, temas, idioma, popup de contacto, descargas de CV | Playwright |
+| Layout | Sin desbordes, nada recortado, nada montado — en seis tamaños | Playwright |
+| Accesibilidad | Cero violaciones en oscuro, claro y móvil; manejo solo con teclado | axe-core |
+| Rendimiento | Puntuaciones de Lighthouse y Core Web Vitals, contra umbrales | Lighthouse |
+
+Las pruebas de layout existen porque cada aserción fue un fallo real: un nombre cortado por un ancestro con `content-visibility`, las píldoras de preguntas deslizándose bajo la hoja del CV, una banda de sección desbordando el viewport. Comprueban el invariante en lugar de comparar píxeles, así que siguen siendo útiles entre plataformas en vez de volverse inestables.
+
+Accesibilidad, buenas prácticas y SEO son deterministas y deben dar 100. El rendimiento se mide con la CPU frenada, así que CI exige un piso (90 en móvil, 95 en escritorio) en lugar de un número exacto; la tabla de arriba es lo que realmente puntúa.
+
+Para correrlo:
+
+```bash
+npm ci
+npx playwright install --with-deps chromium
+npm run qa          # pruebas + Lighthouse
+npm test            # solo pruebas
+npm run lighthouse  # solo Lighthouse
+```
+
+El `package.json` solo contiene herramientas de prueba. El sitio en sí no lleva ninguna dependencia.
+
 ## Ejecutarlo en local
 
 Sin compilación ni dependencias:
@@ -54,7 +90,7 @@ Abrir `index.html` directamente desde el disco también funciona, aunque las fue
 
 ## Despliegue
 
-Cada push a `main` despliega con `.github/workflows/deploy.yml`. También se puede lanzar a mano desde la pestaña Actions. Pages debe estar configurado en **Settings → Pages → Source: GitHub Actions**.
+Cada push a `main` despliega con `.github/workflows/deploy.yml`, que llama primero al workflow de calidad y solo publica si pasa. También se puede lanzar a mano desde la pestaña Actions. Pages debe estar configurado en **Settings → Pages → Source: GitHub Actions**.
 
 ## Editar
 

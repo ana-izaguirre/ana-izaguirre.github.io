@@ -1,0 +1,19 @@
+{
+  "name": "ana-izaguirre-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Interactive CV and portfolio. The site has no runtime dependencies; everything below is test tooling.",
+  "scripts": {
+    "serve": "python3 -m http.server 8000",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "lighthouse": "node scripts/lighthouse.mjs",
+    "qa": "npm run test && npm run lighthouse"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "axe-core": "4.14.0",
+    "chrome-launcher": "1.2.3",
+    "lighthouse": "13.6.0"
+  }
+}
