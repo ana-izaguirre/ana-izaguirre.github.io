@@ -1,42 +1,69 @@
-# Portafolio de Ana Izaguirre
+# Ana Izaguirre — Interactive CV
 
-CV interactivo ambientado en un bosque antiguo: dosel, troncos a varias profundidades, bandas de niebla, rayos de luz y espíritus luminosos que caminan por la escena, delante y detrás del contenido. Todo son SVG originales dibujados en código: no hay imágenes ni personajes de terceros. La carrera se cuenta como un relato sobre una línea de tiempo (empresa, sector, duración y tecnologías con sus logos) y se puede consultar con un buscador que cita el propio CV.
+**English** · [Español](README.es.md)
 
-Dos ambientes: día (pradera) y noche (cielo estrellado). Español e inglés.
+An interactive CV and portfolio, built as a single self-contained page.
 
-Todo el paisaje es SVG propio dibujado a mano en código: no hay imágenes ni material de terceros.
+**Live:** https://ana-izaguirre.github.io/
 
-Los logos son de simple-icons (CC0), incrustados en el HTML: la página no hace ninguna petición externa.
+---
 
-## Publicar en GitHub Pages
-1. Crea un repositorio público llamado `ana-izaguirre.github.io`.
-2. Sube todo el contenido de esta carpeta a la raíz del repositorio, incluida `.github/`.
-3. En Settings, Pages, en **Source** elige **GitHub Actions** (no «Deploy from a branch»).
-4. Cada `push` a `main` despliega solo, con el workflow `.github/workflows/deploy.yml`.
-5. La página queda en https://ana-izaguirre.github.io/
+## What it is
 
-El workflow también se puede lanzar a mano desde la pestaña Actions (`Run workflow`).
+A CV you can read, search and print, wrapped in an original forest scene. The career is told as a story along a continuous timeline — company, sector, duration and the technologies used at each stage, with real logos — and the whole document is searchable from the page itself.
 
-Si usas otro dominio, cambia esa dirección en `index.html` (canonical, og:url, og:image, JSON-LD), en `robots.txt` y en `sitemap.xml`.
+Available in Spanish and English, with light and dark themes. Both are remembered between visits.
 
-## Editar el CV
-Todo el contenido está en `index.html`. El texto en español está en el HTML y el inglés en el objeto `EN` del script.
-El buscador se indexa solo a partir de ese mismo HTML, así que no hay que tocar nada más.
+## Engineering notes
 
-## Regenerar los PDF
-Abre la página, elige el idioma y usa Imprimir, Guardar como PDF (A4). Guarda el archivo como
-`Ana-Izaguirre-CV-ES.pdf` o `Ana-Izaguirre-CV-EN.pdf`.
+The parts worth looking at, for anyone reviewing the code:
 
-## Tipografías
-Instrument Serif, Geist y Geist Mono, bajo SIL Open Font License 1.1, alojadas en `fonts/`.
+**Search runs on the CV, not on a copy of it.** The index is built at load time from the rendered DOM: every element marked `data-chunk` becomes a document, scored with BM25. There is no second source of truth to drift out of sync, and no model generating text — every answer quotes a passage from the CV and links back to the place it came from, so nothing can be invented. Synonym groups widen the ranking (`sql` reaches PostgreSQL, DynamoDB and Snowflake), while highlighting stays strictly on the terms the visitor typed.
 
-## Medición (Lighthouse)
+**Nothing is fetched from outside.** No framework, no CDN, no analytics, no web fonts over the network. Typefaces are self-hosted and subset; technology logos are [simple-icons](https://simpleicons.org/) paths embedded as inline SVG. The page is one HTML file plus three font files.
 
-| | Escritorio | Móvil |
-|---|---|---|
-| SEO | 100 | 100 |
-| Accesibilidad | 100 | 100 |
-| Buenas prácticas | 100 | 100 |
-| Rendimiento | 100 | 100 |
+**The scene is drawn in code.** Canopy, tree layers, mist bands, light shafts and the walking spirits are hand-written SVG and CSS animations — no images, no third-party art. Day and night are two palettes over the same geometry.
 
-El móvil se mide con la CPU frenada 4 veces y red 4G lenta. Las animaciones del bosque quedan en pausa hasta que la página termina de cargar (`html.boot`), así que el hilo principal queda libre durante el arranque.
+**Animation is deferred until the page is interactive.** Every scene animation starts paused behind a `boot` class and is released on `load`, inside `requestIdleCallback`. That keeps the main thread free during startup, which is what holds total blocking time near zero on a throttled phone.
+
+**The print stylesheet is the PDF.** Both downloadable CVs are generated from the page's own print rules — one A4 page each, in either language. There is no separately maintained document to fall behind the web version.
+
+## Measurements
+
+Lighthouse, mobile measured with 4× CPU throttling and slow 4G:
+
+|                 | Desktop | Mobile |
+|-----------------|---------|--------|
+| Performance     | 100     | 100    |
+| Accessibility   | 100     | 100    |
+| Best practices  | 100     | 100    |
+| SEO             | 100     | 100    |
+
+`axe-core` reports no violations in dark, light and mobile contexts. The page is fully keyboard-operable, honours `prefers-reduced-motion`, and the layout holds from 360 px to 1920 px without horizontal scroll.
+
+## Running it locally
+
+No build step, no dependencies:
+
+```bash
+python3 -m http.server 8000
+# open http://localhost:8000
+```
+
+Opening `index.html` directly from the filesystem also works, though fonts load more reliably over HTTP.
+
+## Deployment
+
+Every push to `main` deploys through `.github/workflows/deploy.yml`. It can also be triggered by hand from the Actions tab. Pages must be configured with **Settings → Pages → Source: GitHub Actions**.
+
+## Editing
+
+All content lives in `index.html`. Spanish text sits in the markup; English translations are in the `EN` object in the script. The search index rebuilds itself from that same markup, so adding a role or a project needs no other change.
+
+If the site moves to another domain, update the URL in `index.html` (canonical, `og:url`, `og:image`, JSON-LD), in `robots.txt` and in `sitemap.xml`.
+
+## Credits
+
+Typefaces: Instrument Serif, Geist and Geist Mono, under the SIL Open Font License 1.1.
+Technology logos: [simple-icons](https://simpleicons.org/), CC0.
+Everything else — scene, layout, code — is original.
