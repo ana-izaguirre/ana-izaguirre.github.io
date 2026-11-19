@@ -92,14 +92,29 @@ async function profile(name, port) {
 
 const stop = serve();
 let chrome;
+// On GitHub's runners Chrome occasionally fails to expose its debugging port in
+// time ("waiting for dynamic debugging port"). That says nothing about the page,
+// so it gets three tries before the gate gives up.
+async function launchChrome(tries = 3) {
+  for (let i = 1; ; i++) {
+    try {
+      return await chromeLauncher.launch({
+        chromeFlags: ['--headless=new', '--no-sandbox', '--disable-dev-shm-usage'],
+      });
+    } catch (err) {
+      if (i >= tries) throw err;
+      console.log(`Chrome did not start (${err.message}); retrying ${i + 1}/${tries}`);
+      await new Promise((r) => setTimeout(r, 2000));
+    }
+  }
+}
+
 const failures = [];
 const summary = {};
 
 try {
   await waitForServer();
-  chrome = await chromeLauncher.launch({
-    chromeFlags: ['--headless=new', '--no-sandbox', '--disable-dev-shm-usage'],
-  });
+  chrome = await launchChrome();
 
   for (const name of Object.keys(PROFILES)) {
     console.log(`\n${name}`);
