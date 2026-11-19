@@ -1,5 +1,5 @@
 // Accessibility: axe-core must find nothing, in either theme and on a phone.
-const { test, expect } = require('@playwright/test');
+const { test, expect } = require('./fixtures');
 const fs = require('fs');
 const path = require('path');
 

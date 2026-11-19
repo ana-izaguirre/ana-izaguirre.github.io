@@ -29,6 +29,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Published as /coverage.json, which the README badge reads: the number
+      # comes from the run that gated this very deploy, so it cannot go stale.
+      - name: Fetch the coverage badge
+        uses: actions/download-artifact@v4
+        with:
+          name: coverage-badge
+          path: .coverage-badge
+
+      - name: Publish it with the site
+        run: mv .coverage-badge/badge.json coverage.json && rmdir .coverage-badge
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
