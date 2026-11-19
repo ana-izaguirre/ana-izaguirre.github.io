@@ -33,6 +33,14 @@
 @font-face{font-family:"Fraunces";src:url(fonts/fraunces.woff2) format("woff2");font-weight:300 800;font-display:swap}
 @font-face{font-family:"Nunito";src:url(fonts/nunito.woff2) format("woff2");font-weight:100 550;font-display:swap}
 @font-face{font-family:"Nunito";src:url(fonts/nunito-bold.woff2) format("woff2");font-weight:551 900;font-display:swap}
+/* Respaldo con las proporciones de Fraunces y Nunito. Mientras llegan las fuentes
+   se usa una del sistema reescalada, así el cambio no mueve la página (CLS).
+   Liberation es métricamente igual a Times/Arial, así que vale también en Linux.
+   Valores: tools/font-fallback.py. */
+@font-face{font-family:"Fraunces Fallback";src:local("Times New Roman"),local("TimesNewRomanPSMT"),local("Liberation Serif"),local("LiberationSerif"),local("Times");size-adjust:118.34%;ascent-override:82.65%;descent-override:21.55%;line-gap-override:0%}
+@font-face{font-family:"Fraunces Fallback";font-weight:700;src:local("Times New Roman Bold"),local("TimesNewRomanPS-BoldMT"),local("Liberation Serif Bold"),local("LiberationSerif-Bold"),local("Times Bold");size-adjust:118.34%;ascent-override:82.65%;descent-override:21.55%;line-gap-override:0%}
+@font-face{font-family:"Nunito Fallback";src:local("Arial"),local("ArialMT"),local("Liberation Sans"),local("LiberationSans"),local("Helvetica"),local("Roboto");size-adjust:99.8%;ascent-override:101.3%;descent-override:35.37%;line-gap-override:0%}
+@font-face{font-family:"Nunito Fallback";font-weight:700;src:local("Arial Bold"),local("Arial-BoldMT"),local("Liberation Sans Bold"),local("LiberationSans-Bold"),local("Helvetica Bold"),local("Roboto Bold");size-adjust:99.8%;ascent-override:101.3%;descent-override:35.37%;line-gap-override:0%}
 @font-face{font-family:"Geist Mono";src:url(fonts/geist-mono.woff2) format("woff2");font-weight:100 900;font-display:swap}
 /* Noche cálida: índigo y ciruela con luz dorada, nunca negro puro. */
 :root{
@@ -42,8 +50,8 @@
   --on-red:#1C1830;--sky1:#1B1838;--sky2:#2E2550;--sky3:#5B3A62;--sun:#FFF3D8;--sun2:#F6C77E;
   --hill1:#283A3E;--hill2:#22363F;--hill3:#182A2E;--grass:#121D18;--star:#FFF4DC;--mist:rgba(196,180,220,.08);
   --fly:#FFE6A0;--fly-glow:rgba(255,214,120,.7);--tape:rgba(232,181,114,.32);--sign:#6E4C2A;--sign-t:#FFF1D8;
-  --serif:"Fraunces",Georgia,"Times New Roman",serif;
-  --sans:"Nunito",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --serif:"Fraunces","Fraunces Fallback",Georgia,"Times New Roman",serif;
+  --sans:"Nunito","Nunito Fallback",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --mono:"Geist Mono",ui-monospace,Menlo,Consolas,monospace;
   color-scheme:dark;
 }
