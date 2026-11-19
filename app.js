@@ -49,7 +49,7 @@ s_contact:'Contact',p_contact:'I am looking for a permanent role as a backend or
 e1:"Master's in High Performance Computing, Universidade da Coruña (2022–2026).",
 e2:"Bachelor's in Computer Science, UNAH (2010–2015).",
 k_lang:'Languages',l1:'Native Spanish. Professional English: 6+ years with US engineering teams. Basic Portuguese.',
-foot:'© 2026 Ana Izaguirre. Handmade: one HTML file, no frameworks, no trackers.'
+foot:'© 2026 Ana Izaguirre. Handmade, no frameworks, no trackers.'
 };
 Object.assign(EN,{
 rp_h:'My career in seven scenes',

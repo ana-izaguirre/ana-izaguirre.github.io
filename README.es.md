@@ -8,10 +8,10 @@
 
 [![Lighthouse](https://img.shields.io/badge/Lighthouse-100%20%C2%B7%20100%20%C2%B7%20100%20%C2%B7%20100-success)](#mediciones)
 [![axe-core](https://img.shields.io/badge/axe--core-0%20violaciones-success)](#mediciones)
-[![Tests](https://img.shields.io/badge/Playwright-41%20pruebas-success)](#compuertas-de-calidad)
+[![Tests](https://img.shields.io/badge/Playwright-52%20pruebas-success)](#compuertas-de-calidad)
 [![Dependencias](https://img.shields.io/badge/dependencias%20en%20runtime-ninguna-success)](#notas-de-ingenier%C3%ADa)
 
-Un CV y portafolio interactivo, construido como una sola página autocontenida.
+Un CV y portafolio interactivo: una página estática, sin compilación.
 
 **En vivo:** https://ana-izaguirre.github.io/
 
@@ -19,7 +19,7 @@ Un CV y portafolio interactivo, construido como una sola página autocontenida.
 
 ## Qué es
 
-Un CV que se puede leer, buscar e imprimir, dentro de una escena de bosque original. La carrera se cuenta como un relato sobre una línea de tiempo continua — empresa, sector, duración y las tecnologías de cada etapa, con sus logos — y el documento entero se puede consultar desde la misma página.
+Un CV que se puede leer, buscar e imprimir, dentro de un paisaje ilustrado original que cuenta el viaje de Honduras a Zaragoza. La carrera se cuenta como un relato sobre una línea de tiempo continua — empresa, sector, duración y las tecnologías de cada etapa, con sus logos — y el documento entero se puede consultar desde la misma página.
 
 Disponible en español e inglés, con tema claro y oscuro. Ambos se recuerdan entre visitas.
 
@@ -29,11 +29,11 @@ Lo que vale la pena mirar, para quien revise el código:
 
 **La búsqueda corre sobre el CV, no sobre una copia.** El índice se construye al cargar, a partir del DOM renderizado: cada elemento marcado con `data-chunk` es un documento, puntuado con BM25. No hay una segunda fuente de verdad que se desincronice, ni un modelo generando texto — cada respuesta cita un pasaje del CV y enlaza al lugar del que salió, así que nada puede inventarse. Los grupos de sinónimos amplían el ranking (`sql` alcanza PostgreSQL, DynamoDB y Snowflake), mientras que el resaltado se limita estrictamente a los términos que escribió la persona.
 
-**No se pide nada al exterior.** Sin framework, sin CDN, sin analítica, sin fuentes por red. Las tipografías están alojadas y subconjuntadas; los logos de tecnologías son trazos de [simple-icons](https://simpleicons.org/) incrustados como SVG. La página es un archivo HTML más cuatro de fuentes.
+**No se pide nada al exterior.** Sin framework, sin CDN, sin analítica, sin fuentes por red. Las tipografías están alojadas y subconjuntadas; los logos de tecnologías son trazos de [simple-icons](https://simpleicons.org/) incrustados como SVG. La página es un archivo HTML, un script y cuatro de fuentes.
 
-**La escena está dibujada en código.** Dosel, capas de árboles, bandas de niebla, rayos de luz y los espíritus que caminan son SVG y animaciones CSS escritos a mano — sin imágenes ni material de terceros. Día y noche son dos paletas sobre la misma geometría.
+**La escena está dibujada en código.** Montañas, la basílica del Pilar, la familia y las luciérnagas son SVG y CSS, generados por `tools/scene.py` — sin imágenes ni material de terceros. Un solo SVG sirve a los dos temas: cada color es una variable CSS con su pareja nocturna. Las tarjetas de papel toman el borde rasgado de un filtro de turbulencia SVG, pero solo las pequeñas; las superficies grandes usan CSS puro, porque el filtro pintaría una textura de miles de píxeles de alto.
 
-**La animación se aplaza hasta que la página es interactiva.** Toda animación de la escena arranca en pausa tras una clase `boot` y se libera en `load`, dentro de `requestIdleCallback`. Eso mantiene libre el hilo principal durante el arranque, que es lo que sostiene el tiempo de bloqueo cerca de cero en un teléfono frenado.
+**El primer frame no espera al script.** `app.js` se pide después del primer pintado. Lo que esa pantalla necesita de él se hace en línea: la portada y la barra se traducen antes de pintar, así un visitante en inglés nunca ve un destello en español y nada se recoloca cuando llega el script; y las fuentes de respaldo están reescaladas a Fraunces y Nunito, así el cambio de fuente tampoco mueve nada. El trabajo de arranque queda en tareas de menos de 50 ms: las lecturas de layout van agrupadas y la medición de la historia espera a que el hilo esté libre. Las animaciones de la escena arrancan en pausa tras una clase `boot` y se liberan después de `load`.
 
 **La hoja de impresión es el PDF.** Los dos CV descargables se generan con las reglas de impresión de la propia página — una página A4 cada uno, en cualquiera de los dos idiomas. No hay un documento aparte que se quede atrás de la versión web.
 
@@ -58,6 +58,7 @@ Nada llega a producción sin medirse. Cada push a `main` corre la suite completa
 |---|---|---|
 | End-to-end | Buscador, historia de carrera, temas, idioma, popup de contacto, descargas de CV | Playwright |
 | Layout | Sin desbordes, nada recortado, nada montado — en seis tamaños | Playwright |
+| Primer pintado | La portada sale en el idioma del visitante antes de que corra el script, y el script no la mueve | Playwright |
 | Accesibilidad | Cero violaciones en oscuro, claro y móvil; manejo solo con teclado | axe-core |
 | Rendimiento | Puntuaciones de Lighthouse y Core Web Vitals, contra umbrales | Lighthouse |
 
@@ -94,7 +95,7 @@ Cada push a `main` despliega con `.github/workflows/deploy.yml`, que llama prime
 
 ## Editar
 
-Todo el contenido vive en `index.html`. El texto en español está en el marcado; las traducciones al inglés, en el objeto `EN` del script. El índice de búsqueda se reconstruye solo a partir de ese mismo marcado, así que añadir un puesto o un proyecto no requiere tocar nada más.
+Todo el contenido vive en `index.html`. El texto en español está en el marcado; las traducciones al inglés, en el objeto `EN` de `app.js`, salvo las de la primera pantalla, que viven en `EN_TOP` dentro de `index.html` para aplicarse antes del primer pintado. El paisaje es generado: se edita `tools/scene.py` y se ejecuta `python3 tools/scene.py`. El índice de búsqueda se reconstruye solo a partir de ese mismo marcado, así que añadir un puesto o un proyecto no requiere tocar nada más.
 
 Si el sitio se muda a otro dominio, hay que actualizar la URL en `index.html` (canonical, `og:url`, `og:image`, JSON-LD), en `robots.txt` y en `sitemap.xml`.
 
