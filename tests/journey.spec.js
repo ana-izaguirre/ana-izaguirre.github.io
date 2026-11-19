@@ -39,9 +39,14 @@ test.describe('career story', () => {
     await expect(page.locator('#rp-step')).not.toHaveText('Paso 1/4 · 1/6');
 
     await page.click('#rp-play');                 // pause
-    await page.locator('.seg').nth(3).click();    // jump to Intel
+    const intel = page.locator('.seg', { has: page.locator('.lb', { hasText: /^Intel$/ }) });
+    await intel.click();
     await expect(page.locator('#c-co')).toHaveText('Intel');
-    await expect(page.locator('#c-logos .lg')).toHaveCount(5);
+    // Every technology listed for the stage must render, and as an icon.
+    const listed = (await page.getAttribute('#c-intel', 'data-tech')).split(',').length;
+    const logos = page.locator('#c-logos .lg');
+    await expect(logos).toHaveCount(listed);
+    await expect(logos.locator('svg')).toHaveCount(listed);
 
     await page.click('#rp-prev');
     await expect(page.locator('#rp-step')).toContainText('Paso 3/4');
@@ -50,10 +55,11 @@ test.describe('career story', () => {
   test('clicking a technology logo searches for it', async ({ page }) => {
     await open(page);
     await page.click('#rp-play');
-    await page.locator('.seg').nth(3).click();
-    const name = await page.locator('#c-logos .lg').first().getAttribute('data-q')
-      || await page.locator('#c-logos .lg').first().innerText();
-    await page.locator('#c-logos .lg').first().click();
+    await page.locator('.seg').nth(4).click();
+    const first = page.locator('#c-logos .lg').first();
+    const name = await first.getAttribute('aria-label');   // icon-only: the name lives here
+    expect(name, 'a technology icon has no accessible name').toBeTruthy();
+    await first.click();
     await expect(page.locator('.ans-q')).toHaveText(name.trim());
   });
 });

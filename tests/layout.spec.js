@@ -141,3 +141,52 @@ test.describe('print', () => {
     await expect(page.locator('#sheet')).toBeVisible();
   });
 });
+
+test.describe('career timeline', () => {
+  test('every stage is its own company and no two labels collide', async ({ page }) => {
+    await page.goto('/index.html?quiet=1');
+    await page.waitForTimeout(1200);
+
+    const segs = await page.$$eval('.seg', (els) =>
+      els.map((e) => ({
+        label: e.querySelector('.lb')?.textContent.trim() ?? '',
+        tight: e.classList.contains('tight'),
+        left: Math.round(e.getBoundingClientRect().left),
+        right: Math.round(e.getBoundingClientRect().right),
+      }))
+    );
+
+    expect(segs.length, 'expected seven career stages').toBe(7);
+    expect(segs.every((s) => s.label.length > 0), 'a stage has no label').toBe(true);
+
+    // Any label still on screen must not run into the next one.
+    const visible = segs.filter((s) => !s.tight);
+    for (let i = 1; i < visible.length; i++) {
+      expect(visible[i].left, `"${visible[i].label}" overlaps "${visible[i - 1].label}"`)
+        .toBeGreaterThanOrEqual(visible[i - 1].right);
+    }
+  });
+
+  test('each stage shows icons for its tools and no text labels', async ({ page }) => {
+    await page.goto('/index.html?quiet=1');
+    await page.waitForTimeout(1200);
+    await page.click('#rp-play');
+
+    const n = await page.locator('.seg').count();
+    for (let i = 0; i < n; i++) {
+      // Click through the DOM: the progress knob sits over the earliest stations.
+      await page.evaluate((i) => document.querySelectorAll('.seg')[i].click(), i);
+      await page.waitForTimeout(240);
+      const logos = await page.$$eval('#c-logos .lg', (els) =>
+        els.map((e) => ({ name: e.getAttribute('aria-label'), icon: !!e.querySelector('svg'), text: e.textContent.trim() }))
+      );
+      const company = await page.textContent('#c-co');
+      expect(logos.length, `${company} has no technologies`).toBeGreaterThan(0);
+      for (const l of logos) {
+        expect(l.icon, `${company}: "${l.name}" renders without an icon`).toBe(true);
+        expect(l.text, `${company}: "${l.name}" still shows a text label`).toBe('');
+        expect(l.name, `${company}: an icon has no accessible name`).toBeTruthy();
+      }
+    }
+  });
+});
