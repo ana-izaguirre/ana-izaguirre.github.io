@@ -162,21 +162,20 @@ for _ in range(34):
 
 SVG=(f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
 <defs>
+<!-- 2 octavas: a esta frecuencia las de más no se ven tras el desplazamiento y cuestan pintado en móvil. -->
 <filter id="rough" x="-6%" y="-6%" width="112%" height="112%">
-<feTurbulence type="fractalNoise" baseFrequency="0.009 0.016" numOctaves="4" seed="7" result="n"/>
+<feTurbulence type="fractalNoise" baseFrequency="0.009 0.016" numOctaves="2" seed="7" result="n"/>
 <feDisplacementMap in="SourceGraphic" in2="n" scale="11" xChannelSelector="R" yChannelSelector="G"/>
 </filter>
 <filter id="rough2" x="-6%" y="-6%" width="112%" height="112%">
-<feTurbulence type="fractalNoise" baseFrequency="0.013 0.021" numOctaves="4" seed="19" result="n"/>
+<feTurbulence type="fractalNoise" baseFrequency="0.013 0.021" numOctaves="2" seed="19" result="n"/>
 <feDisplacementMap in="SourceGraphic" in2="n" scale="2.5" xChannelSelector="R" yChannelSelector="G"/>
 </filter>
 <filter id="soft" x="-8%" y="-8%" width="116%" height="116%">
-<feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="3" seed="3" result="n"/>
+<feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="2" seed="3" result="n"/>
 <feDisplacementMap in="SourceGraphic" in2="n" scale="14" xChannelSelector="R" yChannelSelector="G" result="d"/>
 <feGaussianBlur in="d" stdDeviation="2.2"/>
 </filter>
-<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
-<feColorMatrix type="saturate" values="0"/></filter>
 <linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A4D6EC"/><stop offset=".4" stop-color="#D2E8EB"/><stop offset=".7" stop-color="#F4E7CB"/><stop offset="1" stop-color="#FAE0B6"/></linearGradient>
 <radialGradient id="su"><stop offset="0" stop-color="#FFF7E2" stop-opacity=".95"/><stop offset=".4" stop-color="#FFDFA0" stop-opacity=".38"/><stop offset="1" stop-color="#FFDFA0" stop-opacity="0"/></radialGradient>
 <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#D5DCC9"/><stop offset=".5" stop-color="#CDDADA"/><stop offset="1" stop-color="#C6DAE4"/></linearGradient>
@@ -206,7 +205,6 @@ SVG=(f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" preserveA
 <g fill="none" stroke="#3E6344" stroke-width="6" stroke-linecap="round"><g class="bough"><path d="{b1s}"/></g><g class="boughR"><path d="{b3s}"/></g></g>
 <g fill="#39583C"><path d="{b2l}"/></g>
 <g fill="none" stroke="#2E4A32" stroke-width="7" stroke-linecap="round"><path d="{b2s}"/></g>
-<rect width="{W}" height="{H}" filter="url(#grain)" opacity=".055" style="mix-blend-mode:multiply"/>
 </svg>''')
 
 # noche: cada color del día tiene su pareja nocturna
