@@ -418,6 +418,27 @@ test.describe('empty questions', () => {
     await expect(page.locator('#q-mini')).toBeFocused();
   });
 
+  // The search time is shown with a decimal under 10 ms and whole above it.
+  // Which one a real search hits depends on the machine (CI is faster than a
+  // laptop), so the clock that times it is driven by hand here.
+  test('the search time reads well whether it is fast or slow', async ({ page }) => {
+    await open(page, '?quiet=1');
+    const timed = async (step) => {
+      await page.evaluate((s) => {
+        let t = 0;
+        window.__realNow = performance.now.bind(performance);
+        performance.now = () => (t += s);
+      }, step);
+      await page.fill('#q', 'aws');
+      await page.press('#q', 'Enter');
+      const meta = await page.locator('#answer .ans-meta').first().textContent();
+      await page.evaluate(() => { performance.now = window.__realNow; });
+      return meta;
+    };
+    expect(await timed(1.5)).toContain('1,5 ms');
+    expect(await timed(25)).toContain('25 ms');
+  });
+
   test('a single match is counted in the singular', async ({ page }) => {
     await open(page, '?quiet=1');
     await page.fill('#q', 'jmeter');
