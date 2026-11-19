@@ -28,7 +28,7 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"Ana Izaguirre","jobTitle":"Senior Backend / Full Stack Engineer","url":"https://ana-izaguirre.github.io/","sameAs":["https://github.com/ana-izaguirre","https://www.linkedin.com/in/ana-izaguirre/"],"address":{"@type":"PostalAddress","addressLocality":"Zaragoza","addressCountry":"ES"},"knowsLanguage":["es","en"],"knowsAbout":["Node.js","TypeScript","AWS","GraphQL","Event-driven architecture","Message queues","Model Context Protocol"]}
 </script>
-<script>try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+<script>/* Tema antes del primer frame: ?theme= manda sobre lo guardado. */(function(){var t=new URLSearchParams(location.search).get('theme');if(t!=='light'&&t!=='dark'){try{t=localStorage.getItem('theme')}catch(e){t=null}}if(t==='light'||t==='dark')document.documentElement.dataset.theme=t})()</script>
 <style>
 @font-face{font-family:"Fraunces";src:url(fonts/fraunces.woff2) format("woff2");font-weight:300 800;font-display:swap}
 @font-face{font-family:"Nunito";src:url(fonts/nunito.woff2) format("woff2");font-weight:100 550;font-display:swap}

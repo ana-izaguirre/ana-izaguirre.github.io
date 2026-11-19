@@ -438,7 +438,6 @@ function paintTheme(){
   $('meta[name=theme-color]').content=dark?'#1C1830':'#FBF3E4';
 }
 themeBtn.addEventListener('click',()=>{root.dataset.theme=root.dataset.theme==='light'?'dark':'light';try{localStorage.setItem('theme',root.dataset.theme)}catch(e){}paintTheme()});
-if(qs.get('theme')==='light'||qs.get('theme')==='dark')root.dataset.theme=qs.get('theme');
 
 /* ---------- idioma ---------- */
 const langBtn=$('#lang');
