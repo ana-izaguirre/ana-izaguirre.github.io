@@ -29,7 +29,7 @@ Lo que vale la pena mirar, para quien revise el código:
 
 **La búsqueda corre sobre el CV, no sobre una copia.** El índice se construye al cargar, a partir del DOM renderizado: cada elemento marcado con `data-chunk` es un documento, puntuado con BM25. No hay una segunda fuente de verdad que se desincronice, ni un modelo generando texto — cada respuesta cita un pasaje del CV y enlaza al lugar del que salió, así que nada puede inventarse. Los grupos de sinónimos amplían el ranking (`sql` alcanza PostgreSQL, DynamoDB y Snowflake), mientras que el resaltado se limita estrictamente a los términos que escribió la persona.
 
-**No se pide nada al exterior.** Sin framework, sin CDN, sin analítica, sin fuentes por red. Las tipografías están alojadas y subconjuntadas; los logos de tecnologías son trazos de [simple-icons](https://simpleicons.org/) incrustados como SVG. La página es un archivo HTML más tres de fuentes.
+**No se pide nada al exterior.** Sin framework, sin CDN, sin analítica, sin fuentes por red. Las tipografías están alojadas y subconjuntadas; los logos de tecnologías son trazos de [simple-icons](https://simpleicons.org/) incrustados como SVG. La página es un archivo HTML más cuatro de fuentes.
 
 **La escena está dibujada en código.** Dosel, capas de árboles, bandas de niebla, rayos de luz y los espíritus que caminan son SVG y animaciones CSS escritos a mano — sin imágenes ni material de terceros. Día y noche son dos paletas sobre la misma geometría.
 
@@ -100,6 +100,6 @@ Si el sitio se muda a otro dominio, hay que actualizar la URL en `index.html` (c
 
 ## Créditos
 
-Tipografías: Instrument Serif, Geist y Geist Mono, bajo SIL Open Font License 1.1.
+Tipografías: Fraunces, Nunito y Geist Mono, bajo SIL Open Font License 1.1, recortadas a los caracteres que usa la página.
 Logos de tecnologías: [simple-icons](https://simpleicons.org/), CC0.
 Todo lo demás — escena, diseño, código — es original.

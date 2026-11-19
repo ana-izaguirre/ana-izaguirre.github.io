@@ -29,7 +29,7 @@ The parts worth looking at, for anyone reviewing the code:
 
 **Search runs on the CV, not on a copy of it.** The index is built at load time from the rendered DOM: every element marked `data-chunk` becomes a document, scored with BM25. There is no second source of truth to drift out of sync, and no model generating text — every answer quotes a passage from the CV and links back to the place it came from, so nothing can be invented. Synonym groups widen the ranking (`sql` reaches PostgreSQL, DynamoDB and Snowflake), while highlighting stays strictly on the terms the visitor typed.
 
-**Nothing is fetched from outside.** No framework, no CDN, no analytics, no web fonts over the network. Typefaces are self-hosted and subset; technology logos are [simple-icons](https://simpleicons.org/) paths embedded as inline SVG. The page is one HTML file plus three font files.
+**Nothing is fetched from outside.** No framework, no CDN, no analytics, no web fonts over the network. Typefaces are self-hosted and subset; technology logos are [simple-icons](https://simpleicons.org/) paths embedded as inline SVG. The page is one HTML file plus four font files.
 
 **The scene is drawn in code.** Canopy, tree layers, mist bands, light shafts and the walking spirits are hand-written SVG and CSS animations — no images, no third-party art. Day and night are two palettes over the same geometry.
 
@@ -100,6 +100,6 @@ If the site moves to another domain, update the URL in `index.html` (canonical, 
 
 ## Credits
 
-Typefaces: Instrument Serif, Geist and Geist Mono, under the SIL Open Font License 1.1.
+Typefaces: Fraunces, Nunito and Geist Mono, under the SIL Open Font License 1.1, subset to the characters the page uses.
 Technology logos: [simple-icons](https://simpleicons.org/), CC0.
 Everything else — scene, layout, code — is original.
