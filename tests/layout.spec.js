@@ -192,7 +192,7 @@ test.describe('print', () => {
     await page.waitForTimeout(800);
     await page.emulateMedia({ media: 'print' });
 
-    for (const sel of ['.bar', '.sys', '.askwrap', '.top', '.dock', 'footer']) {
+    for (const sel of ['.bar', '.sys', '.story', '.askwrap', '.top', '.dock', 'footer']) {
       const shown = await page.evaluate(
         (s) => { const e = document.querySelector(s); return e ? getComputedStyle(e).display : 'none'; }, sel
       );
