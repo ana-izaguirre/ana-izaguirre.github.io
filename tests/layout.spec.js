@@ -112,18 +112,78 @@ for (const size of SIZES) {
   });
 }
 
+// The story lives in its own section now. Reached through "Explore my world",
+// the whole card — timeline and controls included — must fit one screen
+// below the sticky bar, so it can be watched without scrolling.
 test.describe('the career story fits one screen', () => {
   for (const size of SIZES.filter((s) => s.width >= 390)) {
     test(`${size.name}`, async ({ page }) => {
       await page.setViewportSize({ width: size.width, height: size.height });
       await page.goto('/index.html?quiet=1');
       await page.waitForTimeout(900);
-      const spare = await page.evaluate(
-        () => Math.round(innerHeight - document.querySelector('.replay').getBoundingClientRect().bottom)
-      );
-      expect(spare, 'the story card runs past the fold').toBeGreaterThanOrEqual(0);
+      await page.click('.pill');
+      await page.waitForTimeout(900);
+      const r = await page.evaluate(() => {
+        const card = document.querySelector('.replay').getBoundingClientRect();
+        const bar = document.querySelector('.bar').getBoundingClientRect();
+        return { top: Math.round(card.top - bar.bottom), spare: Math.round(innerHeight - card.bottom) };
+      });
+      expect(r.top, 'the story card hides under the bar').toBeGreaterThanOrEqual(0);
+      expect(r.spare, 'the story card runs past the fold').toBeGreaterThanOrEqual(0);
     });
   }
+});
+
+test.describe('hero', () => {
+  test('the hero question box hands off to the CV search', async ({ page }) => {
+    await page.goto('/index.html?quiet=1');
+    await page.waitForTimeout(900);
+    await page.fill('#q-mini', 'kubernetes');
+    await page.press('#q-mini', 'Enter');
+    await expect(page.locator('.ans-q')).toHaveText('kubernetes');
+    await expect(page.locator('#q-mini')).toHaveValue('');
+    await page.waitForTimeout(900);
+    const inView = await page.evaluate(() => {
+      const r = document.getElementById('answer').getBoundingClientRect();
+      return r.top < innerHeight && r.bottom > 0;
+    });
+    expect(inView, 'the answer is not on screen after asking from the hero').toBe(true);
+  });
+
+  test('the family and the basilica stay in frame on a phone', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/index.html?quiet=1');
+    await page.waitForTimeout(900);
+    // The band crops the landscape twice: once by its viewBox, again by
+    // `slice` to the band's own proportions. Work out what is really visible.
+    const seen = await page.evaluate(() => {
+      const svg = document.querySelector('.land');
+      const [x, y, w, h] = svg.getAttribute('viewBox').split(' ').map(Number);
+      const r = svg.getBoundingClientRect();
+      const scale = Math.max(r.width / w, r.height / h);
+      const visibleW = r.width / scale;
+      const left = x + (w - visibleW) / 2;
+      return { left, right: left + visibleW };
+    });
+    // Half-widths in user units, from tools/scene.py: the family spans about
+    // ±90 around its centre, the basilica's outer towers about ±120.
+    for (const [name, at, half] of [['family', 820, 90], ['basilica', 1150, 120]]) {
+      expect(at - half, `${name} is cut by the left edge`).toBeGreaterThan(seen.left);
+      expect(at + half, `${name} is cut by the right edge`).toBeLessThan(seen.right);
+    }
+  });
+
+  test('aria labels survive a round trip through English', async ({ page }) => {
+    await page.goto('/index.html?quiet=1&lang=es');
+    await page.waitForTimeout(800);
+    await page.click('#lang');
+    await page.click('#lang');
+    await page.waitForTimeout(400);
+    const broken = await page.$$eval('[aria-label]', (els) =>
+      els.filter((e) => /^(undefined|null)?$/.test(e.getAttribute('aria-label'))).map((e) => e.id || e.className)
+    );
+    expect(broken, 'aria-label lost after switching language back').toEqual([]);
+  });
 });
 
 test.describe('print', () => {

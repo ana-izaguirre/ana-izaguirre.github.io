@@ -139,7 +139,7 @@ mid=ridge(9,HOR+34,78,24,1.0,.2)
 t1=trees(21,HOR+66,-60,W+60,20,42)
 t2=trees(33,HOR+118,-60,W+60,28,60)
 FG=hill(41,HOR+228,46,14)
-PIL=pilar(1250,HOR+62,.74)
+PIL=pilar(1150,HOR+62,.74)
 CT,CC,CB=ceiba(232,HOR+150,1.12)
 PT,PF="",""
 rnd=random.Random(31)
@@ -149,7 +149,7 @@ CL="".join(cloud(x,y,s,i) for i,(x,y,s) in enumerate([(320,124,280),(900,80,210)
 b1s,b1l=bough(1,[(-40,-30),(140,74),(320,42),(470,124),(620,72)],15,18,34)
 b2s,b2l=bough(2,[(-30,86),(84,196),(44,352),(116,512)],12,17,32)
 b3s,b3l=bough(3,[(W+40,-24),(W-140,76),(W-76,226),(W-186,356)],13,18,33)
-F=family(470,HOR+252,1.0)
+F=family(820,HOR+252,1.0)
 motes="".join(f'<circle cx="{rnd.uniform(80,W-80):.0f}" cy="{rnd.uniform(HOR-40,HOR+250):.0f}" r="{rnd.uniform(2,4.6):.1f}" opacity="{rnd.uniform(.4,.95):.2f}"/>' for _ in range(24))
 tufts=""
 for _ in range(55):
@@ -236,11 +236,17 @@ def night_extras():
     """Estrellas y ventanas encendidas: solo se ven de noche."""
     r=random.Random(4)
     stars=''.join(f'<circle cx="{r.uniform(0,W):.0f}" cy="{r.uniform(0,420):.0f}" r="{r.uniform(.7,1.9):.1f}" opacity="{r.uniform(.3,.9):.2f}"/>' for _ in range(90))
-    win=''.join(f'<rect x="{x}" y="{y}" width="5" height="8" rx="2"/>' for x in range(1170,1340,22) for y in (482,500))
+    win=''.join(f'<rect x="{x}" y="{y}" width="5" height="8" rx="2"/>' for x in range(1070,1240,22) for y in (482,500))
     return f'<g class="w-stars">{stars}</g>', f'<g class="w-win">{win}</g>'
 
+def scoped(svg):
+    """Los id del dibujo son globales en la página: van con prefijo para no chocar."""
+    for i in set(re.findall(r'id="([^"]+)"',svg)):
+        svg=svg.replace(f'id="{i}"',f'id="w-{i}"').replace(f'url(#{i})',f'url(#w-{i})')
+    return svg
+
 def build():
-    svg=SVG.replace('<svg ','<svg class="land" ',1)
+    svg=scoped(SVG).replace('<svg ','<svg class="land" ',1)
     svg=svg.replace('<g fill="#FFFFFF" opacity=".62"','<g class="w-cloud" fill="#FFFFFF"',1)
     svg,light,dark=themable(svg)
     stars,win=night_extras()
