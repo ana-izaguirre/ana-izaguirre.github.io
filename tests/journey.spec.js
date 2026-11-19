@@ -165,14 +165,27 @@ test.describe('language and theme', () => {
   });
 });
 
+test.describe('fireflies', () => {
+  test('a balanced number drift over the landscape', async ({ page }) => {
+    await open(page);
+    const n = await page.locator('.fly').count();
+    expect(n, 'too few or too many fireflies').toBeGreaterThanOrEqual(8);
+    expect(n).toBeLessThanOrEqual(30);
+    const moving = await page.$eval('.fly', (e) => getComputedStyle(e).animationName);
+    expect(moving).toBe('wander');
+  });
+});
+
 test.describe('reduced motion', () => {
   test.use({ reducedMotion: 'reduce' });
-  test('spirits stay still and the content is all there', async ({ page }) => {
+  test('fireflies stay still and the content is all there', async ({ page }) => {
     await open(page);
-    const moving = await page.evaluate(
-      () => [...document.querySelectorAll('.sp')].some((e) => getComputedStyle(e).animationName !== 'none')
+    // The premise first: without fireflies on the page this would pass for nothing.
+    await expect(page.locator('.fly').first()).toBeAttached();
+    const moving = await page.evaluate(() =>
+      [...document.querySelectorAll('.fly, .fly i, .land *')].some((e) => getComputedStyle(e).animationName !== 'none')
     );
-    expect(moving, 'spirits animate under prefers-reduced-motion').toBe(false);
+    expect(moving, 'something animates under prefers-reduced-motion').toBe(false);
     await expect(page.locator('#sheet')).toBeVisible();
     await expect(page.locator('h1')).toBeVisible();
   });

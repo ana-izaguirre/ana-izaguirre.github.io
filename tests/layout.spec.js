@@ -18,7 +18,7 @@ const OVERFLOW = () => {
   const out = [];
   for (const e of document.querySelectorAll('body *')) {
     // The scene layers are deliberately wider than the viewport, clipped by overflow:hidden.
-    if (e.closest('.sky, .spirits, .grain')) continue;
+    if (e.closest('.world')) continue;
     const r = e.getBoundingClientRect();
     if (r.right > vw + 2 || r.left < -2) {
       const id = e.id
