@@ -440,6 +440,27 @@ html:not([data-theme=light]) .w-cloud{opacity:.22}
 @keyframes fadeup{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 footer{max-width:900px;margin:0 auto;padding:1.6rem clamp(1.1rem,4vw,2rem) 0;color:var(--slate);font-size:.88rem}
 
+/* ── Papel: el mismo material de la portada, en CSS puro ──
+   La portada usa filter:url(#tear) para el borde rasgado. Aquí no: en la hoja del
+   CV (miles de px de alto) ese filtro obliga a pintar una textura enorme fuera de
+   pantalla. Esquinas irregulares, costura punteada, sombra cálida y cinta bastan
+   para leerse como el mismo mundo sin coste de pintado. */
+section.replay,.ans,.sheet{--stitch:color-mix(in srgb,var(--red) 24%,transparent);background:var(--sheet);border:0;border-radius:24px 16px 26px 14px/16px 26px 14px 24px;box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 2px 4px rgba(60,40,20,.07),0 26px 48px -26px rgba(40,25,10,.5)}
+html:not([data-theme=light]) :is(section.replay,.ans,.sheet){box-shadow:0 1px 0 rgba(255,255,255,.05) inset,0 2px 4px rgba(0,0,0,.2),0 26px 48px -24px rgba(0,0,0,.7)}
+section.replay{-webkit-backdrop-filter:none;backdrop-filter:none;position:relative}
+:is(section.replay,.ans,.sheet)::after{content:"";position:absolute;inset:8px;pointer-events:none;border:1.5px dashed var(--stitch);border-radius:19px 12px 21px 10px/12px 21px 10px 19px}
+/* Cinta: sujeta la hoja al mundo, sin imagen. */
+:is(section.replay,.sheet)::before{content:"";position:absolute;top:-12px;left:50%;width:96px;height:24px;margin-left:-48px;background:var(--tape);border-radius:2px;transform:rotate(-2.5deg);box-shadow:0 1px 2px rgba(0,0,0,.08);z-index:1}
+.sheet::before{left:22%;transform:rotate(3deg)}
+/* El botón de reproducir también lleva la clase .replay al terminar: de ahí section.replay. */
+/* La tarjeta de cada escena es una ficha más pequeña sobre la hoja. */
+.card{border:1.5px dashed var(--stitch);border-radius:18px 12px 20px 10px/12px 20px 10px 18px;background:color-mix(in srgb,var(--bg) 55%,var(--sheet));box-shadow:0 14px 30px -20px rgba(40,25,10,.45)}
+/* Preguntas como etiquetas de papel, ligeramente torcidas. */
+.chip{border:1px solid var(--rule);border-radius:12px 8px 13px 7px/8px 13px 7px 12px;box-shadow:0 2px 0 color-mix(in srgb,var(--rule) 80%,transparent);transition:transform .35s cubic-bezier(.34,1.56,.64,1),border-color .2s,box-shadow .2s}
+.chip:nth-child(3n+1){transform:rotate(-.6deg)}
+.chip:nth-child(3n+2){transform:rotate(.5deg)}
+.chip:hover,.chip:focus-visible{transform:rotate(0) translateY(-2px);border-color:var(--red)}
+
 @media (min-width:701px){.doc{scroll-margin-top:60px}}
 @media (max-width:900px){.grid{grid-template-columns:1fr;grid-template-areas:"f" "a" "c"}}
 @media (max-width:640px){
@@ -447,7 +468,8 @@ footer{max-width:900px;margin:0 auto;padding:1.6rem clamp(1.1rem,4vw,2rem) 0;col
   .row{grid-template-columns:1fr}
   .brand{font-size:1.2rem}
   .bar .btn{padding:.6rem .7rem;font-size:.86rem}
-  .sheet{border-radius:14px;margin-left:.6rem;margin-right:.6rem}
+  .sheet{border-radius:16px 11px 18px 10px/11px 18px 10px 16px;margin-left:.6rem;margin-right:.6rem;padding-left:1.35rem;padding-right:1.35rem}
+  .sheet::after,section.replay::after{inset:6px}
   .rp-top{grid-template-columns:minmax(0,1fr) auto}
   .rp-ev{grid-column:1/-1;order:3;min-height:8.6rem;justify-content:flex-start}
 }
@@ -459,7 +481,6 @@ footer{max-width:900px;margin:0 auto;padding:1.6rem clamp(1.1rem,4vw,2rem) 0;col
   .fab{width:54px;height:54px;padding:0;justify-content:center;border-radius:50%}
   .fab span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
   .fab-i{width:21px;height:21px}
-  .replay{-webkit-backdrop-filter:none;backdrop-filter:none;background:var(--bg2)}
 }
 @media print{
   @page{size:A4;margin:9mm 12mm}
@@ -476,6 +497,7 @@ footer{max-width:900px;margin:0 auto;padding:1.6rem clamp(1.1rem,4vw,2rem) 0;col
   .bar,.sys,.askwrap,.top,.dock,footer,.no-print,.skip,.world,.loader{display:none!important}
   .doc{background:#fff;padding:0}
   .sheet{margin:0;max-width:none;padding:0;box-shadow:none;border-radius:0}
+  .sheet::before,.sheet::after{display:none}
   .sh{padding-bottom:4pt}.sh-name{font-size:19.5pt;margin-bottom:1.5pt}.sh-role{margin-bottom:1pt}.sh-contact{font-size:8.4pt}
   .sheet h2{font-size:11pt;margin:4.4pt 0 1.2pt}
   .row{padding:1.7pt 0;grid-template-columns:6.1rem 1fr;gap:0 8pt;break-inside:avoid}
