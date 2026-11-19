@@ -8,7 +8,8 @@
     "test": "playwright test",
     "test:headed": "playwright test --headed",
     "lighthouse": "node scripts/lighthouse.mjs",
-    "qa": "npm run test && npm run lighthouse"
+    "qa": "npm run test && npm run coverage && npm run lighthouse",
+    "coverage": "node scripts/coverage.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.63.0",

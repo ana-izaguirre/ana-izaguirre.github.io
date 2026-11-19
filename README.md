@@ -8,7 +8,8 @@
 
 [![Lighthouse](https://img.shields.io/badge/Lighthouse-100%20%C2%B7%20100%20%C2%B7%20100%20%C2%B7%20100-success)](#measurements)
 [![axe-core](https://img.shields.io/badge/axe--core-0%20violations-success)](#measurements)
-[![Tests](https://img.shields.io/badge/Playwright-52%20tests-success)](#quality-gates)
+[![Tests](https://img.shields.io/badge/Playwright-81%20tests-success)](#quality-gates)
+[![Coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fana-izaguirre.github.io%2Fcoverage.json)](#quality-gates)
 [![Dependencies](https://img.shields.io/badge/runtime%20dependencies-none-success)](#engineering-notes)
 
 An interactive CV and portfolio: one static page, no build step.
@@ -61,8 +62,11 @@ Nothing reaches production unmeasured. Every push to `main` runs the full suite 
 | First paint | The cover is in the visitor's language before the script runs, and the script moves nothing on it | Playwright |
 | Accessibility | Zero violations in dark, light and mobile; keyboard-only operation | axe-core |
 | Performance | Lighthouse scores and Core Web Vitals, against thresholds | Lighthouse |
+| Coverage | Every line and function of the page's own JavaScript runs under some test | V8, via Playwright |
 
 The layout tests exist because each assertion was once a real bug: a name chopped off by a `content-visibility` ancestor, question chips sliding under the CV sheet, a section band bleeding past the viewport. They assert the invariant rather than compare pixels, so they stay meaningful across platforms instead of going flaky.
+
+Coverage is recorded by V8 while the end-to-end suite runs — no instrumentation step, the page under test is the page that ships. It stands at 100% of code and functions, and `scripts/coverage.mjs` fails the build if it drops. Getting there deleted more code than it tested: dead guards, a handler that could never fire, a fallback that contradicted the icons-only rule. The badge reads `/coverage.json`, which the deploy publishes from the run that gated it.
 
 Accessibility, best practices and SEO are deterministic and must score 100. Performance is measured on a throttled CPU, so CI enforces a floor (90 mobile, 95 desktop) rather than an exact number; the table above is what it actually scores.
 
@@ -71,8 +75,9 @@ Run it yourself:
 ```bash
 npm ci
 npx playwright install --with-deps chromium
-npm run qa          # tests + Lighthouse
+npm run qa          # tests + coverage + Lighthouse
 npm test            # tests only
+npm run coverage    # coverage of the last test run
 npm run lighthouse  # Lighthouse only
 ```
 

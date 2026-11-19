@@ -1,7 +1,7 @@
 // Layout invariants. These exist because each one was a real bug at some point:
 // text clipped by its own line-height, chips sliding under the CV sheet,
 // a section band bleeding past the viewport.
-const { test, expect } = require('@playwright/test');
+const { test, expect } = require('./fixtures');
 
 const SIZES = [
   { name: 'phone',        width: 360,  height: 740 },
@@ -183,6 +183,31 @@ test.describe('hero', () => {
       els.filter((e) => /^(undefined|null)?$/.test(e.getAttribute('aria-label'))).map((e) => e.id || e.className)
     );
     expect(broken, 'aria-label lost after switching language back').toEqual([]);
+  });
+});
+
+test.describe('resizing', () => {
+  test('the timeline, the story and the bar re-fit when the window changes', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto('/index.html?quiet=1');
+    await page.waitForTimeout(900);
+    await expect(page.locator('a.dl').first()).toHaveText('Descargar CV');
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await expect(page.locator('a.dl').first()).toHaveText('CV');
+    await page.waitForTimeout(500);
+    const fit = await page.evaluate(() => {
+      const card = document.getElementById('card').getBoundingClientRect();
+      const scene = document.getElementById('scene').getBoundingClientRect();
+      const labels = [...document.querySelectorAll('.seg:not(.tight) .lb')].map((e) => e.getBoundingClientRect());
+      const overlap = labels.some((r, i) => i && r.left < labels[i - 1].right);
+      return { cardFits: card.bottom <= scene.bottom + 1, overlap };
+    });
+    expect(fit.cardFits, 'the story card spills out of its scene after a resize').toBe(true);
+    expect(fit.overlap, 'timeline labels collide after a resize').toBe(false);
+
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await expect(page.locator('a.dl').first()).toHaveText('Descargar CV');
   });
 });
 

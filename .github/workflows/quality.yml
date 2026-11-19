@@ -26,6 +26,18 @@ jobs:
       - name: Run the suite
         run: npx playwright test
 
+      # V8 coverage of the page's own scripts, recorded during the run above.
+      # Fails if it drops below the minimum in scripts/coverage.mjs.
+      - name: Coverage
+        run: node scripts/coverage.mjs
+
+      - name: Keep the coverage badge for the deploy
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-badge
+          path: coverage/badge.json
+          retention-days: 7
+
       - name: Keep the report when something fails
         if: failure()
         uses: actions/upload-artifact@v4

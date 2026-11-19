@@ -8,7 +8,8 @@
 
 [![Lighthouse](https://img.shields.io/badge/Lighthouse-100%20%C2%B7%20100%20%C2%B7%20100%20%C2%B7%20100-success)](#mediciones)
 [![axe-core](https://img.shields.io/badge/axe--core-0%20violaciones-success)](#mediciones)
-[![Tests](https://img.shields.io/badge/Playwright-52%20pruebas-success)](#compuertas-de-calidad)
+[![Tests](https://img.shields.io/badge/Playwright-81%20pruebas-success)](#compuertas-de-calidad)
+[![Coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fana-izaguirre.github.io%2Fcoverage.json)](#compuertas-de-calidad)
 [![Dependencias](https://img.shields.io/badge/dependencias%20en%20runtime-ninguna-success)](#notas-de-ingenier%C3%ADa)
 
 Un CV y portafolio interactivo: una página estática, sin compilación.
@@ -61,8 +62,11 @@ Nada llega a producción sin medirse. Cada push a `main` corre la suite completa
 | Primer pintado | La portada sale en el idioma del visitante antes de que corra el script, y el script no la mueve | Playwright |
 | Accesibilidad | Cero violaciones en oscuro, claro y móvil; manejo solo con teclado | axe-core |
 | Rendimiento | Puntuaciones de Lighthouse y Core Web Vitals, contra umbrales | Lighthouse |
+| Cobertura | Cada línea y cada función del JavaScript propio de la página corre bajo alguna prueba | V8, vía Playwright |
 
 Las pruebas de layout existen porque cada aserción fue un fallo real: un nombre cortado por un ancestro con `content-visibility`, las píldoras de preguntas deslizándose bajo la hoja del CV, una banda de sección desbordando el viewport. Comprueban el invariante en lugar de comparar píxeles, así que siguen siendo útiles entre plataformas en vez de volverse inestables.
+
+La cobertura la registra V8 mientras corre la suite end-to-end — sin paso de instrumentación: la página que se prueba es la que se publica. Está en el 100% de código y funciones, y `scripts/coverage.mjs` hace fallar el build si baja. Llegar ahí borró más código del que probó: guardas muertas, un manejador que nunca podía dispararse, un respaldo que contradecía la regla de solo iconos. El badge lee `/coverage.json`, que el despliegue publica desde la ejecución que lo aprobó.
 
 Accesibilidad, buenas prácticas y SEO son deterministas y deben dar 100. El rendimiento se mide con la CPU frenada, así que CI exige un piso (90 en móvil, 95 en escritorio) en lugar de un número exacto; la tabla de arriba es lo que realmente puntúa.
 
@@ -71,8 +75,9 @@ Para correrlo:
 ```bash
 npm ci
 npx playwright install --with-deps chromium
-npm run qa          # pruebas + Lighthouse
+npm run qa          # pruebas + cobertura + Lighthouse
 npm test            # solo pruebas
+npm run coverage    # cobertura de la última ejecución
 npm run lighthouse  # solo Lighthouse
 ```
 
