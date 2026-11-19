@@ -694,7 +694,8 @@ window.ES_TOP={};
 (function(){
   var d=document,r=d.documentElement,l=new URLSearchParams(location.search).get('lang');
   if(l!=='es'&&l!=='en'){try{l=localStorage.getItem('lang')}catch(e){l=null}}
-  if(l!=='es'&&l!=='en')l=(navigator.language||'es').toLowerCase().indexOf('es')===0?'es':'en';
+  if(l!=='es'&&l!=='en')l=navigator.language.toLowerCase().indexOf('es')===0?'es':'en';
+  window.LANG0=l; // app.js arranca con este mismo idioma: una sola regla
   var keep=function(k,v){if(!(k in ES_TOP))ES_TOP[k]=v};
   d.querySelectorAll('a.dl').forEach(function(a){if(a.dataset.i18n==='dl')keep('dl',a.textContent)});
   if(l==='en'){

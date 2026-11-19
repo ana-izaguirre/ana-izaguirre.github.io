@@ -3,8 +3,8 @@
 (()=>{
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const wait=ms=>new Promise(r=>setTimeout(r,ms));
 const qs=new URLSearchParams(location.search),quiet=qs.has('quiet');
+const MAIL='ana.izaguirrematamoros@gmail.com';
 
 /* ---------- i18n: el español sale del propio HTML ---------- */
 const ES={};$$('[data-i18n]').forEach(e=>{ES[e.dataset.i18n]=e.textContent});
@@ -100,15 +100,20 @@ evs.forEach((ev,i)=>{
 });
 let idx=evs.length-1,beat=BEATS,playing=false,timer=null,shown=-1;
 const STACK=['Node.js','TypeScript','AWS','GraphQL','React','Datadog','Docker','Python'];
-(function(){const ul=$('#stack');if(!ul)return;
-  ul.replaceChildren(...STACK.map(name=>{
-    const li=mk('li');li.title=name;li.setAttribute('aria-label',name);
-    const ic=ICONS[name];
-    if(ic){const svg=document.createElementNS(NS,'svg');svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('aria-hidden','true');
-      const n=parseInt(ic.h.slice(1),16),lum=(.2126*(n>>16)+.7152*(n>>8&255)+.0722*(n&255))/255;
-      const pa=document.createElementNS(NS,'path');pa.setAttribute('d',ic.p);pa.setAttribute('fill',lum<.22||lum>.86?'currentColor':ic.h);svg.appendChild(pa);li.appendChild(svg);}
-    return li;}));
-})();
+// Un logo de simple-icons como SVG en línea. Los colores de marca casi negros o
+// casi blancos no se verían en uno de los dos temas: esos toman el color del texto.
+// Sin red de seguridad a propósito: una tecnología sin icono rompe aquí, y la
+// prueba de iconos de la historia lo detecta, en vez de mostrar iniciales en silencio.
+function iconSvg(name){
+  const ic=ICONS[name],svg=document.createElementNS(NS,'svg');
+  svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('aria-hidden','true');
+  const n=parseInt(ic.h.slice(1),16),lum=(.2126*(n>>16)+.7152*(n>>8&255)+.0722*(n&255))/255;
+  const pa=document.createElementNS(NS,'path');pa.setAttribute('d',ic.p);pa.setAttribute('fill',lum<.22||lum>.86?'currentColor':ic.h);
+  svg.appendChild(pa);return svg;
+}
+$('#stack').replaceChildren(...STACK.map(name=>{
+  const li=mk('li');li.title=name;li.setAttribute('aria-label',name);li.appendChild(iconSvg(name));return li;
+}));
 // Dos paradas muy seguidas en el tiempo quedarían a menos de 24 px una de otra,
 // por debajo del mínimo táctil de WCAG 2.2. Se separan lo justo, sin tocar el
 // relleno ni el marcador de progreso, que siguen las fechas reales.
@@ -126,7 +131,6 @@ function fitLabels(){
   const seen=[];
   evs.forEach((ev,i)=>{
     if(push[i])ev.seg.style.setProperty('--nudge',push[i].toFixed(1)+'px');
-    if(!ev.seg.querySelector('.lb'))return;
     const left=rects[i].left+push[i],right=rects[i].right+push[i];
     if(seen.some(p=>left<p.right+6))ev.seg.classList.add('tight');
     else seen.push({left,right});
@@ -138,11 +142,7 @@ function logosOf(ev){
   if(ev.btns)return ev.btns;
   ev.btns=ev.el.dataset.tech.split(',').map((name,j)=>{
     const b=mk('button','lg');b.type='button';b.style.setProperty('--i',j);
-    const ic=ICONS[name];
-    if(ic){const svg=document.createElementNS(NS,'svg');svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('aria-hidden','true');
-      const n=parseInt(ic.h.slice(1),16),lum=(.2126*(n>>16)+.7152*(n>>8&255)+.0722*(n&255))/255;
-      const pa=document.createElementNS(NS,'path');pa.setAttribute('d',ic.p);pa.setAttribute('fill',lum<.22||lum>.86?'currentColor':ic.h);svg.appendChild(pa);b.appendChild(svg);}
-    else b.appendChild(mk('b',null,name.replace(/[^A-Za-z0-9]/g,'').slice(0,2).toUpperCase()));
+    b.appendChild(iconSvg(name));
     b.setAttribute('aria-label',name);b.setAttribute('title',name);
     b.addEventListener('click',()=>{ask(name);answer.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'})});
     return b;
@@ -225,7 +225,6 @@ function label(){
 function pause(){playing=false;clearTimeout(timer);label()}
 function tick(){
   timer=setTimeout(()=>{
-    if(!playing)return;
     if(idx>=evs.length-1&&beat>=BEATS){pause();return}
     if(beat>=BEATS){idx++;beat=1}else beat++;
     paint(true);tick();
@@ -249,7 +248,7 @@ bandMQ.addEventListener('change',frame);frame();
 // Luciérnagas: unas 22 en escritorio y 11 en móvil, casi todas sobre el
 // paisaje. Cada una deambula y parpadea a su ritmo, así nunca brillan a la vez.
 idle(()=>{
- const host=$('#flies');if(!host)return;
+ const host=$('#flies');
  const small=innerWidth<=680,n=small?11:22,r=(a,b)=>a+Math.random()*(b-a),reach=small?40:90;
  const f=document.createDocumentFragment();
  for(let i=0;i<n;i++){
@@ -268,9 +267,6 @@ idle(()=>{
  }
  host.appendChild(f);
 });
-const factsEl=$('#facts');
-function factsTab(){const sc=factsEl.scrollWidth>factsEl.clientWidth+2;if(sc)factsEl.tabIndex=0;else factsEl.removeAttribute('tabindex')}
-addEventListener('resize',factsTab);idle(factsTab); // leer scrollWidth antes del primer frame obligaría a maquetar toda la página dentro del script
 const fab=$('#fab'),pop=$('#pop');
 function setPop(open){
   pop.hidden=!open;fab.setAttribute('aria-expanded',String(open));
@@ -279,13 +275,11 @@ function setPop(open){
 fab.addEventListener('click',()=>setPop(pop.hidden));
 addEventListener('keydown',e=>{if(e.key==='Escape'&&!pop.hidden){setPop(false);fab.focus()}});
 addEventListener('pointerdown',e=>{if(!pop.hidden&&!e.target.closest('.dock'))setPop(false)});
-const copyBtn=$('#copy');
 const popCopy=$('#pop-copy');
-[copyBtn,popCopy].filter(Boolean).forEach(btn=>btn.addEventListener('click',async()=>{
-  const mail='ana.izaguirrematamoros@gmail.com';
-  try{await navigator.clipboard.writeText(mail)}catch(e){const t=mk('input');t.value=mail;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(_){}t.remove()}
-  btn.textContent=(lang==='es'?ES:EN).c_done;setTimeout(()=>{btn.textContent=(lang==='es'?ES:EN).c_copy},1800);
-}));
+popCopy.addEventListener('click',async()=>{
+  try{await navigator.clipboard.writeText(MAIL)}catch(e){const t=mk('input');t.value=MAIL;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(_){}t.remove()}
+  popCopy.textContent=(lang==='es'?ES:EN).c_done;setTimeout(()=>{popCopy.textContent=(lang==='es'?ES:EN).c_copy},1800);
+});
 const narrow=matchMedia('(max-width:430px)');
 const toTop=$('#to-top');
 addEventListener('scroll',()=>{toTop.classList.toggle('show',scrollY>innerHeight*.75)},{passive:true});
@@ -370,28 +364,30 @@ function titleOf(c){
   const sec=SEC[lang][c.dataset.sec],h=c.querySelector('h3'),w=c.querySelector('.when');
   if(w&&w.classList.contains('k'))return `${sec}: ${w.textContent}`;
   if(!h)return sec;
-  return `${sec}: ${h.textContent}`+(w?`, ${w.textContent}`:'');
+  return `${sec}: ${h.textContent}, ${w.textContent}`; // todo bloque con h3 lleva fecha (.when)
 }
 function fail(text,err){
   const D=lang==='es'?ES:EN,box=mk('div','ans in');
-  box.appendChild(mk('h3','ans-q',text||''));
-  const p=mk('p','none',D.oops+' '),a=mk('a',null,'ana.izaguirrematamoros@gmail.com');
-  a.href='mailto:ana.izaguirrematamoros@gmail.com';p.appendChild(a);box.appendChild(p);
+  box.appendChild(mk('h3','ans-q',text));
+  const p=mk('p','none',D.oops+' '),a=mk('a',null,MAIL);
+  a.href='mailto:'+MAIL;p.appendChild(a);box.appendChild(p);
   if(err)box.appendChild(mk('p','ans-meta',String(err).slice(0,120)));
   answer.replaceChildren(box);
 }
-addEventListener('error',e=>{try{if(!answer.children.length)fail('',e.message)}catch(_){}});
+// El try/catch no es decorativo: si fail() lanzara dentro de este listener, esa
+// excepción dispararía otro evento 'error', y así sin fin.
+addEventListener('error',e=>{try{if(!answer.children.length)fail('',e.message)}catch(_){/* ya no hay dónde mostrarlo */}});
 function ask(text,silent){
   try{askInner(text,silent)}catch(err){fail(text,err&&err.message)}
 }
 function askInner(text,silent){
-  text=(text||'').trim();if(!text){$('#q').focus();return}
+  text=text.trim();if(!text){$('#q').focus();return}
   const t0=performance.now(),res=search(text),ms=performance.now()-t0;
   const box=mk('div','ans'+(silent?'':' in'));
   if(!silent){const x=mk('button','ans-x','×');x.type='button';x.setAttribute('aria-label',(lang==='es'?ES:EN).clear);x.addEventListener('click',clearAsk);box.appendChild(x)}
   box.appendChild(mk('h3','ans-q',text));box.appendChild(mk('p','ans-meta',UI[lang].meta(res.hits.length,num(ms,lang))));
   if(!res.hits.length){
-    const p=mk('p','none',UI[lang].none+' '),a=mk('a',null,'ana.izaguirrematamoros@gmail.com');a.href='mailto:ana.izaguirrematamoros@gmail.com';p.appendChild(a);box.appendChild(p);
+    const p=mk('p','none',UI[lang].none+' '),a=mk('a',null,MAIL);a.href='mailto:'+MAIL;p.appendChild(a);box.appendChild(p);
   }
   res.hits.forEach(h=>{
     const art=mk('article','hit');art.appendChild(mk('p','hit-src',titleOf(h.el)));
@@ -417,6 +413,7 @@ qX.addEventListener('click',clearAsk);
 answer.addEventListener('keydown',e=>{if(e.key==='Escape')clearAsk()});
 qEl.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();clearAsk()}});
 function submitAsk(){const v=qEl.value;qEl.value='';qToggle();ask(v)}
+// Enter en el campo y el botón disparan el submit nativo del formulario: un solo camino.
 $('#ask').addEventListener('submit',e=>{e.preventDefault();submitAsk()});
 $('#ask-mini').addEventListener('submit',e=>{
   e.preventDefault();
@@ -425,8 +422,6 @@ $('#ask-mini').addEventListener('submit',e=>{
   $('#q').value=v;mini.value='';submitAsk();
   $('#ask-sec').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
 });
-$('#q').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();submitAsk()}});
-$('#ask button[type=submit]').addEventListener('click',e=>{e.preventDefault();submitAsk()});
 $('#chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(b)ask(b.textContent)});
 
 /* ---------- tema ---------- */
@@ -457,17 +452,14 @@ function applyLang(l){
   indexReady=false;paintTheme();shown=-1;if(booted){paint(false);measure()}else{fillCard(evs[idx]);shown=idx;segLabels();idle(()=>{paint(false);idle(measure)})} // texto ya, medidas cuando haya hueco // en dos tareas: ninguna llega a 50 ms en un móvil lentolabel();
   asked.length=0;hist.hidden=true;
   const first=$('#chips .chip').textContent;
-  (window.requestIdleCallback||(f=>setTimeout(f,200)))(()=>ask(first,true));
+  idle(()=>ask(first,true));
   try{localStorage.setItem('lang',l)}catch(e){}
 }
 langBtn.addEventListener('click',()=>applyLang(lang==='es'?'en':'es'));
-let want=qs.get('lang');
-if(want!=='es'&&want!=='en'){try{want=localStorage.getItem('lang')}catch(e){want=null}}
-if(want!=='es'&&want!=='en')want=(navigator.language||'es').toLowerCase().startsWith('es')?'es':'en';
 // La historia queda bajo el pliegue: su medición (7 maquetaciones forzadas) espera
 // a que el hilo principal esté libre en la primera carga, no en un cambio de idioma.
 let booted=false;
-applyLang(want);booted=true;
+applyLang(window.LANG0);booted=true; // LANG0: decidido en index.html antes del primer frame
 
 /* un solo momento orquestado al llegar: la carrera se reproduce una vez */
 function wake(){
