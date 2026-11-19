@@ -276,9 +276,18 @@ fab.addEventListener('click',()=>setPop(pop.hidden));
 addEventListener('keydown',e=>{if(e.key==='Escape'&&!pop.hidden){setPop(false);fab.focus()}});
 addEventListener('pointerdown',e=>{if(!pop.hidden&&!e.target.closest('.dock'))setPop(false)});
 const popCopy=$('#pop-copy');
+async function copyMail(){
+  try{await navigator.clipboard.writeText(MAIL);return true}catch(e){/* sin permiso o sin HTTPS: se prueba el método antiguo */}
+  const t=mk('input');t.value=MAIL;document.body.appendChild(t);t.select();
+  let ok=false;try{ok=document.execCommand('copy')}catch(e){ok=false}
+  t.remove();return ok;
+}
+// Si no se pudo copiar, el botón muestra la dirección para copiarla a mano:
+// decir "Copiado" sin haber copiado sería mentir.
 popCopy.addEventListener('click',async()=>{
-  try{await navigator.clipboard.writeText(MAIL)}catch(e){const t=mk('input');t.value=MAIL;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(_){}t.remove()}
-  popCopy.textContent=(lang==='es'?ES:EN).c_done;setTimeout(()=>{popCopy.textContent=(lang==='es'?ES:EN).c_copy},1800);
+  const ok=await copyMail();
+  popCopy.textContent=ok?(lang==='es'?ES:EN).c_done:MAIL;
+  setTimeout(()=>{popCopy.textContent=(lang==='es'?ES:EN).c_copy},ok?1800:6000);
 });
 const narrow=matchMedia('(max-width:430px)');
 const toTop=$('#to-top');
