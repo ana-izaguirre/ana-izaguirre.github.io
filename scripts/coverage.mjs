@@ -50,6 +50,7 @@ let ran = 0;
 let fnTotal = 0;
 let fnRan = 0;
 const rows = [];
+const gaps = [];
 
 for (const s of scripts.values()) {
   let c = 0;
@@ -58,6 +59,15 @@ for (const s of scripts.values()) {
     if (/\s/.test(s.source[i])) continue;
     c++;
     if (s.hits[i]) r++;
+  }
+  // Whatever did not run, named, so a failing gate says where to look.
+  for (let i = 0; i < s.source.length; i++) {
+    if (s.hits[i] || /\s/.test(s.source[i])) continue;
+    let j = i;
+    while (j < s.source.length && !s.hits[j]) j++;
+    const line = s.source.slice(0, i).split('\n').length;
+    gaps.push(`  ${s.url.split('/').pop()}:${line}  ${s.source.slice(i, j).replace(/\s+/g, ' ').trim().slice(0, 100)}`);
+    i = j;
   }
   const f = [...s.fns.values()];
   code += c;
@@ -78,7 +88,9 @@ const color = shown >= 95 ? 'brightgreen' : shown >= 85 ? 'green' : shown >= 70 
 writeFileSync('coverage/summary.json', JSON.stringify({ code: total, functions: fnRan / fnTotal, scripts: rows }, null, 2));
 writeFileSync('coverage/badge.json', JSON.stringify({ schemaVersion: 1, label: 'coverage', message: shown + '%', color }));
 
+if (gaps.length) console.log('\nNot run:\n' + gaps.slice(0, 40).join('\n'));
+
 if (total * 100 < COVERAGE_MIN) {
-  console.error(`\nCoverage ${pct(total)} is below the minimum of ${COVERAGE_MIN}%.`);
+  console.error(`\nCoverage ${(total * 100).toFixed(3)}% is below the minimum of ${COVERAGE_MIN}%.`);
   process.exit(1);
 }
