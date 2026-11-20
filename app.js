@@ -124,12 +124,18 @@ function fitLabels(){
     const p=prev!==null&&r.left<prev+MIN_HIT?prev+MIN_HIT-r.left:0;
     prev=r.left+p;return p;
   });
-  const seen=[];
+  // La etiqueta de la parada activa se ve siempre; antes se mostraba encima de
+  // su vecina ("INFOPAgile Solutions"). Ahora se reserva primero y las que
+  // chocan con ella, por cualquiera de los dos lados, se ocultan.
+  const box=i=>({left:rects[i].left+push[i],right:rects[i].right+push[i]});
+  const hits=(a,b)=>a.left<b.right+6&&b.left<a.right+6;
+  const seen=[box(idx)];
   evs.forEach((ev,i)=>{
     if(push[i])ev.seg.style.setProperty('--nudge',push[i].toFixed(1)+'px');
-    const left=rects[i].left+push[i],right=rects[i].right+push[i];
-    if(seen.some(p=>left<p.right+6))ev.seg.classList.add('tight');
-    else seen.push({left,right});
+    if(i===idx)return;
+    const b=box(i);
+    if(seen.some(p=>hits(b,p)))ev.seg.classList.add('tight');
+    else seen.push(b);
   });
 }
 let szT;
@@ -217,6 +223,9 @@ function label(){
   playBtn.className='btn red ic '+st;
   const t=playing?UI[lang].pause:(st==='replay'?UI[lang].again:UI[lang].play);
   playBtn.setAttribute('aria-label',t);playBtn.setAttribute('title',t);
+  // El marcador de progreso solo tiene sentido en marcha: parado al final de una
+  // etapa queda justo encima del punto de la siguiente y parece que esa es la activa.
+  railLine.classList.toggle('playing',playing);
 }
 function pause(){playing=false;clearTimeout(timer);label()}
 function tick(){
@@ -245,7 +254,7 @@ bandMQ.addEventListener('change',frame);frame();
 // paisaje. Cada una deambula y parpadea a su ritmo, así nunca brillan a la vez.
 idle(()=>{
  const host=$('#flies');
- const small=innerWidth<=680,n=small?11:22,r=(a,b)=>a+Math.random()*(b-a),reach=small?40:90;
+ const small=innerWidth<=680,n=small?11:22,r=(a,b)=>a+Math.random()*(b-a),reach=small?70:130; // en px: lo bastante lejos para que se note que vuelan
  const f=document.createDocumentFragment();
  for(let i=0;i<n;i++){
    const el=mk('span','fly'),dot=mk('i');
@@ -254,9 +263,9 @@ idle(()=>{
    el.style.top=(high?r(18,48):(small?r(30,88):r(50,78))).toFixed(1)+'%';
    for(const k of [1,2,3]){el.style.setProperty('--x'+k,r(-reach,reach).toFixed(0)+'px');el.style.setProperty('--y'+k,r(-reach*.6,reach*.6).toFixed(0)+'px')}
    el.style.setProperty('--s',r(3.5,6.5).toFixed(1)+'px');
-   el.style.setProperty('--d',r(14,28).toFixed(1)+'s');
+   el.style.setProperty('--d',r(9,15).toFixed(1)+'s');
    el.style.setProperty('--b',r(2.2,4.6).toFixed(1)+'s');
-   el.style.animationDelay=(-r(0,28)).toFixed(1)+'s';
+   el.style.animationDelay=(-r(0,15)).toFixed(1)+'s';
    dot.style.animationDelay=(-r(0,4)).toFixed(1)+'s';
    if(reduce){el.style.animation='none';dot.style.animation='none';dot.style.opacity='.8'}
    el.appendChild(dot);f.appendChild(el);

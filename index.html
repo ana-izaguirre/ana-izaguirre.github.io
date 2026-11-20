@@ -148,6 +148,7 @@ html[data-theme=light] .i-moon{display:block}
 .rail-line{position:relative;height:2px;background:var(--line);border-radius:2px}
 .rail-line i{position:absolute;inset:0 auto 0 0;width:0;background:var(--red);border-radius:2px;transition:width .7s cubic-bezier(.22,1,.36,1)}
 .knob{position:absolute;top:50%;left:0;width:13px;height:13px;margin:-6.5px 0 0 -6.5px;border-radius:50%;background:var(--red);border:2px solid var(--bg2);box-shadow:0 0 0 1px var(--red),0 0 14px color-mix(in srgb,var(--red) 70%,transparent);transform:translateX(var(--kx,0px));transition:transform .7s cubic-bezier(.22,1,.36,1);will-change:transform}
+.knob{transition:opacity .3s}.rail-line:not(.playing) .knob{opacity:0}
 .segs{position:relative;height:30px}
 .seg .lb{display:inline-block;transition:opacity .25s}
 .seg.tight .lb{opacity:0;pointer-events:none}
@@ -162,7 +163,7 @@ html[data-theme=light] .i-moon{display:block}
 .seg.on em{opacity:1}
 .seg:hover{opacity:1;color:var(--text)}
 .seg:hover::before{border-color:var(--red)}
-.years{position:relative;height:1rem;font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.years{position:relative;height:1rem;pointer-events:none;font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums}
 .years span{position:absolute;transform:translateX(-50%)}
 .rp-bar{display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:center;margin-top:.8rem;padding-top:.8rem;border-top:1px solid var(--line)}
 .btn.ic{padding:0;width:42px;height:42px;border-radius:50%;display:grid;place-items:center}
@@ -223,7 +224,6 @@ html[data-theme=light] .i-moon{display:block}
 }
 @media (max-width:640px){
   .scene{perspective:900px}
-  .years{display:none}
   .seg{font-size:0;padding:14px 14px 0;margin-left:-14px;height:34px}
   .seg::before{left:13px}
   .segs{height:26px}
@@ -406,9 +406,11 @@ html:not([data-theme=light]) .w-cloud{opacity:.22}
 @keyframes breathe{0%,100%{opacity:.85}50%{opacity:1}}
 /* luciérnagas: cada una con su trayectoria y su parpadeo */
 .flies{position:absolute;inset:0;contain:strict}
-.fly{position:absolute;width:var(--s,5px);height:var(--s,5px);will-change:transform;animation:wander var(--d,18s) ease-in-out infinite alternate}
+.fly{position:absolute;width:var(--s,5px);height:var(--s,5px);will-change:transform;animation:wander var(--d,12s) ease-in-out infinite}
 .fly i{display:block;width:100%;height:100%;border-radius:50%;background:var(--fly);box-shadow:0 0 6px 2px var(--fly-glow),0 0 18px 6px var(--fly-glow);animation:blink var(--b,3s) ease-in-out infinite}
-@keyframes wander{0%{transform:translate(0,0)}30%{transform:translate(var(--x1),var(--y1))}65%{transform:translate(var(--x2),var(--y2))}100%{transform:translate(var(--x3),var(--y3))}}
+/* Un vuelo en bucle por tres puntos y de vuelta, sin ir y volver por el mismo
+   camino: así nunca se quedan quietas en los extremos. */
+@keyframes wander{0%,100%{transform:translate(0,0)}25%{transform:translate(var(--x1),var(--y1))}50%{transform:translate(var(--x2),var(--y2))}75%{transform:translate(var(--x3),var(--y3))}}
 @keyframes blink{0%,100%{opacity:.18}45%,60%{opacity:1}}
 .dock{position:fixed;right:clamp(.9rem,3vw,1.6rem);bottom:clamp(.9rem,3vw,1.6rem);z-index:26;display:flex;flex-direction:column;align-items:flex-end;gap:.6rem}
 .fab{display:inline-flex;align-items:center;gap:.5rem;font:600 .93rem/1 var(--sans);padding:.8rem 1.1rem;border-radius:999px;border:1px solid var(--red);background:var(--red);color:var(--on-red);cursor:pointer;box-shadow:0 14px 34px -14px rgba(0,0,0,.6),0 0 0 6px color-mix(in srgb,var(--red) 16%,transparent),0 0 26px 8px color-mix(in srgb,var(--red) 42%,transparent);transition:box-shadow .3s,transform .2s}
