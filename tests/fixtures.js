@@ -1,14 +1,14 @@
 // Every spec imports `test` from here instead of from @playwright/test, so each
 // page a test opens records V8 coverage of the page's own scripts. The raw data
-// goes to coverage/raw/; scripts/coverage.mjs merges it into a number.
-const base = require('@playwright/test');
-const fs = require('fs');
-const path = require('path');
+// goes to coverage/raw/; scripts/coverage.js merges it into a number.
+import { test as base, expect } from '@playwright/test';
+import fs from 'node:fs';
+import path from 'node:path';
 
-const RAW = path.join(__dirname, '..', 'coverage', 'raw');
-const OURS = /\/(app\.js|index\.html|js\/[\w-]+\.mjs)(\?|$)/;
+const RAW = path.join(import.meta.dirname, '..', 'coverage', 'raw');
+const OURS = /\/(app\.js|index\.html|js\/[\w-]+\.js)(\?|$)/;
 
-const test = base.test.extend({
+export const test = base.extend({
   page: async ({ page }, use, testInfo) => {
     const runs = [];
     const take = async () => {
@@ -37,4 +37,4 @@ const test = base.test.extend({
   },
 });
 
-module.exports = { test, expect: base.expect };
+export { expect };

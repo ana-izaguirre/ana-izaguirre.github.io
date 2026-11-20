@@ -1,7 +1,7 @@
 // The first frame, before app.js. Its own file because the trace has to be off,
 // and Playwright only allows that per file: recording a trace snapshots the DOM
 // and forces frames, which moves exactly the timing measured here.
-const { test, expect } = require('./fixtures');
+import { test, expect } from './fixtures.js';
 
 test.use({ trace: 'off' });
 

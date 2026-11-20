@@ -1,9 +1,9 @@
 // Accessibility: axe-core must find nothing, in either theme and on a phone.
-const { test, expect } = require('./fixtures');
-const fs = require('fs');
-const path = require('path');
+import { test, expect } from './fixtures.js';
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
-const AXE = fs.readFileSync(path.join(require.resolve('axe-core'), '..', 'axe.min.js'), 'utf8');
+const AXE = fs.readFileSync(fileURLToPath(new URL('axe.min.js', import.meta.resolve('axe-core'))), 'utf8');
 
 const CONTEXTS = [
   { name: 'dark',   query: '?theme=dark&quiet=1',  viewport: { width: 1280, height: 900 } },

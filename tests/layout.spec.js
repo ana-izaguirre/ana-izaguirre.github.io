@@ -1,7 +1,7 @@
 // Layout invariants. These exist because each one was a real bug at some point:
 // text clipped by its own line-height, chips sliding under the CV sheet,
 // a section band bleeding past the viewport.
-const { test, expect } = require('./fixtures');
+import { test, expect } from './fixtures.js';
 
 const SIZES = [
   { name: 'phone',        width: 360,  height: 740 },

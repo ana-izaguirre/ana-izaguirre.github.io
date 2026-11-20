@@ -1,6 +1,6 @@
 // Page logic: BM25 search, career story, language, theme and fireflies.
 // Loaded after the first frame, so the HTML paints without waiting to download or run it.
-import {createIndex,search as rank,tokenize,normalize as norm,isHit} from './js/search.mjs';
+import {createIndex,search as rank,tokenize,normalize as norm,isHit} from './js/search.js';
 (()=>{
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -345,7 +345,7 @@ let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(measure,150
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>idle(measure));
 
 /* ---------- index: the CV below is the corpus ---------- */
-// The ranking lives in js/search.mjs, pure and unit-tested. This adapter turns
+// The ranking lives in js/search.js, pure and unit-tested. This adapter turns
 // the CV's [data-chunk] blocks into plain passages and maps ids back to elements.
 let index=null,passageEls=new Map(),indexReady=false;
 function buildIndex(){

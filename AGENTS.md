@@ -76,7 +76,7 @@ Lightweight spec-driven development:
 | Markup, critical CSS | `index.html` | CSS stays inline on purpose (D1) |
 | First-frame script | inline in `index.html` | theme, language, cover translation (`EN_TOP`) |
 | Page logic | `app.js` | requested after the first frame (D2) |
-| Pure modules | `js/*.mjs` | no DOM access; unit-tested in Node (D9) |
+| Pure modules | `js/*.js` | ES modules with no DOM access; unit-tested in Node (D9) |
 | Landscape | `tools/scene.py` → `index.html` | generated; edit the generator, not the SVG |
 | CV content | `index.html` | Spanish in the markup, English in `app.js` |
 | Print and PDF | print rules in `index.html` | `.cv-only` is hidden on screen, printed in the PDF |

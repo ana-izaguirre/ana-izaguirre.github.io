@@ -3,14 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "description": "Interactive CV and portfolio. The site has no runtime dependencies; everything below is test tooling.",
+  "type": "module",
   "scripts": {
     "serve": "python3 -m http.server 8000",
     "test": "playwright test",
     "test:headed": "playwright test --headed",
-    "lighthouse": "node scripts/lighthouse.mjs",
+    "lighthouse": "node scripts/lighthouse.js",
     "qa": "npm run test:unit && npm run test && npm run coverage && npm run lighthouse",
-    "coverage": "node scripts/coverage.mjs",
-    "test:unit": "NODE_V8_COVERAGE=coverage/node node --test tests/unit/*.test.mjs"
+    "coverage": "node scripts/coverage.js",
+    "test:unit": "NODE_V8_COVERAGE=coverage/node node --test tests/unit/*.test.js"
   },
   "devDependencies": {
     "@playwright/test": "1.63.0",

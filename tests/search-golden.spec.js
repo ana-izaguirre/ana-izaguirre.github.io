@@ -2,8 +2,10 @@
 // and quoted lines for every suggested question and a set of edge queries, in
 // both languages. A change to the ranking must be deliberate: regenerate the
 // file and review its diff in the same PR.
-const { test, expect } = require('./fixtures');
-const golden = require('./golden/search.json');
+import { test, expect } from './fixtures.js';
+import fs from 'node:fs';
+
+const golden = JSON.parse(fs.readFileSync(new URL('./golden/search.json', import.meta.url), 'utf8'));
 
 for (const lang of ['es', 'en']) {
   test(`search results match the golden file — ${lang}`, async ({ page }) => {
