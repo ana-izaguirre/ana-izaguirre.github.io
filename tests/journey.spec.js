@@ -531,6 +531,36 @@ test.describe('who she is in one screen, reduced motion', () => {
   });
 });
 
+// Spec 016: a numbered editorial index.
+test.describe('editorial index', () => {
+  const ES = ['01Trayectoria', '02Pregúntale a mi CV', '03Perfil', '04Trabajo propio', '05Hablemos'];
+
+  test('each section opens with its number, and the footer lists them in order', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await expect(page.locator('.eyebrow')).toHaveText(ES);
+    await expect(page.locator('.idx a')).toHaveText(ES);
+    await expect(page.locator('.idx')).toHaveAttribute('aria-label', 'Índice');
+    const order = await page.$$eval('.eyebrow', (els) => els.map((e) => Math.round(e.getBoundingClientRect().top + scrollY)));
+    expect([...order].sort((a, b) => a - b)).toEqual(order);
+  });
+
+  test('every index link lands on its section', async ({ page }) => {
+    await open(page, '?quiet=1');
+    const targets = await page.$$eval('.idx a', (as) => as.map((a) => a.getAttribute('href')));
+    for (const href of targets) {
+      await page.click(`.idx a[href="${href}"]`);
+      await expect(page.locator(href)).toBeInViewport({ timeout: 4000 });
+    }
+  });
+
+  test('the index speaks English, and the numbers are not read twice', async ({ page }) => {
+    await open(page, '?quiet=1&lang=en');
+    await expect(page.locator('.idx a')).toHaveText(['01Journey', '02Ask my CV', '03Profile', '04Own work', "05Let's talk"]);
+    await expect(page.locator('.idx')).toHaveAttribute('aria-label', 'Index');
+    expect(await page.$$eval('.eyebrow', (els) => els.every((e) => e.getAttribute('aria-hidden') === 'true'))).toBe(true);
+  });
+});
+
 // Spec 006: the Curiosity Switch picks which parts of each case a reader sees.
 test.describe('the Curiosity Switch', () => {
   const view = (page, v) => page.locator('#views label', { has: page.locator(`input[value="${v}"]`) });
