@@ -262,6 +262,21 @@ html[data-theme=light] .i-moon{display:block}
 .hit{padding:.95rem 0;border-top:1px solid var(--line)}
 .hit-src{font-weight:600;font-size:.9rem;color:var(--red-t);margin:0 0 .35rem}
 .hit-txt{margin:0 0 .35rem}
+/* Search modes (docs/specs/003): native radios styled as pills, so arrow keys,
+   focus and screen readers behave as a radio group without any script. */
+.modes{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin:0 0 .9rem;padding:0;border:0}
+.modes legend{float:left;margin-right:.3rem;font-size:.85rem;color:var(--slate)}
+.modes label{position:relative}
+.modes input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.modes span{display:block;padding:.3rem .8rem;border:1px solid var(--rule);border-radius:999px;font-size:.85rem;color:var(--text);background:var(--sheet);transition:background .2s,border-color .2s}
+.modes input:checked+span{background:var(--red);border-color:var(--red);color:var(--on-red);font-weight:700}
+.modes input:focus-visible+span{outline:2px solid var(--red-t);outline-offset:2px}
+.modes label:hover span{border-color:var(--red)}
+/* Evidence: which words made a passage answer, synonyms marked as such. */
+.hit-why{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem;margin:0 0 .45rem;font-size:.78rem;color:var(--slate)}
+.ev{padding:.05rem .45rem;border-radius:6px;background:color-mix(in srgb,var(--red) 16%,transparent);color:var(--text)}
+.ev.syn{background:none;border:1px dashed color-mix(in srgb,var(--red) 50%,transparent)}
+.try-all{margin-top:.6rem;background:none;border:0;padding:0;font:700 .92rem var(--sans);color:var(--red-t);cursor:pointer;text-decoration:underline}
 mark{background:var(--mark);color:inherit;border-radius:3px;padding:0 .12em}
 .hit a,.none a{color:var(--text);font-weight:600;font-size:.92rem;text-decoration-color:var(--red);text-underline-offset:3px}
 .none{margin:0 0 .9rem}
@@ -793,6 +808,13 @@ window.ES_TOP={};
         </div>
       </div>
       <div class="g-ans">
+        <fieldset class="modes" id="modes">
+          <legend data-i18n="mode_l">Buscar en</legend>
+          <label><input type="radio" name="mode" value="all" checked><span data-i18n="mode_all">Todo el CV</span></label>
+          <label><input type="radio" name="mode" value="exp"><span data-i18n="mode_exp">Experiencia</span></label>
+          <label><input type="radio" name="mode" value="proj"><span data-i18n="mode_proj">Proyectos</span></label>
+          <label><input type="radio" name="mode" value="skills"><span data-i18n="mode_skills">Competencias</span></label>
+        </fieldset>
         <div class="answer" id="answer" aria-live="polite"></div>
         <div class="hist" id="hist" hidden></div>
         <button class="again" id="ask-again" type="button"><span data-i18n="ask_again">Hacer otra pregunta</span> ↑</button>
