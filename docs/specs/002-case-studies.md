@@ -36,10 +36,12 @@ Diagrams, which are phase 6, and anything not documented in a repository.
 
 ## Risks
 
-- **Inventing or inflating.** Mitigation: every sentence maps to a repo
-  document, and "measured" is never written as "enforced". For example,
-  trainer-flow's mutation score is measured with Stryker without a CI
-  threshold, so the case says "measured".
+- **Inventing, inflating or underselling.** Mitigation: every sentence maps
+  to a repo document, checked against the code where possible. A first
+  draft called trainer-flow's mutation score "measured", from Stryker's
+  config (`break: null`). In fact a nightly workflow
+  (`scripts/mutation-policy.mjs`) enforces 100% per file on the
+  non-negotiable modules. Read the enforcement, not just the config.
 - **Length.** A case that scrolls forever loses the skimmer. Mitigation:
   closed by default, one to three short lines per part.
 

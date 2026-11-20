@@ -32,7 +32,7 @@ cs_trainer_a:"Edge Functions on Deno over Supabase Postgres. The core is plain T
 cs_trainer_t1:"With Telegram as the only interface everything runs as service_role and RLS protects nothing: authorization lives in the core, at 100% coverage, denied cases included.",
 cs_trainer_t2:"Out of V1 on purpose: a web dashboard, a second AI provider, and any automation without human supervision.",
 cs_trainer_r1:"The product works without AI: an E2E walks create, edit, approve and send, and asserts zero rows of AI generations.",
-cs_trainer_r2:"100% coverage enforced by CI on the three critical modules; 100% mutation score measured with Stryker on them.",
+cs_trainer_r2:"100% coverage enforced by CI on the critical modules, and a nightly workflow that requires a 100% mutation score file by file on the non-negotiable ones: authorization, the state machine and Telegram button parsing, among others.",
 cs_mcp_p:"A coding agent knows the language, not your system's documentation, and pasting the whole folder into its context is neither practical nor cheap.",
 cs_mcp_d1:"SQLite FTS5 instead of a vector database: BM25 over an inverted index from the standard library, with nothing to operate. Embeddings would be an additive phase 2.",
 cs_mcp_d2:"Chunks follow headings, each carrying its full path (guide › Setup › Config). One runtime dependency: mcp.",
