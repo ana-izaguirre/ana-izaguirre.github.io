@@ -212,6 +212,43 @@ test.describe('one question box', () => {
   });
 });
 
+// Spec 002: each project opens into a case with the same five parts, in order,
+// citing its own repository.
+test.describe('case studies', () => {
+  const PARTS = {
+    es: ['Problema', 'Decisiones', 'Arquitectura', 'Trade-offs', 'Resultados'],
+    en: ['Problem', 'Decisions', 'Architecture', 'Trade-offs', 'Results'],
+  };
+  const REPOS = { trainer: 'trainer-flow', mcp: 'mcp-docs-search', latino: 'latino-migra' };
+
+  for (const lang of ['es', 'en']) {
+    test(`three cases, closed, with the five parts in order — ${lang}`, async ({ page }) => {
+      await open(page, `?quiet=1&lang=${lang}`);
+      for (const [slug, repo] of Object.entries(REPOS)) {
+        const c = page.locator(`#case-${slug}`);
+        await expect(c, `${slug} should start closed`).not.toHaveAttribute('open', '');
+        await expect(c.locator('dt')).toHaveText(PARTS[lang]);
+        const dd = await c.locator('dd').allTextContents();
+        expect(dd.every((d) => d.trim().length > 20), `${slug} has an empty part`).toBe(true);
+        const links = await c.locator('.case-src a').evaluateAll((as) => as.map((a) => a.href));
+        expect(links.length, `${slug} cites no source`).toBeGreaterThan(0);
+        for (const href of links) expect(href, `${slug} cites outside its repo`).toContain(`github.com/ana-izaguirre/${repo}`);
+      }
+    });
+  }
+
+  test('a case opens and closes from the keyboard', async ({ page }) => {
+    await open(page, '?quiet=1');
+    const summary = page.locator('#case-mcp summary');
+    await summary.focus();
+    await page.keyboard.press('Enter');
+    await expect(page.locator('#case-mcp')).toHaveAttribute('open', '');
+    await expect(page.locator('#case-mcp .case-body')).toBeVisible();
+    await page.keyboard.press('Enter');
+    await expect(page.locator('#case-mcp')).not.toHaveAttribute('open', '');
+  });
+});
+
 test.describe('errors while reporting errors', () => {
   test('a failure inside the error handler does not loop', async ({ page }) => {
     await open(page, '?quiet=1');
