@@ -290,6 +290,32 @@ mark{background:var(--mark);color:inherit;border-radius:3px;padding:0 .12em}
 .yrs-k{margin:0 0 1.1rem;font-size:.8rem;color:var(--slate)}
 .row{display:grid;grid-template-columns:7.4rem minmax(0,1fr);gap:.2rem 1.4rem;padding:.9rem 0;border-top:1px solid var(--rule);border-radius:6px}
 .when{color:var(--slate);font-size:.92rem;font-variant-numeric:tabular-nums;padding-top:.12rem}
+/* Case studies (docs/specs/002): a native <details> under each project, aligned
+   with the row's content column, closed by default so skimming stays fast. */
+.case{margin:0 0 .9rem calc(7.4rem + 1.4rem)}
+.case summary{display:inline-flex;align-items:baseline;gap:.5rem;cursor:pointer;list-style:none;padding:.35rem .8rem;border:1.5px dashed color-mix(in srgb,var(--red) 40%,transparent);border-radius:12px 8px 13px 7px/8px 13px 7px 12px;font-size:.9rem}
+.case summary::-webkit-details-marker{display:none}
+.case summary::before{content:"▸";color:var(--red-t);transition:transform .25s}
+.case[open] summary::before{transform:rotate(90deg)}
+.case summary:hover,.case summary:focus-visible{border-style:solid}
+.case-open{font-weight:700;color:var(--red-t)}
+.case-hint{color:var(--slate);font-size:.82rem}
+.case-body{display:grid;grid-template-columns:8.5rem minmax(0,1fr);gap:.55rem 1rem;margin:.9rem 0 .4rem;padding:1rem 1.1rem;border-radius:14px 9px 16px 8px/9px 16px 8px 14px;background:color-mix(in srgb,var(--bg) 45%,var(--sheet))}
+.case[open] .case-body{animation:case-in .35s cubic-bezier(.22,1,.36,1)}
+@keyframes case-in{from{opacity:0;transform:translateY(-6px)}}
+.case dt{font:600 .95rem/1.4 var(--serif);color:var(--text)}
+.case dd{margin:0;color:var(--body);font-size:.95rem;line-height:1.55}
+.case dd p{margin:0}
+.case dd ul{margin:0;padding-left:1.1rem}
+.case dd li+li{margin-top:.35rem}
+.case-src{margin:.3rem 0 0;font-size:.82rem;color:var(--slate)}
+.case-src a{color:var(--red-t)}
+@media (max-width:640px){
+  .case{margin-left:0}
+  .case-hint{display:none}
+  .case-body{grid-template-columns:1fr;gap:.2rem;padding:.85rem}
+  .case dd{margin-bottom:.55rem}
+}
 .when.k{color:var(--ink);font-weight:600;font-size:1rem}
 .row h3{font:600 1.05rem/1.35 var(--sans);margin:0 0 .3rem}
 .row p,.row li{margin:0 0 .28rem;color:var(--body)}
@@ -866,6 +892,33 @@ window.ES_TOP={};
           <p data-line>TypeScript, Deno, Supabase, Gemini. <a href="https://github.com/ana-izaguirre/trainer-flow">github.com/ana-izaguirre/trainer-flow</a></p>
           <ul class="tr" data-line><li data-i18n="c-trainer_0">Máquina de estados estricta</li><li data-i18n="c-trainer_1">Webhooks idempotentes</li><li data-i18n="c-trainer_2">Dominio aislado de la IA</li><li data-i18n="c-trainer_3">100 % en autorización</li></ul></div>
       </div>
+      <details class="case no-print" id="case-trainer">
+        <summary><span class="case-open" data-i18n="case_open">Ver el caso</span> <span class="case-hint" data-i18n="case_hint">problema, decisiones, arquitectura, trade-offs, resultados</span></summary>
+        <dl class="case-body">
+          <dt data-i18n="case_p">Problema</dt>
+          <dd><p data-i18n="cs_trainer_p">Un entrenador personal arma y sigue rutinas con ayuda de IA. Una rutina mal adaptada puede lesionar a alguien, así que la IA no puede tener la última palabra.</p></dd>
+          <dt data-i18n="case_d">Decisiones</dt>
+          <dd><ul>
+            <li data-i18n="cs_trainer_d1">La transición DRAFT → SENT no existe: a SENT solo se llega desde APPROVED, y ahí solo llega una acción del entrenador.</li>
+            <li data-i18n="cs_trainer_d2">El dominio solo conoce la interfaz AIProvider. «Gemini» no aparece en el core, y un test lo comprueba.</li>
+            <li data-i18n="cs_trainer_d3">Un webhook nunca espera a la IA: recibe, guarda, responde 200 y dispara aparte. Generar tarda 10–30 s y Tally reintenta antes.</li>
+            <li data-i18n="cs_trainer_d4">Idempotencia con UNIQUE (source, external_id): se inserta primero. Una comprobación previa dejaría pasar dos peticiones concurrentes.</li>
+          </ul></dd>
+          <dt data-i18n="case_a">Arquitectura</dt>
+          <dd><p data-i18n="cs_trainer_a">Edge Functions en Deno sobre Supabase Postgres. El core es TypeScript puro: el linter le prohíbe Deno, fetch y npm, y por eso corre igual bajo Node en los tests. La interfaz es Telegram.</p></dd>
+          <dt data-i18n="case_t">Trade-offs</dt>
+          <dd><ul>
+            <li data-i18n="cs_trainer_t1">Con Telegram como única interfaz todo pasa por service_role y RLS no protege nada: la autorización vive en el core, con cobertura del 100 %, casos denegados incluidos.</li>
+            <li data-i18n="cs_trainer_t2">Fuera de la V1, a propósito: dashboard web, segundo proveedor de IA y cualquier automatización sin supervisión humana.</li>
+          </ul></dd>
+          <dt data-i18n="case_r">Resultados</dt>
+          <dd><ul>
+            <li data-i18n="cs_trainer_r1">El producto funciona sin IA: un E2E recorre crear, editar, aprobar y enviar, y comprueba que quedan cero filas de generaciones de IA.</li>
+            <li data-i18n="cs_trainer_r2">Cobertura del 100 % exigida por CI en los tres módulos críticos; mutación del 100 % medida con Stryker en esos módulos.</li>
+          </ul></dd>
+        </dl>
+        <p class="case-src"><span data-i18n="case_src">Fuentes en el repositorio:</span> <a href="https://github.com/ana-izaguirre/trainer-flow/blob/main/docs/ARCHITECTURE.md">ARCHITECTURE.md (ADR-002 – ADR-010)</a> · <a href="https://github.com/ana-izaguirre/trainer-flow/blob/main/docs/RISKS.md">RISKS.md</a> · <a href="https://github.com/ana-izaguirre/trainer-flow#readme">README</a></p>
+      </details>
       <div class="row" id="c-mcp" data-chunk data-sec="proj">
         <span class="when k">mcp-docs-search</span>
         <div><h3 hidden>mcp-docs-search</h3>
@@ -873,6 +926,28 @@ window.ES_TOP={};
           <p data-line>Python, SQLite FTS5, pytest, mypy. <a href="https://github.com/ana-izaguirre/mcp-docs-search">github.com/ana-izaguirre/mcp-docs-search</a></p>
           <ul class="tr" data-line><li data-i18n="c-mcp_0">SQLite FTS5 + BM25</li><li data-i18n="c-mcp_1">Arnés de evaluación</li><li data-i18n="c-mcp_2">Protocolo MCP</li><li data-i18n="c-mcp_3">Tipado estricto con mypy</li></ul></div>
       </div>
+      <details class="case no-print" id="case-mcp">
+        <summary><span class="case-open" data-i18n="case_open">Ver el caso</span> <span class="case-hint" data-i18n="case_hint">problema, decisiones, arquitectura, trade-offs, resultados</span></summary>
+        <dl class="case-body">
+          <dt data-i18n="case_p">Problema</dt>
+          <dd><p data-i18n="cs_mcp_p">Un agente de código conoce el lenguaje, pero no la documentación de tu sistema, y pegar la carpeta entera en su contexto no es práctico ni barato.</p></dd>
+          <dt data-i18n="case_d">Decisiones</dt>
+          <dd><ul>
+            <li data-i18n="cs_mcp_d1">SQLite FTS5 en vez de una base vectorial: BM25 con índice invertido desde la librería estándar, sin infraestructura. Los embeddings serían una fase 2 que se suma, no que reemplaza.</li>
+            <li data-i18n="cs_mcp_d2">Fragmentos por encabezado, cada uno con su ruta completa (guía › Instalación › Config). Una sola dependencia de ejecución: mcp.</li>
+          </ul></dd>
+          <dt data-i18n="case_a">Arquitectura</dt>
+          <dd><p data-i18n="cs_mcp_a">Servidor MCP en Python 3.12 por stdio con tres herramientas: search_docs, list_sources y get_document. El índice es un artefacto de build; los markdown son la fuente de verdad.</p></dd>
+          <dt data-i18n="case_t">Trade-offs</dt>
+          <dd><p data-i18n="cs_mcp_t">La búsqueda por palabras falla cuando la pregunta describe un síntoma con palabras distintas a las de la documentación. Se publica ese límite en vez de esconderlo.</p></dd>
+          <dt data-i18n="case_r">Resultados</dt>
+          <dd><ul>
+            <li data-i18n="cs_mcp_r1">recall@1 0,30 y recall@3 0,44 en 50 preguntas escritas sin copiar el vocabulario del corpus. Un set anterior daba 0,60/0,87 y medía la redacción de las preguntas, no la búsqueda.</li>
+            <li data-i18n="cs_mcp_r2">Cada cambio se juzga con la prueba exacta de McNemar sobre las preguntas que cambian de resultado, para no celebrar ruido.</li>
+          </ul></dd>
+        </dl>
+        <p class="case-src"><span data-i18n="case_src">Fuentes en el repositorio:</span> <a href="https://github.com/ana-izaguirre/mcp-docs-search#retrieval-quality">README · Retrieval quality</a> · <a href="https://github.com/ana-izaguirre/mcp-docs-search/blob/main/docs/decisions.md">decisions.md</a></p>
+      </details>
       <div class="row" id="c-latino" data-chunk data-sec="proj">
         <span class="when k">latino-migra</span>
         <div><h3 hidden>latino-migra</h3>
@@ -880,6 +955,28 @@ window.ES_TOP={};
           <p data-line>React 19, TypeScript, Express, Firestore. <a href="https://latino-migra.vercel.app">latino-migra.vercel.app</a></p>
           <ul class="tr" data-line><li data-i18n="c-latino_0">Proxy que guarda las claves</li><li data-i18n="c-latino_1">React 19 + TypeScript</li><li data-i18n="c-latino_2">Firestore</li></ul></div>
       </div>
+      <details class="case no-print" id="case-latino">
+        <summary><span class="case-open" data-i18n="case_open">Ver el caso</span> <span class="case-hint" data-i18n="case_hint">problema, decisiones, arquitectura, trade-offs, resultados</span></summary>
+        <dl class="case-body">
+          <dt data-i18n="case_p">Problema</dt>
+          <dd><p data-i18n="cs_latino_p">Estudiantes y profesionales latinoamericanos que migran necesitan becas verificadas y guías de visado con su fuente oficial, en español.</p></dd>
+          <dt data-i18n="case_d">Decisiones</dt>
+          <dd><ul>
+            <li data-i18n="cs_latino_d1">El producto se acotó a propósito: seis pantallas compilan pero no se enlazan, y restaurar una es borrar una línea en navigation.ts.</li>
+            <li data-i18n="cs_latino_d2">La clave de Gemini vive en un Express mínimo que solo sirve /api/*. Con sesión iniciada no se guarda nada en el navegador; sin sesión, una cookie con cinco preferencias de visualización.</li>
+          </ul></dd>
+          <dt data-i18n="case_a">Arquitectura</dt>
+          <dd><p data-i18n="cs_latino_a">SPA en React 19 con Vite. El navegador habla directamente con Firestore y Firebase Auth, y firestore.rules es el único control de acceso. Despliegue en Vercel.</p></dd>
+          <dt data-i18n="case_t">Trade-offs</dt>
+          <dd><ul>
+            <li data-i18n="cs_latino_t1">Sin capa de validación en servidor, las reglas de Firestore cargan con toda la seguridad.</li>
+            <li data-i18n="cs_latino_t2">Cada ruta de Firestore cae a datos estáticos ante un error, y eso escondió una función rota durante mucho tiempo. Ahora la regla es que ningún fallo sea silencioso.</li>
+          </ul></dd>
+          <dt data-i18n="case_r">Resultados</dt>
+          <dd><p data-i18n="cs_latino_r">En desarrollo activo, con su tablero de proyecto. Cobertura del 65 % como trinquete: cada PR que añade comportamiento la sube, nunca la baja.</p></dd>
+        </dl>
+        <p class="case-src"><span data-i18n="case_src">Fuentes en el repositorio:</span> <a href="https://github.com/ana-izaguirre/latino-migra#readme">README</a> · <a href="https://github.com/ana-izaguirre/latino-migra/blob/main/CLAUDE.md">CLAUDE.md</a></p>
+      </details>
     </section>
 
     <section class="cv-only" aria-labelledby="h-sk">
