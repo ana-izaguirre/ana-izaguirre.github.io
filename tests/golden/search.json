@@ -200,9 +200,9 @@
      ]
     ],
     [
-     "c-latino",
+     "case-trainer",
      [
-      "React 19, TypeScript, Express, Firestore. latino-migra.verce"
+      "El dominio solo conoce la interfaz AIProvider. «Gemini» no a"
      ]
     ]
    ]
@@ -221,9 +221,9 @@
      ]
     ],
     [
-     "c-allergan",
+     "case-latino",
      [
-      "Reportes de campañas en Snowflake y guardias on-call con Dat"
+      "Cada ruta de Firestore cae a datos estáticos ante un error, "
      ]
     ],
     [
@@ -295,15 +295,15 @@
      ]
     ],
     [
-     "c-allergan",
-     [
-      "Reportes de campañas en Snowflake y guardias on-call con Dat"
-     ]
-    ],
-    [
      "c-sk4",
      [
       "PostgreSQL, MongoDB, Snowflake"
+     ]
+    ],
+    [
+     "case-latino",
+     [
+      "Cada ruta de Firestore cae a datos estáticos ante un error, "
      ]
     ]
    ]
@@ -422,12 +422,6 @@
    ],
    "hits": [
     [
-     "c-allergan",
-     [
-      "Reportes de campañas en Snowflake y guardias on-call con Dat"
-     ]
-    ],
-    [
      "c-laureate",
      [
       "Verificación de identidad con AWS Rekognition en una platafo",
@@ -438,6 +432,12 @@
      "c-sk4",
      [
       "PostgreSQL, MongoDB, Snowflake"
+     ]
+    ],
+    [
+     "c-allergan",
+     [
+      "Reportes de campañas en Snowflake y guardias on-call con Dat"
      ]
     ]
    ]
@@ -451,6 +451,12 @@
      "c-trainer",
      [
       "TypeScript, Deno, Supabase, Gemini. github.com/ana-izaguirre"
+     ]
+    ],
+    [
+     "case-trainer",
+     [
+      "Edge Functions en Deno sobre Supabase Postgres. El core es T"
      ]
     ]
    ]
@@ -497,15 +503,15 @@
      ]
     ],
     [
-     "c-latino",
-     [
-      "React 19, TypeScript, Express, Firestore. latino-migra.verce"
-     ]
-    ],
-    [
      "c-intel",
      [
       "Desarrollo full stack (Angular, Node.js) en una plataforma i"
+     ]
+    ],
+    [
+     "c-latino",
+     [
+      "React 19, TypeScript, Express, Firestore. latino-migra.verce"
      ]
     ]
    ]
@@ -525,6 +531,12 @@
      "c-sk1",
      [
       "Node.js, TypeScript, REST, GraphQL (Apollo), Express, Python"
+     ]
+    ],
+    [
+     "case-mcp",
+     [
+      "Servidor MCP en Python 3.12 por stdio con tres herramientas:"
      ]
     ]
    ]
@@ -558,6 +570,12 @@
      "c-disp",
      [
       "Vivo en Zaragoza. Busco un puesto indefinido como ingeniera "
+     ]
+    ],
+    [
+     "c-laureate",
+     [
+      "Verificación de identidad con AWS Rekognition en una platafo"
      ]
     ]
    ]
@@ -676,9 +694,9 @@
      ]
     ],
     [
-     "c-latino",
+     "c-perfil",
      [
-      "Web platform for Latin American students and professionals w"
+      "Full stack engineer with 8+ years building production system"
      ]
     ]
    ]
@@ -795,15 +813,9 @@
      ]
     ],
     [
-     "c-latino",
+     "case-trainer",
      [
-      "React 19, TypeScript, Express, Firestore. latino-migra.verce"
-     ]
-    ],
-    [
-     "c-pausa",
-     [
-      "Full-time parenting after a company-wide layoff. During this"
+      "The DRAFT → SENT transition does not exist: SENT is only rea"
      ]
     ]
    ]
@@ -821,15 +833,15 @@
      ]
     ],
     [
-     "c-allergan",
-     [
-      "Campaign reporting in Snowflake and on-call rotations with D"
-     ]
-    ],
-    [
      "c-sk4",
      [
       "PostgreSQL, MongoDB, Snowflake"
+     ]
+    ],
+    [
+     "case-mcp",
+     [
+      "SQLite FTS5 instead of a vector database: BM25 over an inver"
      ]
     ]
    ]
@@ -896,15 +908,15 @@
      ]
     ],
     [
-     "c-allergan",
-     [
-      "Campaign reporting in Snowflake and on-call rotations with D"
-     ]
-    ],
-    [
      "c-sk4",
      [
       "PostgreSQL, MongoDB, Snowflake"
+     ]
+    ],
+    [
+     "c-allergan",
+     [
+      "Campaign reporting in Snowflake and on-call rotations with D"
      ]
     ]
    ]
@@ -991,9 +1003,9 @@
      ]
     ],
     [
-     "c-intel",
+     "c-sk5",
      [
-      "Mentoring and onboarding of new engineers, code review pract"
+      "React, Angular, Jest, Cypress"
      ]
     ]
    ]
@@ -1023,12 +1035,6 @@
    ],
    "hits": [
     [
-     "c-allergan",
-     [
-      "Campaign reporting in Snowflake and on-call rotations with D"
-     ]
-    ],
-    [
      "c-laureate",
      [
       "Identity verification with AWS Rekognition on a remote-proct",
@@ -1039,6 +1045,12 @@
      "c-sk4",
      [
       "PostgreSQL, MongoDB, Snowflake"
+     ]
+    ],
+    [
+     "c-allergan",
+     [
+      "Campaign reporting in Snowflake and on-call rotations with D"
      ]
     ]
    ]
@@ -1052,6 +1064,12 @@
      "c-trainer",
      [
       "TypeScript, Deno, Supabase, Gemini. github.com/ana-izaguirre"
+     ]
+    ],
+    [
+     "case-trainer",
+     [
+      "Edge Functions on Deno over Supabase Postgres. The core is p"
      ]
     ]
    ]
@@ -1098,15 +1116,15 @@
      ]
     ],
     [
-     "c-latino",
-     [
-      "React 19, TypeScript, Express, Firestore. latino-migra.verce"
-     ]
-    ],
-    [
      "c-intel",
      [
       "Full stack development (Angular, Node.js) on an internal eng"
+     ]
+    ],
+    [
+     "c-latino",
+     [
+      "React 19, TypeScript, Express, Firestore. latino-migra.verce"
      ]
     ]
    ]
@@ -1126,6 +1144,12 @@
      "c-sk1",
      [
       "Node.js, TypeScript, REST, GraphQL (Apollo), Express, Python"
+     ]
+    ],
+    [
+     "case-mcp",
+     [
+      "An MCP server in Python 3.12 over stdio with three tools: se"
      ]
     ]
    ]
@@ -1159,6 +1183,12 @@
      "c-disp",
      [
       "I live in Zaragoza, Spain. I am looking for a permanent role"
+     ]
+    ],
+    [
+     "c-laureate",
+     [
+      "Identity verification with AWS Rekognition on a remote-proct"
      ]
     ]
    ]
