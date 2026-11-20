@@ -468,7 +468,10 @@ function applyLang(l){
   langBtn.setAttribute('aria-label',code+', '+full);langBtn.setAttribute('title',full);langBtn.lang=l==='es'?'en':'es';
   $$('a.dl').forEach(a=>{if(a.dataset.i18n==='dl')a.textContent=narrow.matches?'CV':D.dl});
   $$('a.dl').forEach(a=>a.href=`Ana-Izaguirre-CV-${l.toUpperCase()}.pdf`);
-  indexReady=false;paintTheme();shown=-1;if(booted){paint(false);measure()}else{fillCard(evs[idx]);shown=idx;segLabels();idle(()=>{paint(false);idle(measure)})} // texto ya, medidas cuando haya hueco // en dos tareas: ninguna llega a 50 ms en un móvil lentolabel();
+  // First load: text now, measurements when the main thread is free, in two
+  // tasks so neither reaches 50 ms on a slow phone. A language switch measures at once.
+  indexReady=false;paintTheme();shown=-1;if(booted){paint(false);measure()}else{fillCard(evs[idx]);shown=idx;segLabels();idle(()=>{paint(false);idle(measure)})}
+  label();
   asked.length=0;hist.hidden=true;
   const first=$('#chips .chip').textContent;
   idle(()=>ask(first,true));

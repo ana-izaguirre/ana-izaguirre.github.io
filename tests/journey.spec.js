@@ -466,6 +466,15 @@ test.describe('empty questions', () => {
 test.describe('in English', () => {
   test.use({ locale: 'en-US' });
 
+  // applyLang() once lost its label() call to a comment: the play button kept
+  // its Spanish name for screen readers on an English page.
+  test('the story controls are named in English', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await expect(page.locator('#rp-play')).toHaveAttribute('aria-label', 'Replay again');
+    await page.click('#lang');
+    await expect(page.locator('#rp-play')).toHaveAttribute('aria-label', 'Reproducir de nuevo');
+  });
+
   test('an English browser gets the English CV, search and contact', async ({ page }) => {
     await open(page, '?quiet=1');
     await expect(page.locator('html')).toHaveAttribute('lang', 'en');
