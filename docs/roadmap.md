@@ -22,7 +22,7 @@ metrics on every project, honest "good fit / bad fit").
 | 11 | Transitions with intent: case parts unfold in sequence, figures count up | Medium | Low | S-M | Planned |
 | 12 | A clear call to action: hire / contact, visible without hunting | **High** for recruiters | Low | S | Planned |
 | 13 | Fireflies that drift on phones, as on desktop | Medium | Low | S | Done (spec 007) |
-| 14 | On phones, "Ask my CV" sits with the suggested questions, one place | Medium | Low | S | Planned |
+| 14 | On phones, "Ask my CV" sits with the suggested questions, one place | Medium | Low | S | Done (spec 008) |
 
 ## Why this order
 

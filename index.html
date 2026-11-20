@@ -536,6 +536,15 @@ section.replay{-webkit-backdrop-filter:none;backdrop-filter:none;position:relati
 
 @media (min-width:701px){.doc{scroll-margin-top:60px}}
 @media (max-width:900px){.grid{grid-template-columns:1fr;grid-template-areas:"a" "c"}}
+/* Phones (spec 008): the box, then its questions in one swipeable row, then the answer. */
+@media (max-width:680px){
+  /* Hidden from the first frame, so the cover does not shrink when app.js moves the box. */
+  #top .hero-r{display:none}
+  .askwrap .grid{grid-template-columns:minmax(0,1fr);grid-template-areas:"q" "c" "a"}
+  .askwrap .ask-mini{grid-area:q;width:100%;transform:none}
+  .chips{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;padding:.15rem .1rem .6rem;scrollbar-width:thin}
+  .chip{flex:none;width:min(15rem,72vw);scroll-snap-align:start}
+}
 @media (max-width:640px){
   .row{grid-template-columns:1fr}
   .brand{font-size:1.2rem}
