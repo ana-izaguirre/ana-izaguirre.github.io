@@ -20,7 +20,7 @@ metrics on every project, honest "good fit / bad fit").
 | 9 | Motion on scroll: sections reveal, cover parallax, reading progress | **High**: the page reads as static | Medium (CLS, performance) | M | Next |
 | 10 | Pointer response: gentle tilt on cards and projects, answers that write in | Medium | Medium (motion sickness) | M | Planned |
 | 11 | Transitions with intent: case parts unfold in sequence, figures count up | Medium | Low | S-M | Planned |
-| 12 | A clear call to action: hire / contact, visible without hunting | **High** for recruiters | Low | S | Planned |
+| 12 | A clear call to action: hire / contact, visible without hunting | **High** for recruiters | Low | S | Done (spec 009) |
 | 13 | Fireflies that drift on phones, as on desktop | Medium | Low | S | Done (spec 007) |
 | 14 | On phones, "Ask my CV" sits with the suggested questions, one place | Medium | Low | S | Done (spec 008) |
 
