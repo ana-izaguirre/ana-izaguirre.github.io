@@ -487,6 +487,19 @@ test.describe('pointer response, not for touch', () => {
   });
 });
 
+// The two signs stand at their places in the landscape, not bunched to one side.
+test.describe('the Honduras and Zaragoza signs', () => {
+  for (const [name, viewport] of [['phone', { width: 390, height: 844 }], ['desktop', { width: 1280, height: 800 }], ['wide', { width: 1680, height: 950 }]]) {
+    test(`Honduras on the left, Zaragoza toward the basilica — ${name}`, async ({ page }) => {
+      await page.setViewportSize(viewport);
+      await open(page, '?quiet=1');
+      const [h, z] = await page.$$eval('.signs span', (els) => els.map((e) => { const r = e.getBoundingClientRect(); return (r.left + r.width / 2) / innerWidth; }));
+      expect(h, 'Honduras is not on the left').toBeLessThan(0.3);
+      expect(z, 'Zaragoza is not on the right half').toBeGreaterThan(0.5);
+    });
+  }
+});
+
 // Spec 006: the Curiosity Switch picks which parts of each case a reader sees.
 test.describe('the Curiosity Switch', () => {
   const view = (page, v) => page.locator('#views label', { has: page.locator(`input[value="${v}"]`) });

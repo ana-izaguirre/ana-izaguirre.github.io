@@ -399,7 +399,11 @@ html:not([data-theme=light]) .world{--w0:#1B1838;--w1:#2E2550;--w2:#5B3A62;--w3:
 .am-s{margin:.65rem 0 0;font-size:.82rem;color:var(--slate)}
 .am-s a{color:var(--red-t)}
 /* signs and cards: pushed to the foot of the hero, so they never meet the headline */
-.signs{display:flex;flex-direction:row;align-items:flex-start;gap:.6rem;margin:auto 0 0;padding:1rem clamp(.6rem,3vw,1.6rem) 0}
+/* The two signs stand where their places are in the landscape: Honduras at the
+   start, on the left; Zaragoza by the basilica. Each on a post in the ground. */
+.signs{display:flex;flex-direction:row;align-items:flex-end;justify-content:space-between;gap:.6rem;margin:auto 0 0;padding:1rem 25% 0 8%}
+.signs span{position:relative}
+.signs span::after{content:"";position:absolute;left:50%;top:100%;width:5px;height:22px;margin-left:-2.5px;background:color-mix(in srgb,var(--sign) 85%,#000);border-radius:0 0 2px 2px;z-index:-1}
 .signs span{background:var(--sign);color:var(--sign-t);font-weight:700;font-size:.86rem;padding:.4rem .95rem;border-radius:3px;box-shadow:0 8px 18px -10px rgba(40,25,10,.6);border:1px solid rgba(0,0,0,.12)}
 .signs span:first-child{transform:rotate(-2.4deg)}
 .signs span:last-child{transform:rotate(1.6deg)}
@@ -453,7 +457,8 @@ html:not([data-theme=light]) .tile:nth-child(3) .blob{color:#E8A49E}
   .veil{display:none}
   .hero-r{order:3;padding:0 clamp(1.1rem,4vw,2rem);justify-content:stretch}
   .ask-mini{width:100%;transform:none}
-  .signs{order:4;flex-direction:row;margin:0;padding:1rem clamp(1.1rem,4vw,2rem) 0}
+  /* On the ground at the foot of the landscape band: the family on the left, the basilica on the right. */
+  .signs{order:4;position:relative;z-index:1;flex-direction:row;justify-content:space-between;margin:-3.6rem 0 1.4rem;padding:0 20% 0 7%}
   .signs span:nth-child(n){transform:none;margin:0}
   .cards{order:5;grid-template-columns:1fr;gap:.8rem;padding:0 clamp(1.1rem,4vw,2rem)}
   .tile:nth-child(n){transform:none}
