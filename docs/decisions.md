@@ -82,3 +82,19 @@ was decided, why, and what would change the decision.
   two module systems side by side. One is simpler to read and to extend.
 - **History.** The first version used `js/search.mjs` to avoid touching the
   CommonJS specs. They were migrated in the next PR.
+
+## D10. Motion in CSS, scroll-driven, with a switch
+
+- **Decision.** Motion on scroll (arriving content, the cover parallax, the
+  reading line, counting figures) uses CSS scroll-driven animations
+  (`animation-timeline: view()` and `scroll()`), behind `@supports`,
+  `prefers-reduced-motion: no-preference` and `@media screen`. Script only
+  measures, as with the pointer tilt.
+- **Why.** They run on the compositor with no observers or scroll handlers,
+  so Lighthouse stays at 100, and where they are unsupported (Safari and
+  Firefox today) the page is simply still and fully visible. Only `transform`
+  and `opacity` change, so nothing shifts layout.
+- **The switch.** A motion button in the bar (spec 019) gives everyone the
+  still page that reduced motion gives. It is saved like the theme and
+  applied before the first frame.
+

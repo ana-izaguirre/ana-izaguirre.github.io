@@ -95,6 +95,16 @@ Lightweight spec-driven development:
   with a test.
 - A ranking change must be deliberate: `tests/golden/search.json` pins the
   results; regenerate it and review its diff in the same PR.
+- `overflow: hidden` makes an element a scroll container, so every
+  `view()` timeline inside it measures against that element, not the page,
+  and sits at its end. Use `overflow: clip` to clip without scrolling.
+- A registered custom property with `inherits: false` is not seen by its
+  own `::before`. Set the counter on the element; draw it in the pseudo.
+- Content that fades in on scroll is mid-animation wherever it happens to
+  sit, and axe flags semi-transparent text. Check settled pages under
+  reduced motion.
+- A test that measures or hovers an element must centre it instantly first:
+  elements arriving on scroll are shifted until they settle.
 
 ## Commands
 
