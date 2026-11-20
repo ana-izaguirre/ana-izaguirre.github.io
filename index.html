@@ -28,7 +28,7 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"Ana Izaguirre","jobTitle":"Senior Backend / Full Stack Engineer","url":"https://ana-izaguirre.github.io/","sameAs":["https://github.com/ana-izaguirre","https://www.linkedin.com/in/ana-izaguirre/"],"address":{"@type":"PostalAddress","addressLocality":"Zaragoza","addressCountry":"ES"},"knowsLanguage":["es","en"],"knowsAbout":["Node.js","TypeScript","AWS","GraphQL","Event-driven architecture","Message queues","Model Context Protocol"]}
 </script>
-<script>/* Theme before the first frame: ?theme= wins over the saved choice. */(function(){var t=new URLSearchParams(location.search).get('theme');if(t!=='light'&&t!=='dark'){try{t=localStorage.getItem('theme')}catch(e){t=null}}if(t==='light'||t==='dark')document.documentElement.dataset.theme=t})()</script>
+<script>/* Theme before the first frame: ?theme= wins over the saved choice. The motion switch (spec 019) too. */(function(){var t=new URLSearchParams(location.search).get('theme');if(t!=='light'&&t!=='dark'){try{t=localStorage.getItem('theme')}catch(e){t=null}}if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;try{if(localStorage.getItem('motion')==='off')document.documentElement.dataset.motion='off'}catch(e){}})()</script>
 <style>
 @font-face{font-family:"Fraunces";src:url(fonts/fraunces.woff2) format("woff2");font-weight:300 800;font-display:swap}
 @font-face{font-family:"Nunito";src:url(fonts/nunito.woff2) format("woff2");font-weight:100 550;font-display:swap}
@@ -86,6 +86,21 @@ body{margin:0;background:linear-gradient(180deg,var(--sky1) 0%,var(--sky2) 42%,v
 .ico{width:42px;padding:0;display:grid;place-items:center}
 .code{width:46px;padding:0;display:grid;place-items:center;font-weight:700;letter-spacing:.05em}
 .ico svg{width:20px;height:20px}
+/* The motion switch (spec 019): a site control, like the theme. Off, the page
+   behaves as under prefers-reduced-motion. Where the system already asks for
+   reduced motion, there is nothing to switch, so the button is not shown. */
+.i-motion{fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round}
+.i-motion .off{display:none}
+html[data-motion=off] .i-motion .off{display:inline}
+@media (prefers-reduced-motion:reduce){#motion{display:none}}
+html[data-motion=off]{scroll-behavior:auto}
+html[data-motion=off] *,html[data-motion=off] *::before,html[data-motion=off] *::after{animation:none!important;transition:none!important}
+html[data-motion=off] .mq-win{-webkit-mask-image:none;mask-image:none}
+html[data-motion=off] .mq{flex:1;flex-wrap:wrap;justify-content:center;row-gap:.5rem}
+html[data-motion=off] .mq[aria-hidden]{display:none}
+html[data-motion=off] .st-n b{position:static;width:auto;height:auto;clip-path:none}
+html[data-motion=off] .st-n::before{content:none}
+html[data-motion=off] .tile:hover{transform:rotate(0) translateY(-7px)}
 .i-sun{fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round}
 .i-sun circle{fill:var(--sun);stroke:currentColor}
 .i-moon{fill:currentColor;display:none}
@@ -734,6 +749,9 @@ section.replay{-webkit-backdrop-filter:none;backdrop-filter:none;position:relati
   <div class="wrap">
     <a class="brand" href="#top">Ana Izaguirre</a>
     <div class="bar-r">
+      <button class="btn ghost ico" id="motion" type="button" aria-pressed="true" aria-label="Movimiento" title="Movimiento" data-i18n-aria="motion_a">
+        <svg class="i-motion" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9c3-3 6 3 9 0s6-3 9 0M3 15c3-3 6 3 9 0s6-3 9 0"/><path class="off" d="M4 20 20 4"/></svg>
+      </button>
       <button class="btn ghost ico" id="theme" type="button" aria-label="Claro" title="Claro">
         <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.4"/><g class="rays"><path d="M12 1.6v2.6M12 19.8v2.6M22.4 12h-2.6M4.2 12H1.6M19.35 4.65l-1.84 1.84M6.49 17.51l-1.84 1.84M19.35 19.35l-1.84-1.84M6.49 6.49L4.65 4.65"/></g></svg>
         <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1z"/><path class="spark" d="M17.6 3.2l.55 1.55 1.55.55-1.55.55-.55 1.55-.55-1.55-1.55-.55 1.55-.55z"/></svg>
@@ -858,7 +876,7 @@ f1:'Zaragoza, remote or hybrid',
 f2:'Permanent contract',
 f3:'Available immediately',
 f4:'Native Spanish, professional English',
-explore:'Explore my world',cta_h:"Let's talk",
+explore:'Explore my world',motion_a:'Motion',cta_h:"Let's talk",
 ask_l:'Ask my CV',
 am_d:'Any questions about my experience, my tools or my projects?',
 ask_h:'Type a question about my CV',
