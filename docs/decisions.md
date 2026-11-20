@@ -72,13 +72,13 @@ was decided, why, and what would change the decision.
   artifact, then two on the re-run. Two jobs is also what GitHub's own Pages
   workflow does.
 
-## D9. Pure modules use `.mjs`
+## D9. ES modules everywhere, with `.js`
 
-- **Decision.** Modules shared by the page and by Node live in `js/*.mjs`.
-- **Why.** Node treats `.js` as CommonJS unless `package.json` declares
-  `"type": "module"`, and the Playwright config and specs here use `require`.
-  `.mjs` is an ES module everywhere, so the same file runs in the page and in
-  `node --test` with no build step and no change to the existing tests.
-- **Alternative.** Name them `js/*.js`, add `"type": "module"`, and move the
-  specs and config to `import`, or rename them `.cjs`. Cleaner in the long
-  run; worth it when the specs are migrated for another reason.
+- **Decision.** `package.json` declares `"type": "module"`, so every `.js` file
+  in the repo is an ES module: the page's `js/` modules, the scripts, the
+  Playwright config and the specs.
+- **Why.** The search module runs in the page and in `node --test`, and has to
+  load as an ES module in both. `.mjs` would have done that alone, but it left
+  two module systems side by side. One is simpler to read and to extend.
+- **History.** The first version used `js/search.mjs` to avoid touching the
+  CommonJS specs. They were migrated in the next PR.

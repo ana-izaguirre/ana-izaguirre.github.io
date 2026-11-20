@@ -1,8 +1,8 @@
-const { defineConfig, devices } = require('@playwright/test');
+import { defineConfig, devices } from '@playwright/test';
 
 const PORT = 8000;
 
-module.exports = defineConfig({
+export default defineConfig({
   testDir: './tests',
   // Node's own runner handles the unit tests (npm run test:unit).
   testIgnore: 'unit/**',

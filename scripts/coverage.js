@@ -1,7 +1,7 @@
 // Merges the V8 coverage recorded by the browser suite (coverage/raw/, see
 // tests/fixtures.js) and by the Node unit tests (coverage/node/, written by
 // NODE_V8_COVERAGE), and reports how much of the page's own JavaScript ran.
-// A script is keyed by its path in the site, so /js/search.mjs run by the
+// A script is keyed by its path in the site, so /js/search.js run by the
 // browser and by Node merges into one.
 //
 // Code coverage is measured in non-whitespace characters: V8 reports executed
@@ -31,7 +31,7 @@ function* entries() {
   if (!existsSync(NODE)) return;
   for (const file of readdirSync(NODE)) {
     for (const r of JSON.parse(readFileSync(`${NODE}/${file}`, 'utf8')).result) {
-      if (!/\/js\/[\w-]+\.mjs$/.test(r.url) || !r.url.startsWith('file:')) continue;
+      if (!/\/js\/[\w-]+\.js$/.test(r.url) || !r.url.startsWith('file:')) continue;
       const path = fileURLToPath(r.url);
       yield { url: '/' + relative(process.cwd(), path), source: readFileSync(path, 'utf8'), functions: r.functions };
     }

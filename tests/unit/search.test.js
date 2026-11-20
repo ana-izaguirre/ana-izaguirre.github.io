@@ -1,8 +1,8 @@
-// Unit tests for js/search.mjs: Node's built-in runner, no dependencies.
+// Unit tests for js/search.js: Node's built-in runner, no dependencies.
 // Run: npm run test:unit
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { tokenize, normalize, createIndex, search, isHit, DEFAULT_BOOST } from '../../js/search.mjs';
+import { tokenize, normalize, createIndex, search, isHit, DEFAULT_BOOST } from '../../js/search.js';
 
 const doc = (id, text, section = 'exp', lines) => ({ id, section, text, ...(lines ? { lines: lines.map((t) => ({ text: t })) } : {}) });
 

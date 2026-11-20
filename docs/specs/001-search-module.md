@@ -12,7 +12,7 @@ that coupling.
 
 ## Scope
 
-- `js/search.mjs` is an ES module with no DOM access. It holds the tokenizer
+- `js/search.js` is an ES module with no DOM access. It holds the tokenizer
   (normalization, stopwords, light stemming), the synonym groups, BM25 with
   section boosts, passage selection, and highlight matching.
 - **Contract.** `createIndex(docs, options)` takes plain
@@ -47,7 +47,7 @@ changes: the same queries must return the same passages.
 
 ## Acceptance criteria
 
-1. `js/search.mjs` has no reference to `document`, `window` or `Element`.
+1. `js/search.js` has no reference to `document`, `window` or `Element`.
 2. The golden results are identical before and after.
 3. `npm run test:unit` passes and covers tokenization, synonyms, BM25 order,
    boosts, the cutoff and limit, line selection, validation errors and empty

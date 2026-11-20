@@ -1,5 +1,5 @@
 // End-to-end journeys a recruiter actually performs on the page.
-const { test, expect } = require('./fixtures');
+import { test, expect } from './fixtures.js';
 
 const EMAIL = 'ana.izaguirrematamoros@gmail.com';
 

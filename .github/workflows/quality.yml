@@ -30,9 +30,9 @@ jobs:
         run: npx playwright test
 
       # V8 coverage of the page's own scripts, recorded during the run above.
-      # Fails if it drops below the minimum in scripts/coverage.mjs.
+      # Fails if it drops below the minimum in scripts/coverage.js.
       - name: Coverage
-        run: node scripts/coverage.mjs
+        run: node scripts/coverage.js
 
       - name: Keep the coverage badge for the deploy
         uses: actions/upload-artifact@v4
@@ -65,7 +65,7 @@ jobs:
 
       # ubuntu-latest ships Google Chrome; chrome-launcher finds it on its own.
       - name: Measure
-        run: node scripts/lighthouse.mjs
+        run: node scripts/lighthouse.js
         env:
           LH_RUNS: 3
 
