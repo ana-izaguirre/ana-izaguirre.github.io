@@ -369,6 +369,45 @@ test.describe('call to action', () => {
   });
 });
 
+// Spec 010: motion on scroll, in CSS alone.
+test.describe('motion on scroll', () => {
+  const style = (page, sel, prop) => page.$eval(sel, (e, p) => getComputedStyle(e).getPropertyValue(p), prop);
+  const progress = (page) => page.evaluate(() => new DOMMatrix(getComputedStyle(document.querySelector('.bar'), '::after').transform).a);
+
+  test('the reading line fills from empty at the top to full at the bottom', async ({ page }) => {
+    await open(page, '?quiet=1');
+    expect(await progress(page)).toBeLessThan(0.02);
+    await page.evaluate(() => scrollTo(0, document.documentElement.scrollHeight));
+    await expect.poll(() => progress(page)).toBeGreaterThan(0.98);
+  });
+
+  test('a row below the fold rises into place as it arrives', async ({ page }) => {
+    await open(page, '?quiet=1');
+    const row = '#c-trainer';
+    expect(Number(await style(page, row, 'opacity')), 'the premise: it waits, transparent').toBeLessThan(0.05);
+    await page.$eval(row, (e) => e.scrollIntoView({ block: 'center' }));
+    await expect.poll(async () => Number(await style(page, row, 'opacity'))).toBe(1);
+    expect(await style(page, row, 'transform')).toMatch(/^(none|matrix\(1, 0, 0, 1, 0, 0\))$/);
+  });
+
+  test('a highlighted row keeps its flash', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await page.fill('#q-mini', 'supabase');
+    await page.press('#q-mini', 'Enter');
+    await page.locator('.hit a').first().click();
+    await expect(page.locator('.flash')).toHaveCount(1);
+    expect(await page.$eval('.flash', (e) => getComputedStyle(e).animationName)).toBe('flash');
+  });
+
+  test('on paper every row is there, still and opaque', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await page.emulateMedia({ media: 'print' });
+    const rows = await page.$$eval('.sheet .row', (els) => els.map((e) => [getComputedStyle(e).opacity, getComputedStyle(e).animationName]));
+    expect(rows.length).toBeGreaterThan(5);
+    expect(rows.filter(([o, a]) => o !== '1' || a !== 'none')).toEqual([]);
+  });
+});
+
 // Spec 006: the Curiosity Switch picks which parts of each case a reader sees.
 test.describe('the Curiosity Switch', () => {
   const view = (page, v) => page.locator('#views label', { has: page.locator(`input[value="${v}"]`) });
@@ -883,6 +922,8 @@ test.describe('reduced motion', () => {
       [...document.querySelectorAll('.fly, .fly i, .land *')].some((e) => getComputedStyle(e).animationName !== 'none' || e.getAnimations().length > 0)
     );
     expect(moving, 'something animates under prefers-reduced-motion').toBe(false);
+    const scrolled = await page.$$eval('.sheet .row, .replay, .cta, .ask-rule', (els) => els.filter((e) => getComputedStyle(e).animationName !== 'none' || getComputedStyle(e).opacity !== '1').length);
+    expect(scrolled, 'scroll motion runs under prefers-reduced-motion').toBe(0);
     await expect(page.locator('#sheet')).toBeVisible();
     await expect(page.locator('h1')).toBeVisible();
   });
