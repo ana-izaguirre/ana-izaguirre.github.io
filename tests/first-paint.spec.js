@@ -25,6 +25,7 @@ test.describe('first paint', () => {
         expect(blocked, 'app.js was never requested, so nothing was tested').toBe(1);
         const big = await page.textContent('.h1-big');
         expect(big).toBe(locale === 'en-US' ? 'A curious mind.' : 'Una mente curiosa.');
+        expect(await page.textContent('.pill-go')).toContain(locale === 'en-US' ? "Let's talk" : 'Hablemos');
       });
 
       // Deterministic rather than timed: the cover's geometry with app.js blocked
@@ -33,7 +34,7 @@ test.describe('first paint', () => {
       test('app.js does not move anything on the cover', async ({ browser }) => {
         // On a phone the question box lives in the question section, not on the
         // cover (spec 008); the cards below where it sat must not move either.
-        const BOXES = ['.h1-big', '.lead', '#facts', '#stack', '.pill', '.land', '.cards'];
+        const BOXES = ['.h1-big', '.lead', '#facts', '#stack', '.pill-go', '.pill:not(.pill-go)', '.land', '.cards'];
         const measure = async (blockScript) => {
           const ctx = await browser.newContext({ locale, viewport: { width: 412, height: 823 }, isMobile: true, hasTouch: true, deviceScaleFactor: 1.75 });
           const page = await ctx.newPage();

@@ -344,6 +344,31 @@ test('on a desktop the box stays on the cover', async ({ page }) => {
   await expect(page.locator('#top #ask-mini')).toHaveCount(1);
 });
 
+// Spec 009: a call to action on the cover and where the page ends.
+test.describe('call to action', () => {
+  for (const [name, viewport] of [['phone', { width: 390, height: 844 }], ['desktop', { width: 1280, height: 800 }]]) {
+    test(`"let's talk" lands on the closing card — ${name}`, async ({ page }) => {
+      await page.setViewportSize(viewport);
+      await open(page, '?quiet=1');
+      await page.click('.pill-go');
+      await expect(page.locator('#hablemos')).toBeInViewport({ ratio: 0.9, timeout: 4000 });
+      await expect(page).toHaveURL(/#hablemos$/);
+    });
+  }
+
+  test('the closing card offers email, LinkedIn and the CV in the current language', async ({ page }) => {
+    await open(page, '?quiet=1');
+    const card = page.locator('#hablemos');
+    await expect(card.locator('a[href^="mailto:"]')).toHaveText('Escríbeme');
+    await expect(card.locator('a[href*="linkedin.com"]')).toHaveCount(1);
+    await expect(card.locator('a.dl')).toHaveAttribute('href', 'Ana-Izaguirre-CV-ES.pdf');
+    await page.click('#lang');
+    await expect(card.locator('a.dl')).toHaveAttribute('href', 'Ana-Izaguirre-CV-EN.pdf');
+    await expect(card.locator('a[href^="mailto:"]')).toHaveText('Write to me');
+    await expect(page.locator('.pill-go')).toContainText("Let's talk");
+  });
+});
+
 // Spec 006: the Curiosity Switch picks which parts of each case a reader sees.
 test.describe('the Curiosity Switch', () => {
   const view = (page, v) => page.locator('#views label', { has: page.locator(`input[value="${v}"]`) });
@@ -793,11 +818,11 @@ test.describe('in English', () => {
 test.describe('language and theme', () => {
   test('switch, change the CV download, and survive a reload', async ({ page }) => {
     await open(page);
-    await expect(page.locator('a.dl')).toHaveAttribute('href', 'Ana-Izaguirre-CV-ES.pdf');
+    await expect(page.locator('.bar a.dl')).toHaveAttribute('href', 'Ana-Izaguirre-CV-ES.pdf');
 
     await page.click('#lang');
     await expect(page.locator('h1')).toContainText(/engineer/i);
-    await expect(page.locator('a.dl')).toHaveAttribute('href', 'Ana-Izaguirre-CV-EN.pdf');
+    await expect(page.locator('.bar a.dl')).toHaveAttribute('href', 'Ana-Izaguirre-CV-EN.pdf');
 
     await page.click('#theme');
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');

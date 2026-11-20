@@ -17,7 +17,7 @@ const EN={...window.EN_TOP,
 // Case studies (docs/specs/002). Spanish lives in the markup; keep both in step.
 case_open:"See the case",
 case_hint:"problem, decisions, architecture, trade-offs, results",
-case_hint_b:"problem and results",view_l:"Read it as",view_brief:"Hiring",view_deep:"Engineering",
+case_hint_b:"problem and results",cta_mail:"Write to me",view_l:"Read it as",view_brief:"Hiring",view_deep:"Engineering",
 case_src:"Sources in the repository:",
 case_p:"Problem",
 case_d:"Decisions",
@@ -487,6 +487,18 @@ $('#ask-mini').addEventListener('submit',e=>{
 const box=$('#ask-mini'),boxHome=box.parentElement,phoneMQ=matchMedia('(max-width:680px)');
 const placeBox=()=>phoneMQ.matches?$('#ask-sec .grid').prepend(box):boxHome.append(box);
 phoneMQ.addEventListener('change',placeBox);placeBox();
+// In-page links land where they point (spec 009). The sections below the story
+// skip rendering until seen (content-visibility), so the browser aims at their
+// estimated heights and stops short. Once the scroll settles, aim again at the
+// real position. The browser's own jump stays: hash, focus, history.
+document.addEventListener('click',e=>{
+  const a=e.target.closest('a[href^="#"]'),t=a&&document.getElementById(a.hash.slice(1));
+  if(!t)return;
+  // Whichever comes first, the scroll ending or a fallback for browsers without
+  // scrollend, cancels the other: one correction, never a snap back later.
+  const settle=()=>{clearTimeout(timer);removeEventListener('scrollend',settle);t.scrollIntoView({behavior:'auto'})};
+  addEventListener('scrollend',settle);const timer=setTimeout(settle,1200);
+});
 $('#ask-again').addEventListener('click',()=>{
   if(phoneMQ.matches)box.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
   else scrollTo({top:0,behavior:reduce?'auto':'smooth'});
