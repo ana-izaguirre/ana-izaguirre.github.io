@@ -621,28 +621,27 @@ test.describe('slow fonts', () => {
 test.describe('career story, edges and gestures', () => {
   test('the arrow keys step through the story', async ({ page }) => {
     await open(page, '?quiet=1');
-    await expect(page.locator('#rp-step')).toContainText('4/4 · 7/7');
-    await page.keyboard.press('ArrowLeft');
-    await expect(page.locator('#rp-step')).toContainText('3/4 · 7/7');
+    await expect(page.locator('#rp-step')).toContainText('1/4 · 1/7');
     await page.keyboard.press('ArrowRight');
-    await expect(page.locator('#rp-step')).toContainText('4/4 · 7/7');
+    await expect(page.locator('#rp-step')).toContainText('2/4 · 1/7');
+    await page.keyboard.press('ArrowLeft');
+    await expect(page.locator('#rp-step')).toContainText('1/4 · 1/7');
   });
 
   test('typing in the search box does not move the story', async ({ page }) => {
     await open(page, '?quiet=1');
-    await page.press('#q-mini', 'ArrowLeft');
-    await expect(page.locator('#rp-step')).toContainText('4/4 · 7/7');
+    await page.press('#q-mini', 'ArrowRight');
+    await expect(page.locator('#rp-step')).toContainText('1/4 · 1/7');
   });
 
   test('it stops at both ends instead of wrapping', async ({ page }) => {
     await open(page, '?quiet=1');
-    await page.click('#rp-next');
-    await expect(page.locator('#rp-step')).toContainText('4/4 · 7/7');
-    await page.locator('.seg').first().click();
-    for (let i = 0; i < 3; i++) await page.click('#rp-prev');
-    await expect(page.locator('#rp-step')).toContainText('1/4 · 1/7');
     await page.click('#rp-prev');
     await expect(page.locator('#rp-step')).toContainText('1/4 · 1/7');
+    await page.locator('.seg').last().click();
+    await expect(page.locator('#rp-step')).toContainText('4/4 · 7/7');
+    await page.click('#rp-next');
+    await expect(page.locator('#rp-step')).toContainText('4/4 · 7/7');
   });
 
   test('stepping past the last beat crosses into the next stage and back', async ({ page }) => {
@@ -664,23 +663,66 @@ test.describe('career story, edges and gestures', () => {
       s.dispatchEvent(new PointerEvent('pointerdown', { clientX: a, bubbles: true }));
       s.dispatchEvent(new PointerEvent('pointerup', { clientX: b, bubbles: true }));
     }, [from, to]);
-    await swipe(300, 380);
-    await expect(page.locator('#rp-step')).toContainText('3/4 · 7/7');
     await swipe(380, 300);
-    await expect(page.locator('#rp-step')).toContainText('4/4 · 7/7');
+    await expect(page.locator('#rp-step')).toContainText('2/4 · 1/7');
+    await swipe(300, 380);
+    await expect(page.locator('#rp-step')).toContainText('1/4 · 1/7');
     await swipe(300, 320); // too short to count
-    await expect(page.locator('#rp-step')).toContainText('4/4 · 7/7');
+    await expect(page.locator('#rp-step')).toContainText('1/4 · 1/7');
   });
 
-  // A virtual clock walks the whole autoplay in a moment instead of a minute.
-  test('autoplay walks every stage and ends ready to replay', async ({ page }) => {
+  // Spec 013: the story waits at its first scene until it is seen. On the
+  // cover it used to play out, unwatched, before anyone scrolled down.
+  test('the story waits at its first scene while the visitor is on the cover', async ({ page }) => {
     await page.clock.install();
     await page.goto('/index.html');
     await page.clock.runFor(2_000);
     await expect(page.locator('html')).not.toHaveClass(/boot/);
     await page.clock.runFor(120_000);
+    await expect(page.locator('#rp-step')).toContainText('1/4 · 1/7');
+    await expect(page.locator('#rp-play')).toHaveClass(/ play/);
+  });
+
+  test('a story already moved by hand is not taken over when it comes into view', async ({ page }) => {
+    await page.clock.install();
+    await page.goto('/index.html');
+    await page.clock.runFor(2_000);
+    await page.locator('.seg').nth(2).click();
+    await page.locator('#scene').evaluate((e) => e.scrollIntoView({ block: 'center', behavior: 'instant' }));
+    await page.clock.runFor(10_000);
+    await expect(page.locator('#rp-step')).toContainText('4/4 · 3/7');
+  });
+
+  // A virtual clock walks the whole autoplay in a moment instead of a minute.
+  test('autoplay starts when the story comes into view, walks every stage and ends ready to replay', async ({ page }) => {
+    await page.clock.install();
+    await page.goto('/index.html');
+    await page.clock.runFor(2_000);
+    await expect(page.locator('html')).not.toHaveClass(/boot/);
+    await page.locator('#scene').evaluate((e) => e.scrollIntoView({ block: 'center', behavior: 'instant' }));
+    await expect(page.locator('#rp-play')).toHaveClass(/pause/);
+    await page.clock.runFor(120_000);
     await expect(page.locator('#rp-step')).toContainText('4/4 · 7/7');
     await expect(page.locator('#rp-play')).toHaveClass(/replay/);
+    await page.click('#rp-play');
+    await expect(page.locator('#rp-step')).toContainText('1/4 · 1/7');
+  });
+});
+
+test.describe('entering the page', () => {
+  test('a reload starts at the top, not where the visitor left off', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await page.evaluate(() => scrollTo(0, 2500));
+    await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(2000);
+    await page.reload();
+    await page.waitForTimeout(800);
+    expect(await page.evaluate(() => scrollY)).toBe(0);
+  });
+
+  test('everything starts collapsed: the cases closed, the story at its start', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await expect(page.locator('details[open]')).toHaveCount(0);
+    await expect(page.locator('#rp-step')).toContainText('1/4 · 1/7');
   });
 });
 
@@ -778,9 +820,9 @@ test.describe('in English', () => {
   // its Spanish name for screen readers on an English page.
   test('the story controls are named in English', async ({ page }) => {
     await open(page, '?quiet=1');
-    await expect(page.locator('#rp-play')).toHaveAttribute('aria-label', 'Replay again');
+    await expect(page.locator('#rp-play')).toHaveAttribute('aria-label', 'Play');
     await page.click('#lang');
-    await expect(page.locator('#rp-play')).toHaveAttribute('aria-label', 'Reproducir de nuevo');
+    await expect(page.locator('#rp-play')).toHaveAttribute('aria-label', 'Reproducir');
   });
 
   test('an English browser gets the English CV, search and contact', async ({ page }) => {

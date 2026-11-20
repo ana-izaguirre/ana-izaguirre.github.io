@@ -108,7 +108,7 @@ es:{meta:(n,ms)=>`${n===1?'1 fragmento':n+' fragmentos'} del CV, búsqueda en ${
  noneIn:m=>`No aparece en ${m}.`,tryAll:'Buscar en todo el CV',play:'Reproducir',pause:'Pausar',again:'Reproducir de nuevo',light:'Claro',dark:'Oscuro'},
 en:{meta:(n,ms)=>`${n===1?'1 passage':n+' passages'} from the CV, search took ${ms} ms`,none:'That is not in my CV. Email me and I will tell you:',
  see:'See it in the CV',hist:'Already asked:',why:'Matches:',syn:'synonym',
- noneIn:m=>`Nothing in ${m}.`,tryAll:'Search the whole CV',play:'Replay',pause:'Pause',again:'Replay again',light:'Light',dark:'Dark'}};
+ noneIn:m=>`Nothing in ${m}.`,tryAll:'Search the whole CV',play:'Play',pause:'Pause',again:'Replay again',light:'Light',dark:'Dark'}};
 const META={es:{t:document.title,d:$('meta[name=description]').content},
  en:{t:'Ana Izaguirre, full stack and backend engineer in Zaragoza | Node.js, TypeScript, AWS',d:'Interactive CV of Ana Izaguirre, full stack engineer specialising in backend, based in Zaragoza, with 8+ years in production: Node.js, TypeScript, React and AWS.'}};
 let lang='es';
@@ -131,7 +131,8 @@ evs.forEach((ev,i)=>{
   segsEl.appendChild(g);ev.seg=g;
   ev.btns=null;
 });
-let idx=evs.length-1,beat=BEATS,playing=false,timer=null,shown=-1;
+// The story always starts at its first scene (spec 013).
+let idx=0,beat=1,playing=false,timer=null,shown=-1;
 const STACK=['Node.js','TypeScript','AWS','GraphQL','React','Datadog','Docker','Python'];
 // A simple-icons logo as inline SVG. Brand colours close to black or white would
 // vanish in one of the two themes, so those take the text colour instead.
@@ -549,9 +550,12 @@ let booted=false;
 applyLang(window.LANG0);booted=true; // LANG0: decided in index.html before the first frame
 
 /* one orchestrated moment on arrival: the career plays once */
+// It plays when the story comes into view, not on the cover where nobody sees
+// it: by the time a visitor scrolled down, it used to be over (spec 013).
 function wake(){
   document.documentElement.classList.remove('boot');
-  if(!quiet&&!reduce)play();
+  const seen=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){seen.disconnect();if(!playing&&idx===0&&beat===1)play()}},{threshold:.45});
+  seen.observe($('#scene'));
 }
 if(reduce||quiet)document.documentElement.classList.remove('boot');
 else if(document.readyState==='complete')idle(()=>setTimeout(wake,120));
