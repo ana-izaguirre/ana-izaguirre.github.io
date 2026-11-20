@@ -121,7 +121,7 @@ test.describe('the career story fits one screen', () => {
       await page.setViewportSize({ width: size.width, height: size.height });
       await page.goto('/index.html?quiet=1');
       await page.waitForTimeout(900);
-      await page.click('.pill');
+      await page.click('.pill[href="#story"]');
       await page.waitForTimeout(900);
       const r = await page.evaluate(() => {
         const card = document.querySelector('.replay').getBoundingClientRect();
