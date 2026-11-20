@@ -943,29 +943,29 @@ window.ES_TOP={};
           <p data-line>TypeScript, Deno, Supabase, Gemini. <a href="https://github.com/ana-izaguirre/trainer-flow">github.com/ana-izaguirre/trainer-flow</a></p>
           <ul class="tr" data-line><li data-i18n="c-trainer_0">Máquina de estados estricta</li><li data-i18n="c-trainer_1">Webhooks idempotentes</li><li data-i18n="c-trainer_2">Dominio aislado de la IA</li><li data-i18n="c-trainer_3">100 % en autorización</li></ul></div>
       </div>
-      <details class="case no-print" id="case-trainer">
+      <details class="case no-print" id="case-trainer" data-chunk data-sec="case" data-name="trainer-flow">
         <summary><span class="case-open" data-i18n="case_open">Ver el caso</span> <span class="case-hint" data-i18n="case_hint">problema, decisiones, arquitectura, trade-offs, resultados</span></summary>
         <dl class="case-body">
           <dt data-i18n="case_p">Problema</dt>
-          <dd><p data-i18n="cs_trainer_p">Un entrenador personal arma y sigue rutinas con ayuda de IA. Una rutina mal adaptada puede lesionar a alguien, así que la IA no puede tener la última palabra.</p></dd>
+          <dd><p data-line data-i18n="cs_trainer_p">Un entrenador personal arma y sigue rutinas con ayuda de IA. Una rutina mal adaptada puede lesionar a alguien, así que la IA no puede tener la última palabra.</p></dd>
           <dt data-i18n="case_d">Decisiones</dt>
           <dd><ul>
-            <li data-i18n="cs_trainer_d1">La transición DRAFT → SENT no existe: a SENT solo se llega desde APPROVED, y ahí solo llega una acción del entrenador.</li>
-            <li data-i18n="cs_trainer_d2">El dominio solo conoce la interfaz AIProvider. «Gemini» no aparece en el core, y un test lo comprueba.</li>
-            <li data-i18n="cs_trainer_d3">Un webhook nunca espera a la IA: recibe, guarda, responde 200 y dispara aparte. Generar tarda 10–30 s y Tally reintenta antes.</li>
-            <li data-i18n="cs_trainer_d4">Idempotencia con UNIQUE (source, external_id): se inserta primero. Una comprobación previa dejaría pasar dos peticiones concurrentes.</li>
+            <li data-line data-i18n="cs_trainer_d1">La transición DRAFT → SENT no existe: a SENT solo se llega desde APPROVED, y ahí solo llega una acción del entrenador.</li>
+            <li data-line data-i18n="cs_trainer_d2">El dominio solo conoce la interfaz AIProvider. «Gemini» no aparece en el core, y un test lo comprueba.</li>
+            <li data-line data-i18n="cs_trainer_d3">Un webhook nunca espera a la IA: recibe, guarda, responde 200 y dispara aparte. Generar tarda 10–30 s y Tally reintenta antes.</li>
+            <li data-line data-i18n="cs_trainer_d4">Idempotencia con UNIQUE (source, external_id): se inserta primero. Una comprobación previa dejaría pasar dos peticiones concurrentes.</li>
           </ul></dd>
           <dt data-i18n="case_a">Arquitectura</dt>
-          <dd><p data-i18n="cs_trainer_a">Edge Functions en Deno sobre Supabase Postgres. El core es TypeScript puro: el linter le prohíbe Deno, fetch y npm, y por eso corre igual bajo Node en los tests. La interfaz es Telegram.</p></dd>
+          <dd><p data-line data-i18n="cs_trainer_a">Edge Functions en Deno sobre Supabase Postgres. El core es TypeScript puro: el linter le prohíbe Deno, fetch y npm, y por eso corre igual bajo Node en los tests. La interfaz es Telegram.</p></dd>
           <dt data-i18n="case_t">Trade-offs</dt>
           <dd><ul>
-            <li data-i18n="cs_trainer_t1">Con Telegram como única interfaz todo pasa por service_role y RLS no protege nada: la autorización vive en el core, con cobertura del 100 %, casos denegados incluidos.</li>
-            <li data-i18n="cs_trainer_t2">Fuera de la V1, a propósito: dashboard web, segundo proveedor de IA y cualquier automatización sin supervisión humana.</li>
+            <li data-line data-i18n="cs_trainer_t1">Con Telegram como única interfaz todo pasa por service_role y RLS no protege nada: la autorización vive en el core, con cobertura del 100 %, casos denegados incluidos.</li>
+            <li data-line data-i18n="cs_trainer_t2">Fuera de la V1, a propósito: dashboard web, segundo proveedor de IA y cualquier automatización sin supervisión humana.</li>
           </ul></dd>
           <dt data-i18n="case_r">Resultados</dt>
           <dd><ul>
-            <li data-i18n="cs_trainer_r1">El producto funciona sin IA: un E2E recorre crear, editar, aprobar y enviar, y comprueba que quedan cero filas de generaciones de IA.</li>
-            <li data-i18n="cs_trainer_r2">Cobertura del 100 % exigida por CI en los módulos críticos, y un workflow nocturno que exige mutación del 100 % archivo por archivo en los que no son negociables: autorización, máquina de estados y el parseo de los botones de Telegram, entre otros.</li>
+            <li data-line data-i18n="cs_trainer_r1">El producto funciona sin IA: un E2E recorre crear, editar, aprobar y enviar, y comprueba que quedan cero filas de generaciones de IA.</li>
+            <li data-line data-i18n="cs_trainer_r2">Cobertura del 100 % exigida por CI en los módulos críticos, y un workflow nocturno que exige mutación del 100 % archivo por archivo en los que no son negociables: autorización, máquina de estados y el parseo de los botones de Telegram, entre otros.</li>
           </ul></dd>
         </dl>
         <p class="case-src"><span data-i18n="case_src">Fuentes en el repositorio:</span> <a href="https://github.com/ana-izaguirre/trainer-flow/blob/main/docs/ARCHITECTURE.md">ARCHITECTURE.md (ADR-002 – ADR-010)</a> · <a href="https://github.com/ana-izaguirre/trainer-flow/blob/main/docs/RISKS.md">RISKS.md</a> · <a href="https://github.com/ana-izaguirre/trainer-flow#readme">README</a></p>
@@ -977,24 +977,24 @@ window.ES_TOP={};
           <p data-line>Python, SQLite FTS5, pytest, mypy. <a href="https://github.com/ana-izaguirre/mcp-docs-search">github.com/ana-izaguirre/mcp-docs-search</a></p>
           <ul class="tr" data-line><li data-i18n="c-mcp_0">SQLite FTS5 + BM25</li><li data-i18n="c-mcp_1">Arnés de evaluación</li><li data-i18n="c-mcp_2">Protocolo MCP</li><li data-i18n="c-mcp_3">Tipado estricto con mypy</li></ul></div>
       </div>
-      <details class="case no-print" id="case-mcp">
+      <details class="case no-print" id="case-mcp" data-chunk data-sec="case" data-name="mcp-docs-search">
         <summary><span class="case-open" data-i18n="case_open">Ver el caso</span> <span class="case-hint" data-i18n="case_hint">problema, decisiones, arquitectura, trade-offs, resultados</span></summary>
         <dl class="case-body">
           <dt data-i18n="case_p">Problema</dt>
-          <dd><p data-i18n="cs_mcp_p">Un agente de código conoce el lenguaje, pero no la documentación de tu sistema, y pegar la carpeta entera en su contexto no es práctico ni barato.</p></dd>
+          <dd><p data-line data-i18n="cs_mcp_p">Un agente de código conoce el lenguaje, pero no la documentación de tu sistema, y pegar la carpeta entera en su contexto no es práctico ni barato.</p></dd>
           <dt data-i18n="case_d">Decisiones</dt>
           <dd><ul>
-            <li data-i18n="cs_mcp_d1">SQLite FTS5 en vez de una base vectorial: BM25 con índice invertido desde la librería estándar, sin infraestructura. Los embeddings serían una fase 2 que se suma, no que reemplaza.</li>
-            <li data-i18n="cs_mcp_d2">Fragmentos por encabezado, cada uno con su ruta completa (guía › Instalación › Config). Una sola dependencia de ejecución: mcp.</li>
+            <li data-line data-i18n="cs_mcp_d1">SQLite FTS5 en vez de una base vectorial: BM25 con índice invertido desde la librería estándar, sin infraestructura. Los embeddings serían una fase 2 que se suma, no que reemplaza.</li>
+            <li data-line data-i18n="cs_mcp_d2">Fragmentos por encabezado, cada uno con su ruta completa (guía › Instalación › Config). Una sola dependencia de ejecución: mcp.</li>
           </ul></dd>
           <dt data-i18n="case_a">Arquitectura</dt>
-          <dd><p data-i18n="cs_mcp_a">Servidor MCP en Python 3.12 por stdio con tres herramientas: search_docs, list_sources y get_document. El índice es un artefacto de build; los markdown son la fuente de verdad.</p></dd>
+          <dd><p data-line data-i18n="cs_mcp_a">Servidor MCP en Python 3.12 por stdio con tres herramientas: search_docs, list_sources y get_document. El índice es un artefacto de build; los markdown son la fuente de verdad.</p></dd>
           <dt data-i18n="case_t">Trade-offs</dt>
-          <dd><p data-i18n="cs_mcp_t">La búsqueda por palabras falla cuando la pregunta describe un síntoma con palabras distintas a las de la documentación. Se publica ese límite en vez de esconderlo.</p></dd>
+          <dd><p data-line data-i18n="cs_mcp_t">La búsqueda por palabras falla cuando la pregunta describe un síntoma con palabras distintas a las de la documentación. Se publica ese límite en vez de esconderlo.</p></dd>
           <dt data-i18n="case_r">Resultados</dt>
           <dd><ul>
-            <li data-i18n="cs_mcp_r1">recall@1 0,30 y recall@3 0,44 en 50 preguntas escritas sin copiar el vocabulario del corpus. Un set anterior daba 0,60/0,87 y medía la redacción de las preguntas, no la búsqueda.</li>
-            <li data-i18n="cs_mcp_r2">Cada cambio se juzga con la prueba exacta de McNemar sobre las preguntas que cambian de resultado, para no celebrar ruido.</li>
+            <li data-line data-i18n="cs_mcp_r1">recall@1 0,30 y recall@3 0,44 en 50 preguntas escritas sin copiar el vocabulario del corpus. Un set anterior daba 0,60/0,87 y medía la redacción de las preguntas, no la búsqueda.</li>
+            <li data-line data-i18n="cs_mcp_r2">Cada cambio se juzga con la prueba exacta de McNemar sobre las preguntas que cambian de resultado, para no celebrar ruido.</li>
           </ul></dd>
         </dl>
         <p class="case-src"><span data-i18n="case_src">Fuentes en el repositorio:</span> <a href="https://github.com/ana-izaguirre/mcp-docs-search#retrieval-quality">README · Retrieval quality</a> · <a href="https://github.com/ana-izaguirre/mcp-docs-search/blob/main/docs/decisions.md">decisions.md</a></p>
@@ -1006,25 +1006,25 @@ window.ES_TOP={};
           <p data-line>React 19, TypeScript, Express, Firestore. <a href="https://latino-migra.vercel.app">latino-migra.vercel.app</a></p>
           <ul class="tr" data-line><li data-i18n="c-latino_0">Proxy que guarda las claves</li><li data-i18n="c-latino_1">React 19 + TypeScript</li><li data-i18n="c-latino_2">Firestore</li></ul></div>
       </div>
-      <details class="case no-print" id="case-latino">
+      <details class="case no-print" id="case-latino" data-chunk data-sec="case" data-name="latino-migra">
         <summary><span class="case-open" data-i18n="case_open">Ver el caso</span> <span class="case-hint" data-i18n="case_hint">problema, decisiones, arquitectura, trade-offs, resultados</span></summary>
         <dl class="case-body">
           <dt data-i18n="case_p">Problema</dt>
-          <dd><p data-i18n="cs_latino_p">Estudiantes y profesionales latinoamericanos que migran necesitan becas verificadas y guías de visado con su fuente oficial, en español.</p></dd>
+          <dd><p data-line data-i18n="cs_latino_p">Estudiantes y profesionales latinoamericanos que migran necesitan becas verificadas y guías de visado con su fuente oficial, en español.</p></dd>
           <dt data-i18n="case_d">Decisiones</dt>
           <dd><ul>
-            <li data-i18n="cs_latino_d1">El producto se acotó a propósito: seis pantallas compilan pero no se enlazan, y restaurar una es borrar una línea en navigation.ts.</li>
-            <li data-i18n="cs_latino_d2">La clave de Gemini vive en un Express mínimo que solo sirve /api/*. Con sesión iniciada no se guarda nada en el navegador; sin sesión, una cookie con cinco preferencias de visualización.</li>
+            <li data-line data-i18n="cs_latino_d1">El producto se acotó a propósito: seis pantallas compilan pero no se enlazan, y restaurar una es borrar una línea en navigation.ts.</li>
+            <li data-line data-i18n="cs_latino_d2">La clave de Gemini vive en un Express mínimo que solo sirve /api/*. Con sesión iniciada no se guarda nada en el navegador; sin sesión, una cookie con cinco preferencias de visualización.</li>
           </ul></dd>
           <dt data-i18n="case_a">Arquitectura</dt>
-          <dd><p data-i18n="cs_latino_a">SPA en React 19 con Vite. El navegador habla directamente con Firestore y Firebase Auth, y firestore.rules es el único control de acceso. Despliegue en Vercel.</p></dd>
+          <dd><p data-line data-i18n="cs_latino_a">SPA en React 19 con Vite. El navegador habla directamente con Firestore y Firebase Auth, y firestore.rules es el único control de acceso. Despliegue en Vercel.</p></dd>
           <dt data-i18n="case_t">Trade-offs</dt>
           <dd><ul>
-            <li data-i18n="cs_latino_t1">Sin capa de validación en servidor, las reglas de Firestore cargan con toda la seguridad.</li>
-            <li data-i18n="cs_latino_t2">Cada ruta de Firestore cae a datos estáticos ante un error, y eso escondió una función rota durante mucho tiempo. Ahora la regla es que ningún fallo sea silencioso.</li>
+            <li data-line data-i18n="cs_latino_t1">Sin capa de validación en servidor, las reglas de Firestore cargan con toda la seguridad.</li>
+            <li data-line data-i18n="cs_latino_t2">Cada ruta de Firestore cae a datos estáticos ante un error, y eso escondió una función rota durante mucho tiempo. Ahora la regla es que ningún fallo sea silencioso.</li>
           </ul></dd>
           <dt data-i18n="case_r">Resultados</dt>
-          <dd><p data-i18n="cs_latino_r">En desarrollo activo, con su tablero de proyecto. Cobertura del 65 % como trinquete: cada PR que añade comportamiento la sube, nunca la baja.</p></dd>
+          <dd><p data-line data-i18n="cs_latino_r">En desarrollo activo, con su tablero de proyecto. Cobertura del 65 % como trinquete: cada PR que añade comportamiento la sube, nunca la baja.</p></dd>
         </dl>
         <p class="case-src"><span data-i18n="case_src">Fuentes en el repositorio:</span> <a href="https://github.com/ana-izaguirre/latino-migra#readme">README</a> · <a href="https://github.com/ana-izaguirre/latino-migra/blob/main/CLAUDE.md">CLAUDE.md</a></p>
       </details>

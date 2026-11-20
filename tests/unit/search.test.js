@@ -131,3 +131,19 @@ test('a matched stem is shown as the text writes it', () => {
   assert.equal(surfaceForm('Formación en C#', 'formacion'), 'Formación', 'accents survive');
   assert.equal(surfaceForm('', 'aws'), 'aws', 'empty text');
 });
+
+test('false friends are not synonyms, though typed they still match (spec 005)', () => {
+  const index = createIndex([
+    doc('lab', 'Allergan Data Labs, role-based permissions, remote proctoring at Laureate Education', 'exp'),
+    doc('fin', 'financing flows and GitHub Actions', 'exp'),
+    doc('tf', 'trainer-flow, where AI proposes', 'proj'),
+  ]);
+  for (const [q, word] of [['database', 'data'], ['location', 'where'], ['hybrid', 'role'], ['zaragoza', 'remote'],
+    ['university', 'education'], ['portfolio', 'flow'], ['proyecto', 'github']]) {
+    const hits = search(index, q).hits;
+    assert.ok(hits.every((h) => !h.synonyms.includes(word)), `"${q}" reached "${word}" through a synonym`);
+  }
+  assert.equal(search(index, 'data').hits[0].id, 'lab', 'typed, data still matches literally');
+  assert.equal(search(index, 'github').hits[0].id, 'fin');
+});
+
