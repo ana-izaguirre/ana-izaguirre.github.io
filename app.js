@@ -245,7 +245,7 @@ bandMQ.addEventListener('change',frame);frame();
 // paisaje. Cada una deambula y parpadea a su ritmo, así nunca brillan a la vez.
 idle(()=>{
  const host=$('#flies');
- const small=innerWidth<=680,n=small?11:22,r=(a,b)=>a+Math.random()*(b-a),reach=small?40:90;
+ const small=innerWidth<=680,n=small?11:22,r=(a,b)=>a+Math.random()*(b-a),reach=small?70:130; // en px: lo bastante lejos para que se note que vuelan
  const f=document.createDocumentFragment();
  for(let i=0;i<n;i++){
    const el=mk('span','fly'),dot=mk('i');
@@ -254,9 +254,9 @@ idle(()=>{
    el.style.top=(high?r(18,48):(small?r(30,88):r(50,78))).toFixed(1)+'%';
    for(const k of [1,2,3]){el.style.setProperty('--x'+k,r(-reach,reach).toFixed(0)+'px');el.style.setProperty('--y'+k,r(-reach*.6,reach*.6).toFixed(0)+'px')}
    el.style.setProperty('--s',r(3.5,6.5).toFixed(1)+'px');
-   el.style.setProperty('--d',r(14,28).toFixed(1)+'s');
+   el.style.setProperty('--d',r(9,15).toFixed(1)+'s');
    el.style.setProperty('--b',r(2.2,4.6).toFixed(1)+'s');
-   el.style.animationDelay=(-r(0,28)).toFixed(1)+'s';
+   el.style.animationDelay=(-r(0,15)).toFixed(1)+'s';
    dot.style.animationDelay=(-r(0,4)).toFixed(1)+'s';
    if(reduce){el.style.animation='none';dot.style.animation='none';dot.style.opacity='.8'}
    el.appendChild(dot);f.appendChild(el);

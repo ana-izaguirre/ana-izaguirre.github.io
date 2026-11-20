@@ -518,6 +518,24 @@ test.describe('fireflies', () => {
   });
 });
 
+// They used to drift ~5 px a second: technically animated, visibly still on a
+// phone. A firefly has to be seen flying.
+test.describe('fireflies on a phone', () => {
+  test.use({ viewport: { width: 412, height: 915 }, isMobile: true, hasTouch: true });
+
+  test('they visibly fly, not just flicker', async ({ page }) => {
+    await open(page);
+    await expect(page.locator('html')).not.toHaveClass(/boot/, { timeout: 8000 });
+    const at = () => page.$$eval('.fly', (els) => els.map((e) => { const r = e.getBoundingClientRect(); return [r.left, r.top]; }));
+    const a = await at();
+    await page.waitForTimeout(2000);
+    const b = await at();
+    expect(a.length, 'no fireflies on a phone').toBeGreaterThanOrEqual(8);
+    const avg = a.reduce((s, p, i) => s + Math.hypot(b[i][0] - p[0], b[i][1] - p[1]), 0) / a.length;
+    expect(avg, `fireflies moved ${avg.toFixed(1)} px in 2 s on average`).toBeGreaterThan(18);
+  });
+});
+
 test.describe('reduced motion', () => {
   test.use({ reducedMotion: 'reduce' });
   test('fireflies stay still and the content is all there', async ({ page }) => {

@@ -406,9 +406,11 @@ html:not([data-theme=light]) .w-cloud{opacity:.22}
 @keyframes breathe{0%,100%{opacity:.85}50%{opacity:1}}
 /* luciérnagas: cada una con su trayectoria y su parpadeo */
 .flies{position:absolute;inset:0;contain:strict}
-.fly{position:absolute;width:var(--s,5px);height:var(--s,5px);will-change:transform;animation:wander var(--d,18s) ease-in-out infinite alternate}
+.fly{position:absolute;width:var(--s,5px);height:var(--s,5px);will-change:transform;animation:wander var(--d,12s) ease-in-out infinite}
 .fly i{display:block;width:100%;height:100%;border-radius:50%;background:var(--fly);box-shadow:0 0 6px 2px var(--fly-glow),0 0 18px 6px var(--fly-glow);animation:blink var(--b,3s) ease-in-out infinite}
-@keyframes wander{0%{transform:translate(0,0)}30%{transform:translate(var(--x1),var(--y1))}65%{transform:translate(var(--x2),var(--y2))}100%{transform:translate(var(--x3),var(--y3))}}
+/* Un vuelo en bucle por tres puntos y de vuelta, sin ir y volver por el mismo
+   camino: así nunca se quedan quietas en los extremos. */
+@keyframes wander{0%,100%{transform:translate(0,0)}25%{transform:translate(var(--x1),var(--y1))}50%{transform:translate(var(--x2),var(--y2))}75%{transform:translate(var(--x3),var(--y3))}}
 @keyframes blink{0%,100%{opacity:.18}45%,60%{opacity:1}}
 .dock{position:fixed;right:clamp(.9rem,3vw,1.6rem);bottom:clamp(.9rem,3vw,1.6rem);z-index:26;display:flex;flex-direction:column;align-items:flex-end;gap:.6rem}
 .fab{display:inline-flex;align-items:center;gap:.5rem;font:600 .93rem/1 var(--sans);padding:.8rem 1.1rem;border-radius:999px;border:1px solid var(--red);background:var(--red);color:var(--on-red);cursor:pointer;box-shadow:0 14px 34px -14px rgba(0,0,0,.6),0 0 0 6px color-mix(in srgb,var(--red) 16%,transparent),0 0 26px 8px color-mix(in srgb,var(--red) 42%,transparent);transition:box-shadow .3s,transform .2s}
