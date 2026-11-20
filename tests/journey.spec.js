@@ -698,6 +698,30 @@ test.describe('FAQ', () => {
   });
 });
 
+// Spec 021: a case's parts unfold in reading order.
+test.describe('case parts unfold', () => {
+  test('each part of an opened case arrives after the one before it', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await page.click('#case-trainer summary');
+    const parts = await page.$$eval('#case-trainer .case-body > *', (els) => els.map((e) => [getComputedStyle(e).animationName, parseFloat(getComputedStyle(e).animationDelay)]));
+    expect(parts.length).toBe(10);
+    expect(parts.every(([n]) => n === 'part-in')).toBe(true);
+    const delays = parts.map(([, d]) => d);
+    expect([...delays].sort((a, b) => a - b)).toEqual(delays);
+    expect(delays[9]).toBeGreaterThan(delays[0]);
+    await expect(page.locator('#case-trainer .case-body > *').last()).toHaveCSS('opacity', '1');
+  });
+});
+
+test.describe('case parts unfold, reduced motion', () => {
+  test.use({ reducedMotion: 'reduce' });
+  test('everything is there at once', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await page.click('#case-trainer summary');
+    expect(await page.$$eval('#case-trainer .case-body > *', (els) => els.filter((e) => getComputedStyle(e).animationName !== 'none').length)).toBe(0);
+  });
+});
+
 // Spec 006: the Curiosity Switch picks which parts of each case a reader sees.
 test.describe('the Curiosity Switch', () => {
   const view = (page, v) => page.locator('#views label', { has: page.locator(`input[value="${v}"]`) });
