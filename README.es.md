@@ -3,109 +3,43 @@
 [English](README.md) · **Español**
 
 [![Deploy](https://github.com/ana-izaguirre/ana-izaguirre.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/ana-izaguirre/ana-izaguirre.github.io/actions/workflows/deploy.yml)
-[![Quality](https://github.com/ana-izaguirre/ana-izaguirre.github.io/actions/workflows/quality.yml/badge.svg)](https://github.com/ana-izaguirre/ana-izaguirre.github.io/actions/workflows/quality.yml)
-[![Live](https://img.shields.io/badge/en%20vivo-ana--izaguirre.github.io-E4674A)](https://ana-izaguirre.github.io/)
+[![Coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fana-izaguirre.github.io%2Fcoverage.json)](#calidad)
+[![En vivo](https://img.shields.io/badge/en%20vivo-ana--izaguirre.github.io-E8B572)](https://ana-izaguirre.github.io/)
 
-[![Lighthouse](https://img.shields.io/badge/Lighthouse-100%20%C2%B7%20100%20%C2%B7%20100%20%C2%B7%20100-success)](#mediciones)
-[![axe-core](https://img.shields.io/badge/axe--core-0%20violaciones-success)](#mediciones)
-[![Tests](https://img.shields.io/badge/Playwright-81%20pruebas-success)](#compuertas-de-calidad)
-[![Coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fana-izaguirre.github.io%2Fcoverage.json)](#compuertas-de-calidad)
-[![Dependencias](https://img.shields.io/badge/dependencias%20en%20runtime-ninguna-success)](#notas-de-ingenier%C3%ADa)
+Portafolio y CV en una sola página estática, dentro de un paisaje ilustrado original que cuenta el viaje de Honduras a Zaragoza. Español e inglés, tema claro y oscuro.
 
-Un CV y portafolio interactivo: una página estática, sin compilación.
+## Lo que vale la pena mirar
 
-**En vivo:** https://ana-izaguirre.github.io/
+- **Pregúntale a mi CV.** Búsqueda BM25 sobre el propio CV, construida con el marcado de la página al cargar. Ningún modelo genera texto: cada respuesta cita el CV.
+- **Nada del exterior.** Sin framework, CDN, analítica ni servicio de fuentes: un HTML, un script y cuatro fuentes alojadas.
+- **Pinta antes que el script.** `app.js` se pide después del primer frame. La portada ya sale en el idioma del visitante y nada se mueve cuando llega el script.
+- **La hoja de impresión es el PDF.** Los dos CV descargables salen de las reglas de impresión de la propia página, una página A4 cada uno.
 
----
+## Calidad
 
-## Qué es
+Cada push a `main` pasa la compuerta completa antes de desplegar, y el despliegue solo corre si pasa:
 
-Un CV que se puede leer, buscar e imprimir, dentro de un paisaje ilustrado original que cuenta el viaje de Honduras a Zaragoza. La carrera se cuenta como un relato sobre una línea de tiempo continua — empresa, sector, duración y las tecnologías de cada etapa, con sus logos — y el documento entero se puede consultar desde la misma página.
-
-Disponible en español e inglés, con tema claro y oscuro. Ambos se recuerdan entre visitas.
-
-## Notas de ingeniería
-
-Lo que vale la pena mirar, para quien revise el código:
-
-**La búsqueda corre sobre el CV, no sobre una copia.** El índice se construye al cargar, a partir del DOM renderizado: cada elemento marcado con `data-chunk` es un documento, puntuado con BM25. No hay una segunda fuente de verdad que se desincronice, ni un modelo generando texto — cada respuesta cita un pasaje del CV y enlaza al lugar del que salió, así que nada puede inventarse. Los grupos de sinónimos amplían el ranking (`sql` alcanza PostgreSQL, DynamoDB y Snowflake), mientras que el resaltado se limita estrictamente a los términos que escribió la persona.
-
-**No se pide nada al exterior.** Sin framework, sin CDN, sin analítica, sin fuentes por red. Las tipografías están alojadas y subconjuntadas; los logos de tecnologías son trazos de [simple-icons](https://simpleicons.org/) incrustados como SVG. La página es un archivo HTML, un script y cuatro de fuentes.
-
-**La escena está dibujada en código.** Montañas, la basílica del Pilar, la familia y las luciérnagas son SVG y CSS, generados por `tools/scene.py` — sin imágenes ni material de terceros. Un solo SVG sirve a los dos temas: cada color es una variable CSS con su pareja nocturna. Las tarjetas de papel toman el borde rasgado de un filtro de turbulencia SVG, pero solo las pequeñas; las superficies grandes usan CSS puro, porque el filtro pintaría una textura de miles de píxeles de alto.
-
-**El primer frame no espera al script.** `app.js` se pide después del primer pintado. Lo que esa pantalla necesita de él se hace en línea: la portada y la barra se traducen antes de pintar, así un visitante en inglés nunca ve un destello en español y nada se recoloca cuando llega el script; y las fuentes de respaldo están reescaladas a Fraunces y Nunito, así el cambio de fuente tampoco mueve nada. El trabajo de arranque queda en tareas de menos de 50 ms: las lecturas de layout van agrupadas y la medición de la historia espera a que el hilo esté libre. Las animaciones de la escena arrancan en pausa tras una clase `boot` y se liberan después de `load`.
-
-**La hoja de impresión es el PDF.** Los dos CV descargables se generan con las reglas de impresión de la propia página — una página A4 cada uno, en cualquiera de los dos idiomas. No hay un documento aparte que se quede atrás de la versión web.
-
-## Mediciones
-
-Lighthouse; el móvil se mide con la CPU frenada 4 veces y red 4G lenta:
-
-|                 | Escritorio | Móvil |
-|-----------------|------------|-------|
-| Rendimiento     | 100        | 100   |
-| Accesibilidad   | 100        | 100   |
-| Buenas prácticas| 100        | 100   |
-| SEO             | 100        | 100   |
-
-`axe-core` no reporta violaciones en oscuro, claro ni móvil. La página se maneja por completo con teclado, respeta `prefers-reduced-motion`, y el diseño aguanta de 360 px a 1920 px sin scroll horizontal.
-
-## Compuertas de calidad
-
-Nada llega a producción sin medirse. Cada push a `main` corre la suite completa primero, y el trabajo de despliegue solo arranca cuando está en verde.
-
-| Capa | Qué comprueba | Herramienta |
-|---|---|---|
-| End-to-end | Buscador, historia de carrera, temas, idioma, popup de contacto, descargas de CV | Playwright |
-| Layout | Sin desbordes, nada recortado, nada montado — en seis tamaños | Playwright |
-| Primer pintado | La portada sale en el idioma del visitante antes de que corra el script, y el script no la mueve | Playwright |
-| Accesibilidad | Cero violaciones en oscuro, claro y móvil; manejo solo con teclado | axe-core |
-| Rendimiento | Puntuaciones de Lighthouse y Core Web Vitals, contra umbrales | Lighthouse |
-| Cobertura | Cada línea y cada función del JavaScript propio de la página corre bajo alguna prueba | V8, vía Playwright |
-
-Las pruebas de layout existen porque cada aserción fue un fallo real: un nombre cortado por un ancestro con `content-visibility`, las píldoras de preguntas deslizándose bajo la hoja del CV, una banda de sección desbordando el viewport. Comprueban el invariante en lugar de comparar píxeles, así que siguen siendo útiles entre plataformas en vez de volverse inestables.
-
-La cobertura la registra V8 mientras corre la suite end-to-end — sin paso de instrumentación: la página que se prueba es la que se publica. Está en el 100% de código y funciones, y `scripts/coverage.mjs` hace fallar el build si baja. Llegar ahí borró más código del que probó: guardas muertas, un manejador que nunca podía dispararse, un respaldo que contradecía la regla de solo iconos. El badge lee `/coverage.json`, que el despliegue publica desde la ejecución que lo aprobó.
-
-Accesibilidad, buenas prácticas y SEO son deterministas y deben dar 100. El rendimiento se mide con la CPU frenada, así que CI exige un piso (90 en móvil, 95 en escritorio) en lugar de un número exacto; la tabla de arriba es lo que realmente puntúa.
-
-Para correrlo:
+- **Playwright:** recorridos end-to-end y layout en seis tamaños de pantalla.
+- **axe-core:** cero violaciones de accesibilidad.
+- **Lighthouse:** 100 en todas las categorías, en móvil y escritorio.
+- **Cobertura V8:** 100% del JavaScript de la página. El badge de arriba muestra la ejecución que aprobó el sitio en vivo.
 
 ```bash
-npm ci
-npx playwright install --with-deps chromium
-npm run qa          # pruebas + cobertura + Lighthouse
-npm test            # solo pruebas
-npm run coverage    # cobertura de la última ejecución
-npm run lighthouse  # solo Lighthouse
+npm ci && npx playwright install --with-deps chromium
+npm run qa        # pruebas + cobertura + Lighthouse
 ```
 
-El `package.json` solo contiene herramientas de prueba. El sitio en sí no lleva ninguna dependencia.
-
-## Ejecutarlo en local
-
-Sin compilación ni dependencias:
+## Ejecutar y editar
 
 ```bash
-python3 -m http.server 8000
-# abrir http://localhost:8000
+python3 -m http.server 8000   # http://localhost:8000
 ```
 
-Abrir `index.html` directamente desde el disco también funciona, aunque las fuentes cargan de forma más fiable por HTTP.
-
-## Despliegue
-
-Cada push a `main` despliega con `.github/workflows/deploy.yml`, que llama primero al workflow de calidad y solo publica si pasa. También se puede lanzar a mano desde la pestaña Actions. Pages debe estar configurado en **Settings → Pages → Source: GitHub Actions**.
-
-## Editar
-
-Todo el contenido vive en `index.html`. El texto en español está en el marcado; las traducciones al inglés, en el objeto `EN` de `app.js`, salvo las de la primera pantalla, que viven en `EN_TOP` dentro de `index.html` para aplicarse antes del primer pintado. El paisaje es generado: se edita `tools/scene.py` y se ejecuta `python3 tools/scene.py`. El índice de búsqueda se reconstruye solo a partir de ese mismo marcado, así que añadir un puesto o un proyecto no requiere tocar nada más.
-
-Si el sitio se muda a otro dominio, hay que actualizar la URL en `index.html` (canonical, `og:url`, `og:image`, JSON-LD), en `robots.txt` y en `sitemap.xml`.
+- **Contenido:** el español vive en `index.html` y el inglés en `app.js`; el de la primera pantalla está en `EN_TOP`, dentro de `index.html`.
+- **Paisaje:** lo genera `tools/scene.py`.
 
 ## Créditos
 
-Tipografías: Fraunces, Nunito y Geist Mono, bajo SIL Open Font License 1.1, recortadas a los caracteres que usa la página.
-Logos de tecnologías: [simple-icons](https://simpleicons.org/), CC0.
-Todo lo demás — escena, diseño, código — es original.
+- **Tipografías:** Fraunces, Nunito y Geist Mono (SIL OFL 1.1).
+- **Logos:** [simple-icons](https://simpleicons.org/) (CC0).
+- Todo lo demás es original.
