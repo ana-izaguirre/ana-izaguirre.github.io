@@ -98,8 +98,8 @@ rp_h:'My career in seven scenes',
 rp_note:'At every stop: who, which sector, how long and with which technologies.',to_top:'Back to top',clear:'Clear the search',rp_step:'Step',rp_prev:'Previous step',rp_next:'Next step',k_co:'companies',k_te:'technologies',k_pr:'own projects',
 c7:'Have you designed REST and GraphQL APIs?',c8:'How do you approach testing?',c9:'Do you use Docker and Kubernetes?',c10:'What architectural decisions did you make in trainer-flow?',c11:'Which databases have you used?',c12:'What have you done since 2025?'
 });
-const SEC={es:{perfil:'Perfil',disp:'Disponibilidad',exp:'Experiencia',proj:'Proyectos',skills:'Competencias',edu:'Formación',lang:'Idiomas'},
-           en:{perfil:'Profile',disp:'Availability',exp:'Experience',proj:'Projects',skills:'Skills',edu:'Education',lang:'Languages'}};
+const SEC={es:{perfil:'Perfil',disp:'Disponibilidad',exp:'Experiencia',proj:'Proyectos',skills:'Competencias',edu:'Formación',lang:'Idiomas',case:'Caso de estudio'},
+           en:{perfil:'Profile',disp:'Availability',exp:'Experience',proj:'Projects',skills:'Skills',edu:'Education',lang:'Languages',case:'Case study'}};
 const num=(ms,l)=>{const s=ms<10?ms.toFixed(1):String(Math.round(ms));return l==='es'?s.replace('.',','):s};
 const UI={
 es:{meta:(n,ms)=>`${n===1?'1 fragmento':n+' fragmentos'} del CV, búsqueda en ${ms} ms`,none:'Eso no aparece en mi CV. Escríbeme y te lo cuento:',
@@ -355,6 +355,18 @@ function buildIndex(){
   for(const el of $$('[data-chunk]')){
     // A block with no [data-line] would be rejected by createIndex, loudly.
     const lines=el.matches('[data-line]')?[el]:[...el.querySelectorAll('[data-line]')];
+    if(el.dataset.sec==='case'){
+      // A case is indexed line by line, each with its project's name and its
+      // part's heading ("Decisions"): short passages like the CV's own. As one
+      // long passage it raised the average length BM25 normalizes by, and short
+      // skill lines fell below the cutoff.
+      lines.forEach((l,i)=>{
+        const part=l.closest('dd').previousElementSibling.textContent;
+        passageEls.set(`${el.id}:${i}`,{el,lines:[l]});
+        docs.push({id:`${el.id}:${i}`,section:'case',text:`${el.dataset.name} ${part} ${l.textContent}`,lines:[{text:l.textContent}]});
+      });
+      continue;
+    }
     passageEls.set(el.id,{el,lines});
     docs.push({id:el.id,section:el.dataset.sec,text:el.textContent,lines:lines.map(l=>({text:l.textContent}))});
   }
@@ -362,15 +374,17 @@ function buildIndex(){
 }
 // Search modes (docs/specs/003): which CV sections may answer. "all" searches
 // everything, education and profile included.
-const MODES={all:undefined,exp:['exp'],proj:['proj'],skills:['skills','lang']};
+const MODES={all:undefined,exp:['exp'],proj:['proj','case'],skills:['skills','lang']};
 let mode='all';
 function search(q){
   if(!indexReady)buildIndex();
-  const res=rank(index,q,{sections:MODES[mode]});
+  // Ask for more than three: several lines of one case may rank, and each
+  // case answers once, with its best line.
+  const res=rank(index,q,{sections:MODES[mode],limit:6}),seen=new Set();
   return{terms:new Set(res.terms),hits:res.hits.map(h=>{
     const p=passageEls.get(h.id);
     return{el:p.el,lines:h.lines.map(i=>p.lines[i]),matched:h.matched,synonyms:new Set(h.synonyms)};
-  })};
+  }).filter(h=>!seen.has(h.el)&&seen.add(h.el)).slice(0,3)};
 }
 
 
@@ -385,6 +399,7 @@ function marked(text,terms){
 }
 function titleOf(c){
   const sec=SEC[lang][c.dataset.sec],h=c.querySelector('h3'),w=c.querySelector('.when');
+  if(c.dataset.sec==='case')return `${sec}: ${c.dataset.name}`;
   if(w&&w.classList.contains('k'))return `${sec}: ${w.textContent}`;
   if(!h)return sec;
   return `${sec}: ${h.textContent}, ${w.textContent}`; // every block with an h3 has a date (.when)
@@ -433,7 +448,9 @@ function askInner(text,silent){
     // Only About and Projects are on screen; the rest of the CV exists for the PDF
     // and for this search. Nobody can be sent to a hidden passage.
     if(!h.el.closest('.cv-only')){
-      const a=mk('a',null,UI[lang].see);a.href='#'+h.el.id;a.addEventListener('click',e=>{e.preventDefault();flash(h.el)});
+      const a=mk('a',null,UI[lang].see);a.href='#'+h.el.id;
+      // A case lives in a closed <details>: open it, or the scroll lands on a summary.
+      a.addEventListener('click',e=>{e.preventDefault();h.el.open=true;flash(h.el)});
       art.appendChild(a);
     }
     box.appendChild(art);

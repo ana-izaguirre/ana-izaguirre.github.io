@@ -227,7 +227,7 @@ test.describe('ask my CV: modes and evidence', () => {
     await expect(page.locator('.ans-q')).toHaveText('typescript');
     const only = await sources(page);
     expect(only.length).toBeGreaterThan(0);
-    expect(only.every((s) => s.startsWith('Proyectos')), `non-project sources: ${only}`).toBe(true);
+    expect(only.every((s) => s.startsWith('Proyectos') || s.startsWith('Caso de estudio')), `non-project sources: ${only}`).toBe(true);
   });
 
   test('the modes are a radio group the keyboard can drive', async ({ page }) => {
@@ -261,6 +261,46 @@ test.describe('ask my CV: modes and evidence', () => {
     await page.fill('#q-mini', 'kubernetes');
     await page.press('#q-mini', 'Enter');
     await expect(page.locator('#answer .hit').first().locator('.ev:not(.syn)')).toContainText(['Kubernetes']);
+  });
+});
+
+// Spec 005: the case studies answer questions, and "see it" opens them.
+test.describe('ask my CV: case studies', () => {
+  const sources = (page) => page.locator('#answer .hit-src').allTextContents();
+  const QUESTION = {
+    es: ['¿Qué decisiones de arquitectura tomaste en trainer-flow?', 'Caso de estudio: trainer-flow'],
+    en: ['What architectural decisions did you make in trainer-flow?', 'Case study: trainer-flow'],
+  };
+
+  for (const [lang, [q, title]] of Object.entries(QUESTION)) {
+    test(`the trainer-flow decisions question cites its case, and "see it" opens it — ${lang}`, async ({ page }) => {
+      await open(page, `?quiet=1&lang=${lang}`);
+      await expect(page.locator('#case-trainer')).not.toHaveAttribute('open', '');
+      await page.fill('#q-mini', q);
+      await page.press('#q-mini', 'Enter');
+      expect(await sources(page)).toContain(title);
+      await page.locator('#answer .hit', { has: page.locator('.hit-src', { hasText: title }) }).locator('a').click();
+      await expect(page.locator('#case-trainer')).toHaveAttribute('open', '');
+      await expect(page.locator('#case-trainer.flash')).toBeInViewport();
+    });
+  }
+
+  test('the Projects mode answers from cases too', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await page.locator('#modes label', { has: page.locator('input[value="proj"]') }).click();
+    await page.fill('#q-mini', 'supabase');
+    await page.press('#q-mini', 'Enter');
+    const only = await sources(page);
+    expect(only).toContain('Caso de estudio: trainer-flow');
+    expect(only.every((s) => s.startsWith('Proyectos') || s.startsWith('Caso de estudio')), `other sources: ${only}`).toBe(true);
+  });
+
+  test('a removed false friend no longer widens the question', async ({ page }) => {
+    await open(page, '?quiet=1');
+    // "education" used to be a synonym of "studies", and pulled in Laureate Education.
+    await page.fill('#q-mini', '¿Qué estudiaste?');
+    await page.press('#q-mini', 'Enter');
+    expect((await sources(page)).join(' ')).not.toContain('Laureate');
   });
 });
 
