@@ -356,6 +356,14 @@ test.describe('call to action', () => {
     });
   }
 
+  test('on a phone the closing card keeps the same side margins as the CV', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await open(page, '?quiet=1');
+    const edges = await page.evaluate(() => ['#sheet', '#hablemos'].map((s) => { const r = document.querySelector(s).getBoundingClientRect(); return [Math.round(r.left), Math.round(r.right)]; }));
+    expect(edges[0][0], 'the premise: the CV has a margin').toBeGreaterThan(0);
+    expect(edges[1]).toEqual(edges[0]);
+  });
+
   test('the closing card offers email, LinkedIn and the CV in the current language', async ({ page }) => {
     await open(page, '?quiet=1');
     const card = page.locator('#hablemos');
