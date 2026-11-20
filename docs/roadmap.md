@@ -33,7 +33,7 @@ metrics on every project, honest "good fit / bad fit").
 | 22 | Good fit / bad fit, in Ana's own words | High, distinctive | Needs Ana: not to be invented | S | Needs Ana |
 | 23 | Numbered editorial sections: "01 — Journey", "02 — Ask my CV"… as eyebrows over each heading, and a numbered footer index | Medium | Low | S | Done (spec 016) |
 | 24 | A stat row on the cover: years in production, companies, own projects, from the story's own counters | Medium-high | Low | S | Done (spec 017) |
-| 25 | Section exits: each section ends in one text link to the next ("See the projects →", "Let's talk →") | Medium | Low | S | Planned |
+| 25 | Section exits: each section ends in one text link to the next ("See the projects →", "Let's talk →") | Medium | Low | S | Done (spec 022) |
 
 ## Why this order
 
