@@ -473,6 +473,17 @@ html:not([data-theme=light]) .world{--w0:#1B1838;--w1:#2E2550;--w2:#5B3A62;--w3:
    start, on the left; Zaragoza by the basilica. Each on a post in the ground. */
 .signs{display:flex;flex-direction:row;align-items:flex-end;justify-content:space-between;gap:.6rem;margin:auto 0 0;padding:1rem 25% 0 8%}
 .signs span{position:relative}
+/* A small surprise (spec 023): hovering a sign raises its flag, Honduras and
+   Aragón, waving on a little pole. Decoration only, like the signs. */
+.signs .egg{background:none;border:0;border-radius:0;box-shadow:none;padding:0;font-size:0;position:absolute;left:50%;bottom:calc(100% + 12px);width:54px;margin-left:-27px;opacity:0;transform:translateY(8px) scale(.7);transform-origin:50% 100%;transition:opacity .25s,transform .35s cubic-bezier(.34,1.56,.64,1);pointer-events:none;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))}
+.signs .egg svg{display:block;width:100%;border-radius:2px;transform-origin:0 50%}
+.signs .egg::after{content:"";position:absolute;left:-2px;top:-2px;bottom:-16px;height:auto;width:2px;margin:0;z-index:0;border-radius:0;background:var(--sign)}
+@media (hover:hover){
+  .signs span{pointer-events:auto;cursor:default}
+  .signs>span:hover .egg{opacity:1;transform:none}
+  .signs>span:hover .egg svg{animation:wave 1.6s ease-in-out infinite}
+}
+@keyframes wave{0%,100%{transform:skewY(0)}50%{transform:skewY(-4deg) scaleX(.97)}}
 .signs span::after{content:"";position:absolute;left:50%;top:100%;width:5px;height:22px;margin-left:-2.5px;background:color-mix(in srgb,var(--sign) 85%,#000);border-radius:0 0 2px 2px;z-index:-1}
 .signs span{background:var(--sign);color:var(--sign-t);font-weight:700;font-size:.86rem;padding:.4rem .95rem;border-radius:3px;box-shadow:0 8px 18px -10px rgba(40,25,10,.6);border:1px solid rgba(0,0,0,.12)}
 .signs span:first-child{transform:rotate(-2.4deg)}
@@ -862,7 +873,7 @@ section.replay{-webkit-backdrop-filter:none;backdrop-filter:none;position:relati
       </form>
     </aside>
   </div>
-  <div class="signs" aria-hidden="true"><span>Honduras ♡</span><span>Zaragoza ♡</span></div>
+  <div class="signs" aria-hidden="true"><span>Honduras ♡<span class="egg"><svg viewBox="0 0 60 36"><rect width="60" height="36" fill="#18C3DF"/><rect y="12" width="60" height="12" fill="#fff"/><g fill="#18C3DF"><path d="M30.00 16.30L30.40 17.45L31.62 17.47L30.65 18.21L31.00 19.38L30.00 18.68L29.00 19.38L29.35 18.21L28.38 17.47L29.60 17.45Z"/><path d="M24.50 13.70L24.90 14.85L26.12 14.87L25.15 15.61L25.50 16.78L24.50 16.08L23.50 16.78L23.85 15.61L22.88 14.87L24.10 14.85Z"/><path d="M35.50 13.70L35.90 14.85L37.12 14.87L36.15 15.61L36.50 16.78L35.50 16.08L34.50 16.78L34.85 15.61L33.88 14.87L35.10 14.85Z"/><path d="M24.50 18.90L24.90 20.05L26.12 20.07L25.15 20.81L25.50 21.98L24.50 21.28L23.50 21.98L23.85 20.81L22.88 20.07L24.10 20.05Z"/><path d="M35.50 18.90L35.90 20.05L37.12 20.07L36.15 20.81L36.50 21.98L35.50 21.28L34.50 21.98L34.85 20.81L33.88 20.07L35.10 20.05Z"/></g></svg></span></span><span>Zaragoza ♡<span class="egg"><svg viewBox="0 0 60 36"><rect width="60" height="36" fill="#FCDD09"/><g fill="#DA121A"><rect y="4" width="60" height="4"/><rect y="12" width="60" height="4"/><rect y="20" width="60" height="4"/><rect y="28" width="60" height="4"/></g></svg></span></span></div>
   <nav class="wrap cards" aria-label="Secciones" data-i18n-aria="cards_a">
     <a class="paper tile" href="#story" data-focus="story"><span class="tape"></span><span class="whisper" aria-hidden="true" data-i18n="msg_story">Todo empezó en Honduras, en 2015.</span>
       <h2 class="tl-t"><span class="blob"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm3.6 6.4-2.1 5-5 2.1 2.1-5Z"/></svg></span><span data-i18n="t1_t">Mi trayectoria</span></h2>
