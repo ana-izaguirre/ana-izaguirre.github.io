@@ -14,12 +14,12 @@ const ES={};$$('[data-i18n]').forEach(e=>{ES[e.dataset.i18n]=e.textContent});
 ES.ph_mini=$('#q-mini').placeholder;
 $$('[data-i18n-aria]').forEach(e=>{const k=e.dataset.i18nAria;if(!(k in ES))ES[k]=e.getAttribute('aria-label')});
 Object.assign(ES,window.ES_TOP); // the cover may have been translated before the first frame
-ES.rp_step='Paso';ES.c_done='Copiado';ES.clear='Limpiar la búsqueda';ES.oops='Algo falló en la búsqueda. Escríbeme y te contesto yo:';ES.to_top='Volver arriba';ES.rp_prev='Paso anterior';ES.rp_next='Paso siguiente';
+ES.rp_step='Paso';ES.k_co='empresas';ES.k_te='tecnologías';ES.k_pr='proyectos propios';ES.k_co1='empresa';ES.k_te1='tecnología';ES.k_pr1='proyecto propio';ES.c_done='Copiado';ES.clear='Limpiar la búsqueda';ES.oops='Algo falló en la búsqueda. Escríbeme y te contesto yo:';ES.to_top='Volver arriba';ES.rp_prev='Paso anterior';ES.rp_next='Paso siguiente';
 const EN={...window.EN_TOP,
 // Case studies (docs/specs/002). Spanish lives in the markup; keep both in step.
 case_open:"See the case",
 case_hint:"problem, decisions, architecture, trade-offs, results",
-case_hint_b:"problem and results",cta_mail:"Write to me",more_q:"More questions",eb_faq:"FAQ",faq_h:"What I am usually asked",faq_q1:"Where, how and when do you want to work?",faq_q2:"What is your English level?",faq_q3:"Why is there a break since 2025?",faq_q4:"Can I see your code?",faq_a4:"Yes: three own projects, with their decisions and figures, above and at",pm_trainer1_n:"100%",pm_trainer1:"coverage required on the critical modules",pm_trainer2_n:"100%",pm_trainer2:"nightly mutation score, file by file, on the non-negotiable ones",pm_trainer3_n:"0",pm_trainer3:"AI rows left after the E2E that runs the product without AI",pm_mcp1_n:"0.44",pm_mcp1:"recall@3 over 50 questions without the corpus vocabulary",pm_mcp2_n:"50",pm_mcp2:"evaluation questions, every change judged with McNemar's test",pm_mcp3_n:"1",pm_mcp3:"runtime dependency: mcp",pm_latino1_n:"65%",pm_latino1:"coverage as a ratchet: it only goes up",pm_latino2_n:"0",pm_latino2:"data in the browser once signed in",pm_latino3_n:"1",pm_latino3:"access control: the Firestore rules",trust_h:"Has worked at",eb_story:"Journey",eb_ask:"Ask my CV",eb_about:"Profile",eb_proj:"Own work",eb_talk:"Let's talk",idx_a:"Index",st_a:"In figures",st_years:"years in production",st_cos:"companies",st_tech:"technologies",st_own:"own projects",view_l:"Read it as",view_brief:"Hiring",view_deep:"Engineering",
+case_hint_b:"problem and results",cta_mail:"Write to me",more_q:"More questions",k_co1:"company",k_te1:"technology",k_pr1:"own project",eb_faq:"FAQ",faq_h:"What I am usually asked",faq_q1:"Where, how and when do you want to work?",faq_q2:"What is your English level?",faq_q3:"Why is there a break since 2025?",faq_q4:"Can I see your code?",faq_a4:"Yes: three own projects, with their decisions and figures, above and at",pm_trainer1_n:"100%",pm_trainer1:"coverage required on the critical modules",pm_trainer2_n:"100%",pm_trainer2:"nightly mutation score, file by file, on the non-negotiable ones",pm_trainer3_n:"0",pm_trainer3:"AI rows left after the E2E that runs the product without AI",pm_mcp1_n:"0.44",pm_mcp1:"recall@3 over 50 questions without the corpus vocabulary",pm_mcp2_n:"50",pm_mcp2:"evaluation questions, every change judged with McNemar's test",pm_mcp3_n:"1",pm_mcp3:"runtime dependency: mcp",pm_latino1_n:"65%",pm_latino1:"coverage as a ratchet: it only goes up",pm_latino2_n:"0",pm_latino2:"data in the browser once signed in",pm_latino3_n:"1",pm_latino3:"access control: the Firestore rules",trust_h:"Has worked at",eb_story:"Journey",eb_ask:"Ask my CV",eb_about:"Profile",eb_proj:"Own work",eb_talk:"Let's talk",idx_a:"Index",st_a:"In figures",st_years:"years in production",st_cos:"companies",st_tech:"technologies",st_own:"own projects",view_l:"Read it as",view_brief:"Hiring",view_deep:"Engineering",
 case_src:"Sources in the repository:",
 case_p:"Problem",
 case_d:"Decisions",
@@ -248,6 +248,8 @@ function paint(anim){
   $('#k-pr').textContent=upto.reduce((a,e)=>a+(+e.el.dataset.pr||0),0);
   const t=new Set();upto.forEach((e,i)=>{if(i<idx||beat===BEATS)e.el.dataset.tech.split(',').forEach(x=>t.add(x))});
   $('#k-te').textContent=t.size;
+  // One company, not "1 companies": the label follows its number.
+  for(const k of ['co','te','pr'])$('#k-'+k).nextElementSibling.textContent=D[$('#k-'+k).textContent==='1'?`k_${k}1`:`k_${k}`];
   logosEl.querySelectorAll('button').forEach(b=>b.tabIndex=beat===BEATS?0:-1);
 }
 function segLabels(){evs.forEach(e=>{e.seg.querySelector('.lb').textContent=(lang==='en'&&e.el.dataset.shortEn)||e.el.dataset.short})}
