@@ -304,6 +304,46 @@ test.describe('ask my CV: case studies', () => {
   });
 });
 
+// Spec 008: on a phone the box sits with its suggested questions.
+test.describe('ask my CV on a phone', () => {
+  test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+
+  test('one box, right above the questions, which sit on one swipeable row', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await expect(page.locator('input#q-mini')).toHaveCount(1);
+    await expect(page.locator('#ask-sec #ask-mini')).toHaveCount(1);
+    const before = await page.evaluate(() => !!(document.querySelector('#ask-mini').compareDocumentPosition(document.querySelector('#chips')) & Node.DOCUMENT_POSITION_FOLLOWING));
+    expect(before, 'the box is not before the questions').toBe(true);
+    const tops = await page.locator('#chips .chip').evaluateAll((cs) => new Set(cs.map((c) => c.offsetTop)).size);
+    expect(tops, 'questions wrap onto more than one row').toBe(1);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+    await page.fill('#q-mini', 'docker');
+    await page.press('#q-mini', 'Enter');
+    await expect(page.locator('.ans-q')).toHaveText('docker');
+  });
+
+  test('"ask something else" brings the box back into view', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await page.locator('#chips .chip').first().click();
+    await page.locator('#ask-again').click();
+    await expect(page.locator('#q-mini')).toBeFocused();
+    await expect(page.locator('#ask-mini')).toBeInViewport();
+  });
+
+  test('a wider window takes the box back to the cover', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await expect(page.locator('#top #ask-mini')).toHaveCount(1);
+    await page.setViewportSize({ width: 390, height: 844 });
+    await expect(page.locator('#ask-sec #ask-mini')).toHaveCount(1);
+  });
+});
+
+test('on a desktop the box stays on the cover', async ({ page }) => {
+  await open(page, '?quiet=1');
+  await expect(page.locator('#top #ask-mini')).toHaveCount(1);
+});
+
 // Spec 006: the Curiosity Switch picks which parts of each case a reader sees.
 test.describe('the Curiosity Switch', () => {
   const view = (page, v) => page.locator('#views label', { has: page.locator(`input[value="${v}"]`) });
@@ -837,5 +877,16 @@ test.describe('reduced motion', () => {
     await jump(() => page.click('#ask-again'));
     await page.locator('.seg').last().click(); // last stage, all beats: its logos are showing
     await jump(() => page.locator('#c-logos .lg').first().click());
+  });
+
+  test('on a phone, "ask something else" is instant too', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await open(page, '?quiet=1');
+    await page.locator('#chips .chip').first().click();
+    await page.click('#ask-again');
+    const a = await page.evaluate(() => scrollY);
+    await page.waitForTimeout(120);
+    expect(await page.evaluate(() => scrollY)).toBe(a);
+    await expect(page.locator('#ask-mini')).toBeInViewport();
   });
 });

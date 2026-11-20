@@ -31,7 +31,9 @@ test.describe('first paint', () => {
       // must equal its geometry once app.js has run. Anything the script changes
       // in the first screen would be a layout shift on a slow phone.
       test('app.js does not move anything on the cover', async ({ browser }) => {
-        const BOXES = ['.h1-big', '.lead', '#facts', '#stack', '.pill', '.land', '#ask-mini'];
+        // On a phone the question box lives in the question section, not on the
+        // cover (spec 008); the cards below where it sat must not move either.
+        const BOXES = ['.h1-big', '.lead', '#facts', '#stack', '.pill', '.land', '.cards'];
         const measure = async (blockScript) => {
           const ctx = await browser.newContext({ locale, viewport: { width: 412, height: 823 }, isMobile: true, hasTouch: true, deviceScaleFactor: 1.75 });
           const page = await ctx.newPage();

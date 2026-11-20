@@ -482,8 +482,14 @@ $('#ask-mini').addEventListener('submit',e=>{
   mini.value='';ask(v);
   $('#ask-sec').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
 });
+// On phones the question box moves next to its suggested questions (spec 008):
+// on the cover it sat a screen and a half away from them. Still one box.
+const box=$('#ask-mini'),boxHome=box.parentElement,phoneMQ=matchMedia('(max-width:680px)');
+const placeBox=()=>phoneMQ.matches?$('#ask-sec .grid').prepend(box):boxHome.append(box);
+phoneMQ.addEventListener('change',placeBox);placeBox();
 $('#ask-again').addEventListener('click',()=>{
-  scrollTo({top:0,behavior:reduce?'auto':'smooth'});
+  if(phoneMQ.matches)box.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
+  else scrollTo({top:0,behavior:reduce?'auto':'smooth'});
   mini.focus({preventScroll:true});
 });
 $('#chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(b)ask(b.textContent)});
