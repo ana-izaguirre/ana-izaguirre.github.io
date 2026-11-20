@@ -86,7 +86,7 @@ for (const size of SIZES) {
       await page.locator('#cv').scrollIntoViewIfNeeded();
       await page.waitForTimeout(600);
 
-      for (const sel of ['.sh-name', '.sh-role', 'h1', '#c-perfil', '#c-disp']) {
+      for (const sel of ['h1', '#h-about', '#sobre-mi .txt', '#h-proj', '#c-trainer']) {
         const r = await page.evaluate(CLIPPED, sel);
         expect(r.missing, `${sel} is not on the page`).toBe(false);
         expect(r.cut, `${sel} is cut off by ${r.by}`).toBeLessThanOrEqual(1);
@@ -224,6 +224,27 @@ test.describe('print', () => {
       expect(shown, `${sel} would be printed`).toBe('none');
     }
     await expect(page.locator('#sheet')).toBeVisible();
+    // The PDF is the whole CV: what the screen hides comes back, and the
+    // screen-only About section stays out.
+    for (const sel of ['#h-perfil', '#h-exp', '#h-sk', '#h-edu', '.sh-name']) {
+      await expect(page.locator(sel), `${sel} is missing from the PDF`).toBeVisible();
+    }
+    await expect(page.locator('#sobre-mi')).toBeHidden();
+  });
+
+  test('on screen the CV shows only About and Projects', async ({ page }) => {
+    await page.goto('/index.html?quiet=1');
+    await page.waitForTimeout(600);
+    for (const sel of ['#h-perfil', '#h-exp', '#h-sk', '#h-edu', '.sh-name']) {
+      await expect(page.locator(sel), `${sel} is still on screen`).toBeHidden();
+    }
+    await expect(page.locator('#sobre-mi')).toBeVisible();
+    await expect(page.locator('#h-proj')).toBeVisible();
+    await page.click('.tile[href="#sobre-mi"]');
+    await expect.poll(() => page.evaluate(() => {
+      const r = document.getElementById('sobre-mi').getBoundingClientRect();
+      return r.top >= 0 && r.top < innerHeight;
+    })).toBe(true);
   });
 });
 

@@ -20,12 +20,13 @@ jobs:
   quality:
     uses: ./.github/workflows/quality.yml
 
-  deploy:
+  # Two jobs, as GitHub's own Pages workflow does. deploy-pages looks the
+  # artifact up through the API; asked from the job that had just uploaded it,
+  # it once found none and, on the re-run, two. A separate job reads it after
+  # the upload has settled.
+  build:
     needs: quality
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -48,6 +49,13 @@ jobs:
         with:
           path: .
 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4

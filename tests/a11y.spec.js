@@ -56,7 +56,7 @@ test('the page can be driven from the keyboard alone', async ({ page }) => {
   let reached = false;
   for (let i = 0; i < 40 && !reached; i++) {
     await page.keyboard.press('Tab');
-    reached = await page.evaluate(() => document.activeElement?.id === 'q');
+    reached = await page.evaluate(() => document.activeElement?.id === 'q-mini');
   }
   expect(reached, 'could not reach the search field by tabbing').toBe(true);
 

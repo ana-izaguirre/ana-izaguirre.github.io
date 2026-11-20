@@ -8,18 +8,16 @@ const MAIL='ana.izaguirrematamoros@gmail.com';
 
 /* ---------- i18n: el español sale del propio HTML ---------- */
 const ES={};$$('[data-i18n]').forEach(e=>{ES[e.dataset.i18n]=e.textContent});
-ES.ph=$('#q').placeholder;ES.ph_mini=$('#q-mini').placeholder;
+ES.ph_mini=$('#q-mini').placeholder;
 $$('[data-i18n-aria]').forEach(e=>{const k=e.dataset.i18nAria;if(!(k in ES))ES[k]=e.getAttribute('aria-label')});
 Object.assign(ES,window.ES_TOP); // la portada pudo traducirse antes del primer frame
 ES.rp_step='Paso';ES.c_done='Copiado';ES.clear='Limpiar la búsqueda';ES.oops='Algo falló en la búsqueda. Escríbeme y te contesto yo:';ES.to_top='Volver arriba';ES.rp_prev='Paso anterior';ES.rp_next='Paso siguiente';
 const EN={...window.EN_TOP,
-skip:'Go to the CV',ask_h2:'Or tap one of these questions:',ph:'For example: have you worked with queues?',
+skip:'Go to the CV',ans_h:'What my CV says',ask_again:'Ask something else',s_about:'About me',
+about1:'Backend and full stack engineer with 8+ years in production, most recently at Allergan Data Labs (AbbVie) and Intel. I work with event-driven architectures on AWS, REST and GraphQL APIs, and AI-assisted development every day.',
+about2:'I live in Zaragoza and I am looking for a permanent role: hybrid in Zaragoza or remote from Spain. Available immediately.',ask_h2:'Or tap one of these questions:',
 c1:'How did you handle queue and event architecture on AWS?',c2:'What is your experience with on-call and observability with Datadog?',c3:'How do you use AI and agentic development day to day?',c4:'Have you led or mentored engineers?',c5:'Where do you live and what role are you looking for?',c6:'What is your English level?',
-n0:'Question',n1:'Queue',n2:'CV search',n3:'Answer',
-st_done:'answered',st_cache:'from cache',st_retry:'retries',chaos:'Simulate a failure on the next question',
 how:'Keyword search (BM25) over this very CV, inside your browser. No model is generating text: nothing is made up and every answer cites its source.',
-how_3:'Every question is an event with an idempotency key. If it repeats, it is served from cache; if the search fails, it is retried after a wait.',
-empty:'Pick a question or write your own. Every answer comes from my CV, with its source.',
 role:'Full stack engineer, backend-focused',loc:'Zaragoza, Spain',
 s_perfil:'Profile',
 perfil:'Full stack engineer with 8+ years building production systems, most recently at Allergan Data Labs (AbbVie) and Intel. My strength is the backend: event-driven architectures on AWS, REST and GraphQL APIs, and on-call rotations with Datadog. Two years leading and mentoring teams. AI-assisted development in my daily workflow.',
@@ -44,8 +42,7 @@ p1_1:'Workout planning over Telegram where AI proposes and the trainer decides: 
 p2_1:'MCP server that gives AI agents keyword search over markdown documentation, with an evaluation harness that publishes its metrics. It is the same idea behind the search in my interactive CV.',
 p3_1:'Web platform for Latin American students and professionals who migrate: scholarships, an AI assistant (Gemini) and forums, with a proxy that keeps keys out of the browser.',
 s_sk:'Skills',yrs_k:'Years of experience per technology',k2:'Messaging',v2:'SNS, SQS and RabbitMQ: queues, events and asynchronous messaging',k4:'Data',k5:'Frontend, testing',k6:'AI',
-v6:'Gemini API, MCP and development with coding agents (Claude Code, OpenCode)',
-s_contact:'Contact',p_contact:'I am looking for a permanent role as a backend or full stack engineer, hybrid in Zaragoza or remote from Spain. Available immediately.',c_mail:'Open in mail app',fab:'Contact',pop_t:'Available to start now',pop_d:'Permanent full stack or backend role: hybrid in Zaragoza or remote from Spain.',c_copy:'Copy email',c_done:'Copied',oops:'Something went wrong with the search. Write to me and I will answer myself:',s_edu:'Education and languages',k_edu:'Education',
+v6:'Gemini API, MCP and development with coding agents (Claude Code, OpenCode)',fab:'Contact',pop_t:'Available to start now',pop_d:'Permanent full stack or backend role: hybrid in Zaragoza or remote from Spain.',c_copy:'Copy email',c_done:'Copied',oops:'Something went wrong with the search. Write to me and I will answer myself:',s_edu:'Education and languages',k_edu:'Education',
 e1:"Master's in High Performance Computing, Universidade da Coruña (2022–2026).",
 e2:"Bachelor's in Computer Science, UNAH (2010–2015).",
 k_lang:'Languages',l1:'Native Spanish. Professional English: 6+ years with US engineering teams. Basic Portuguese.',
@@ -64,8 +61,7 @@ rp_h:'My career in seven scenes',
 'c-trainer_1':'Idempotent webhooks',
 'c-trainer_2':'Domain isolated from the AI',
 'c-trainer_3':'100% coverage on authorization',
-rp_note:'At every stop: who, which sector, how long and with which technologies.',
-rp_see:'See this stage in the CV',to_top:'Back to top',clear:'Clear the search',rp_step:'Step',rp_prev:'Previous step',rp_next:'Next step',rp_aria:'Timeline year',k_co:'companies',k_te:'technologies',k_pr:'own projects',
+rp_note:'At every stop: who, which sector, how long and with which technologies.',to_top:'Back to top',clear:'Clear the search',rp_step:'Step',rp_prev:'Previous step',rp_next:'Next step',k_co:'companies',k_te:'technologies',k_pr:'own projects',
 c7:'Have you designed REST and GraphQL APIs?',c8:'How do you approach testing?',c9:'Do you use Docker and Kubernetes?',c10:'What architectural decisions did you make in trainer-flow?',c11:'Which databases have you used?',c12:'What have you done since 2025?'
 });
 const SEC={es:{perfil:'Perfil',disp:'Disponibilidad',exp:'Experiencia',proj:'Proyectos',skills:'Competencias',edu:'Formación',lang:'Idiomas'},
@@ -390,7 +386,7 @@ function ask(text,silent){
   try{askInner(text,silent)}catch(err){fail(text,err&&err.message)}
 }
 function askInner(text,silent){
-  text=text.trim();if(!text){$('#q').focus();return}
+  text=text.trim();
   const t0=performance.now(),res=search(text),ms=performance.now()-t0;
   const box=mk('div','ans'+(silent?'':' in'));
   if(!silent){const x=mk('button','ans-x','×');x.type='button';x.setAttribute('aria-label',(lang==='es'?ES:EN).clear);x.addEventListener('click',clearAsk);box.appendChild(x)}
@@ -401,8 +397,13 @@ function askInner(text,silent){
   res.hits.forEach(h=>{
     const art=mk('article','hit');art.appendChild(mk('p','hit-src',titleOf(h.el)));
     h.lines.forEach(l=>art.appendChild(marked(l.textContent,res.terms)));
-    const a=mk('a',null,UI[lang].see);a.href='#'+h.el.id;a.addEventListener('click',e=>{e.preventDefault();flash(h.el)});
-    art.appendChild(a);box.appendChild(art);
+    // En pantalla solo se ven Sobre mí y Proyectos: el resto del CV existe para el
+    // PDF y para esta búsqueda. A un pasaje oculto no se puede llevar a nadie.
+    if(!h.el.closest('.cv-only')){
+      const a=mk('a',null,UI[lang].see);a.href='#'+h.el.id;a.addEventListener('click',e=>{e.preventDefault();flash(h.el)});
+      art.appendChild(a);
+    }
+    box.appendChild(art);
   });
   answer.replaceChildren(box);
   if(!silent){
@@ -414,22 +415,22 @@ function askInner(text,silent){
     box.classList.remove('in');void box.offsetWidth;box.classList.add('in');
   }
 }
-const qEl=$('#q'),qX=$('#q-clear');
-function qToggle(){qX.hidden=!qEl.value}
-qEl.addEventListener('input',qToggle);
-function clearAsk(){qEl.value='';qToggle();asked.length=0;hist.hidden=true;answer.replaceChildren();ask($('#chips .chip').textContent,true);qEl.focus()}
-qX.addEventListener('click',clearAsk);
+// Una sola caja de preguntas, la de la portada. La sección de abajo muestra la
+// respuesta, las sugerencias y el historial, sin una segunda caja que la repita.
+const mini=$('#q-mini');
+function clearAsk(){mini.value='';asked.length=0;hist.hidden=true;answer.replaceChildren();ask($('#chips .chip').textContent,true)}
 answer.addEventListener('keydown',e=>{if(e.key==='Escape')clearAsk()});
-qEl.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();clearAsk()}});
-function submitAsk(){const v=qEl.value;qEl.value='';qToggle();ask(v)}
-// Enter en el campo y el botón disparan el submit nativo del formulario: un solo camino.
-$('#ask').addEventListener('submit',e=>{e.preventDefault();submitAsk()});
+mini.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();clearAsk()}});
 $('#ask-mini').addEventListener('submit',e=>{
   e.preventDefault();
-  const mini=$('#q-mini'),v=mini.value.trim();
+  const v=mini.value.trim();
   if(!v){mini.focus();return}
-  $('#q').value=v;mini.value='';submitAsk();
+  mini.value='';ask(v);
   $('#ask-sec').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+});
+$('#ask-again').addEventListener('click',()=>{
+  scrollTo({top:0,behavior:reduce?'auto':'smooth'});
+  mini.focus({preventScroll:true});
 });
 $('#chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(b)ask(b.textContent)});
 
@@ -450,7 +451,7 @@ function applyLang(l){
   root.lang=l;
   $$('[data-i18n]').forEach(e=>{const v=D[e.dataset.i18n];if(v!=null)e.textContent=v});
   $$('[data-i18n-aria]').forEach(e=>e.setAttribute('aria-label',D[e.dataset.i18nAria]));
-  $('#q').placeholder=D.ph;$('#q-mini').placeholder=D.ph_mini;
+  $('#q-mini').placeholder=D.ph_mini;
   document.title=META[l].t;$('meta[name=description]').content=META[l].d;
   $('meta[property="og:locale"]').content=l==='es'?'es_ES':'en_US';
   const full=l==='es'?'English':'Español',code=l==='es'?'EN':'ES';

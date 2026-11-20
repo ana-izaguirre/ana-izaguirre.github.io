@@ -68,8 +68,8 @@ test.describe('CV search', () => {
   test('finds content and only highlights what was typed', async ({ page }) => {
     await open(page);
     for (const q of ['sql', 'kubernetes', 'graphql']) {
-      await page.fill('#q', q);
-      await page.press('#q', 'Enter');
+      await page.fill('#q-mini', q);
+      await page.press('#q-mini', 'Enter');
       await page.waitForTimeout(350);
       const marks = await page.$$eval('mark', (els) => [...new Set(els.map((e) => e.textContent.toLowerCase()))]);
       const stray = marks.filter((m) => !m.includes(q.slice(0, 4).toLowerCase()));
@@ -79,32 +79,32 @@ test.describe('CV search', () => {
 
   test('says so when there is no match', async ({ page }) => {
     await open(page);
-    await page.fill('#q', 'zzzqqq');
-    await page.press('#q', 'Enter');
+    await page.fill('#q-mini', 'zzzqqq');
+    await page.press('#q-mini', 'Enter');
     await expect(page.locator('#answer')).toContainText(/No|no aparece/);
   });
 
   test('can be cleared, by button and by Escape', async ({ page }) => {
     await open(page);
-    await page.fill('#q', 'aws');
-    await page.press('#q', 'Enter');
+    await page.fill('#q-mini', 'aws');
+    await page.press('#q-mini', 'Enter');
     await expect(page.locator('.ans-x')).toBeVisible();
 
     await page.click('.ans-x');
-    await expect(page.locator('#q')).toHaveValue('');
+    await expect(page.locator('#q-mini')).toHaveValue('');
     await expect(page.locator('#hist')).toBeHidden();
     await expect(page.locator('.ans-x')).toBeHidden();
 
-    await page.fill('#q', 'jest');
-    await page.press('#q', 'Enter');
-    await page.press('#q', 'Escape');
-    await expect(page.locator('#q')).toHaveValue('');
+    await page.fill('#q-mini', 'jest');
+    await page.press('#q-mini', 'Enter');
+    await page.press('#q-mini', 'Escape');
+    await expect(page.locator('#q-mini')).toHaveValue('');
   });
 
   test('"see it in the CV" scrolls to the cited passage', async ({ page }) => {
     await open(page);
-    await page.fill('#q', 'snowflake');
-    await page.press('#q', 'Enter');
+    await page.fill('#q-mini', 'supabase');
+    await page.press('#q-mini', 'Enter');
     await page.locator('.hit a').first().click();
     await page.waitForTimeout(1000);
     const onScreen = await page.evaluate(() => {
@@ -130,26 +130,26 @@ test.describe('CV search, every way in', () => {
   // answer must still quote that role instead of coming back empty.
   test('a match only in a role\'s title still quotes that role', async ({ page }) => {
     await open(page, '?quiet=1');
-    await page.fill('#q', 'intel');
-    await page.press('#q', 'Enter');
+    await page.fill('#q-mini', 'intel');
+    await page.press('#q-mini', 'Enter');
     const first = page.locator('#answer .hit').first();
     await expect(first).toContainText('Intel');
     await expect(first.locator('p, li, blockquote').first()).not.toHaveText('');
   });
 
-  test('the Ask button submits the form', async ({ page }) => {
+  test('the arrow button submits the question', async ({ page }) => {
     await open(page, '?quiet=1');
-    await page.fill('#q', 'docker');
-    await page.click('#ask button[type=submit]');
+    await page.fill('#q-mini', 'docker');
+    await page.click('#ask-mini .go');
     await expect(page.locator('.ans-q')).toHaveText('docker');
-    await expect(page.locator('#q')).toHaveValue('');
+    await expect(page.locator('#q-mini')).toHaveValue('');
   });
 
   test('the history asks a previous question again', async ({ page }) => {
     await open(page, '?quiet=1');
     for (const q of ['aws', 'jest']) {
-      await page.fill('#q', q);
-      await page.press('#q', 'Enter');
+      await page.fill('#q-mini', q);
+      await page.press('#q-mini', 'Enter');
       await expect(page.locator('.ans-q')).toHaveText(q);
     }
     await page.locator('#hist .chip', { hasText: /^aws$/ }).click();
@@ -158,9 +158,9 @@ test.describe('CV search, every way in', () => {
 
   test('Escape inside an answer clears the search', async ({ page }) => {
     await open(page, '?quiet=1');
-    await page.fill('#q', 'graphql');
-    await page.press('#q', 'Enter');
-    await page.locator('.hit a').first().focus();
+    await page.fill('#q-mini', 'graphql');
+    await page.press('#q-mini', 'Enter');
+    await page.locator('.ans-x').focus();
     await page.keyboard.press('Escape');
     await expect(page.locator('#hist')).toBeHidden();
     await expect(page.locator('.ans-x')).toBeHidden();
@@ -170,8 +170,8 @@ test.describe('CV search, every way in', () => {
   test('a search that throws says so and offers the email', async ({ page }) => {
     await open(page, '?quiet=1');
     await page.evaluate(() => { String.prototype.normalize = () => { throw new Error('boom'); }; });
-    await page.fill('#q', 'aws');
-    await page.press('#q', 'Enter');
+    await page.fill('#q-mini', 'aws');
+    await page.press('#q-mini', 'Enter');
     await expect(page.locator('#answer')).toContainText('Algo falló en la búsqueda');
   });
 
@@ -182,6 +182,33 @@ test.describe('CV search, every way in', () => {
       window.dispatchEvent(new ErrorEvent('error', { message: 'boom' }));
     });
     await expect(page.locator('#answer')).toContainText('Algo falló en la búsqueda');
+  });
+});
+
+test.describe('one question box', () => {
+  test('the cover box is the only place to type a question', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await expect(page.locator('input[type=text], input:not([type]), textarea')).toHaveCount(1);
+    await expect(page.locator('#q-mini')).toBeVisible();
+  });
+
+  test('"ask something else" goes back to the box', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await page.fill('#q-mini', 'docker');
+    await page.press('#q-mini', 'Enter');
+    await page.click('#ask-again');
+    await expect(page.locator('#q-mini')).toBeFocused();
+    await expect.poll(() => page.evaluate(() => scrollY)).toBeLessThan(5);
+  });
+
+  // Only About and Projects are on screen; the rest of the CV feeds the PDF
+  // and this search. Sending someone to a hidden passage would go nowhere.
+  test('answers from hidden parts of the CV carry no link', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await page.fill('#q-mini', 'snowflake');
+    await page.press('#q-mini', 'Enter');
+    await expect(page.locator('#answer .hit').first()).toBeVisible(); // the premise: it did answer
+    await expect(page.locator('#answer .hit a')).toHaveCount(0);
   });
 });
 
@@ -222,13 +249,6 @@ test.describe('contact', () => {
 
     await page.keyboard.press('Escape');
     await expect(page.locator('#pop')).toBeHidden();
-  });
-
-  test('the links at the foot of the CV are visible', async ({ page }) => {
-    await open(page);
-    await page.locator('.contact').scrollIntoViewIfNeeded();
-    const colors = await page.$$eval('.cta .btn', (els) => els.map((e) => getComputedStyle(e).color));
-    for (const c of colors) expect(c, 'a contact button is transparent').not.toBe('rgba(0, 0, 0, 0)');
   });
 });
 
@@ -302,7 +322,7 @@ test.describe('career story, edges and gestures', () => {
 
   test('typing in the search box does not move the story', async ({ page }) => {
     await open(page, '?quiet=1');
-    await page.press('#q', 'ArrowLeft');
+    await page.press('#q-mini', 'ArrowLeft');
     await expect(page.locator('#rp-step')).toContainText('4/4 · 7/7');
   });
 
@@ -408,14 +428,10 @@ test.describe('empty questions', () => {
   test('asking nothing keeps the focus in the box and changes nothing', async ({ page }) => {
     await open(page, '?quiet=1');
     const before = await page.textContent('.ans-q');
-    await page.fill('#q', '   ');
-    await page.press('#q', 'Enter');
-    await expect(page.locator('#q')).toBeFocused();
-    await expect(page.locator('.ans-q')).toHaveText(before);
-
-    await page.fill('#q-mini', '');
+    await page.fill('#q-mini', '   ');
     await page.press('#q-mini', 'Enter');
     await expect(page.locator('#q-mini')).toBeFocused();
+    await expect(page.locator('.ans-q')).toHaveText(before);
   });
 
   // The search time is shown with a decimal under 10 ms and whole above it.
@@ -429,8 +445,8 @@ test.describe('empty questions', () => {
         window.__realNow = performance.now.bind(performance);
         performance.now = () => (t += s);
       }, step);
-      await page.fill('#q', 'aws');
-      await page.press('#q', 'Enter');
+      await page.fill('#q-mini', 'aws');
+      await page.press('#q-mini', 'Enter');
       const meta = await page.locator('#answer .ans-meta').first().textContent();
       await page.evaluate(() => { performance.now = window.__realNow; });
       return meta;
@@ -441,8 +457,8 @@ test.describe('empty questions', () => {
 
   test('a single match is counted in the singular', async ({ page }) => {
     await open(page, '?quiet=1');
-    await page.fill('#q', 'jmeter');
-    await page.press('#q', 'Enter');
+    await page.fill('#q-mini', 'jmeter');
+    await page.press('#q-mini', 'Enter');
     await expect(page.locator('#answer')).toContainText('1 fragmento del CV');
   });
 });
@@ -453,8 +469,8 @@ test.describe('in English', () => {
   test('an English browser gets the English CV, search and contact', async ({ page }) => {
     await open(page, '?quiet=1');
     await expect(page.locator('html')).toHaveAttribute('lang', 'en');
-    await page.fill('#q', 'jmeter');
-    await page.press('#q', 'Enter');
+    await page.fill('#q-mini', 'jmeter');
+    await page.press('#q-mini', 'Enter');
     await expect(page.locator('#answer')).toContainText('1 passage from the CV');
 
     await page.click('#fab');
@@ -466,8 +482,8 @@ test.describe('in English', () => {
   test('a failed search apologises in English', async ({ page }) => {
     await open(page, '?quiet=1');
     await page.evaluate(() => { String.prototype.normalize = () => { throw new Error('boom'); }; });
-    await page.fill('#q', 'aws');
-    await page.press('#q', 'Enter');
+    await page.fill('#q-mini', 'aws');
+    await page.press('#q-mini', 'Enter');
     await expect(page.locator('#answer')).toContainText('Something went wrong with the search');
   });
 });
@@ -525,9 +541,10 @@ test.describe('reduced motion', () => {
       await page.waitForTimeout(120);
       expect(await page.evaluate(() => scrollY)).toBe(a);
     };
-    await jump(() => page.fill('#q-mini', 'aws').then(() => page.press('#q-mini', 'Enter')));
+    await jump(() => page.fill('#q-mini', 'supabase').then(() => page.press('#q-mini', 'Enter')));
     await jump(() => page.locator('.hit a').first().click());
     await jump(() => page.click('#to-top'));
+    await jump(() => page.click('#ask-again'));
     await page.locator('.seg').last().click(); // last stage, all beats: its logos are showing
     await jump(() => page.locator('#c-logos .lg').first().click());
   });

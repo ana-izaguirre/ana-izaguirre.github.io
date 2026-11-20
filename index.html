@@ -239,17 +239,8 @@ html[data-theme=light] .i-moon{display:block}
   .years span:nth-child(even){display:none}
   .rp-step{order:5;flex-basis:100%}
 }
-.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);grid-template-areas:"f a" "c a";gap:1.1rem 2.2rem;align-items:start}
-.g-form{grid-area:f}.g-chips{grid-area:c}.g-ans{grid-area:a}
-.ask{display:flex;gap:.6rem}
-.q-wrap{position:relative;flex:1;min-width:0;display:flex}
-.q-x{position:absolute;right:.5rem;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;border:0;background:transparent;color:var(--muted);font-size:1.25rem;line-height:1;cursor:pointer}
-.q-x:hover{color:var(--red-t);background:color-mix(in srgb,var(--red) 12%,transparent)}
-.ask input{flex:1;min-width:0;background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:1rem 1.15rem;font:400 1.05rem var(--sans);color:var(--text)}
-.ask input::placeholder{color:var(--muted)}
-.ask input{padding-right:2.6rem}
-.ask input:focus{outline:2px solid var(--red-t);outline-offset:2px;border-color:transparent}
-.ask .btn{border-radius:14px;padding:0 1.4rem}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);grid-template-areas:"c a";gap:1.1rem 2.2rem;align-items:start}
+.g-chips{grid-area:c}.g-ans{grid-area:a}
 .ask-head{max-width:70ch;margin:0 0 1.3rem}
 .ask-head .h2{margin-bottom:.45rem}
 .ask-head .how{margin:0}
@@ -278,6 +269,11 @@ mark{background:var(--mark);color:inherit;border-radius:3px;padding:0 .12em}
 .hist{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-top:1rem;font-size:.88rem;color:var(--muted)}
 
 .doc{scroll-margin-top:70px;background:transparent;color:var(--ink);margin-top:0;padding:0 0 4rem;content-visibility:auto;contain-intrinsic-size:auto 2300px}
+@media screen{.cv-only{display:none!important}}  /* solo en pantalla (gana a .sh{display:flex}); el PDF y la búsqueda siguen usándolos */
+.about{scroll-margin-top:76px}
+.about .txt+.txt{margin-top:.5rem}
+.again{margin-top:1rem;background:none;border:0;padding:.4rem 0;font:700 .92rem var(--sans);color:var(--red-t);cursor:pointer}
+.again:hover{text-decoration:underline}
 .sheet{scroll-margin-top:76px;position:relative;background:var(--sheet);max-width:900px;margin:0 auto;border-radius:22px;padding:clamp(1.4rem,5vw,3.5rem);box-shadow:var(--shadow);transition:background .25s}
 .sh{display:flex;justify-content:space-between;gap:1.2rem 1.5rem;align-items:flex-start;flex-wrap:wrap;padding-bottom:1.6rem;border-bottom:1px solid var(--rule)}
 .sh-name{font:400 clamp(2.3rem,5vw,3.3rem)/1.12 var(--serif);margin:0 0 .45rem}
@@ -303,11 +299,7 @@ mark{background:var(--mark);color:inherit;border-radius:3px;padding:0 .12em}
 [data-chunk]{scroll-margin-top:96px}
 .flash{animation:flash 2.4s ease-out}
 @keyframes flash{0%,35%{background:var(--mark);box-shadow:0 0 0 8px var(--mark)}100%{background:transparent;box-shadow:0 0 0 8px transparent}}
-.contact{margin-top:1.6rem}
-.cta{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.9rem}
-.cta .btn{text-decoration:none}
-.sheet a.btn.red,.cta .btn.red{color:var(--on-red)}
-.sheet a.btn.ghost2{color:var(--ink)}
+.sheet a.btn.red,.sheet a.btn.ghost2{color:var(--ink)}
 .btn.ghost2{background:transparent;color:var(--ink);border-color:var(--rule)}
 .btn.ghost2:hover{border-color:var(--red)}
 /* ── paisaje del hero: de Honduras a Zaragoza ─────────── */
@@ -470,9 +462,8 @@ section.replay{-webkit-backdrop-filter:none;backdrop-filter:none;position:relati
 .chip:hover,.chip:focus-visible{transform:rotate(0) translateY(-2px);border-color:var(--red)}
 
 @media (min-width:701px){.doc{scroll-margin-top:60px}}
-@media (max-width:900px){.grid{grid-template-columns:1fr;grid-template-areas:"f" "a" "c"}}
+@media (max-width:900px){.grid{grid-template-columns:1fr;grid-template-areas:"a" "c"}}
 @media (max-width:640px){
-  .ask{flex-direction:column}.ask .btn{min-height:50px}
   .row{grid-template-columns:1fr}
   .brand{font-size:1.2rem}
   .bar .btn{padding:.6rem .7rem;font-size:.86rem}
@@ -648,9 +639,9 @@ section.replay{-webkit-backdrop-filter:none;backdrop-filter:none;position:relati
       <p data-i18n="t2_d">Specs antes que código, 1.500 pruebas y decisiones que se sostienen.</p>
       <span class="more"><span data-i18n="t2_l">Ver proyectos</span> →</span>
     </a>
-    <a class="paper tile" href="#h-perfil"><span class="tape"></span>
+    <a class="paper tile" href="#sobre-mi"><span class="tape"></span>
       <h2 class="tl-t"><span class="blob"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c3 2 5 5 5 8a5 5 0 0 1-10 0c0-3 2-6 5-8Zm0 17v-5"/></svg></span><span data-i18n="t3_t">Sobre mí</span></h2>
-      <p data-i18n="t3_d">Qué me mueve, cómo trabajo y qué estoy buscando ahora.</p>
+      <p data-i18n="t3_d">Cómo trabajo y qué estoy buscando ahora.</p>
       <span class="more"><span data-i18n="t3_l">Conóceme</span> →</span>
     </a>
   </nav>
@@ -683,7 +674,7 @@ t2_t:'Projects',
 t2_d:'Specs before code, 1,500 tests and decisions that hold up.',
 t2_l:'View projects',
 t3_t:'About me',
-t3_d:'What drives me, how I work and what I’m looking for now.',
+t3_d:'How I work and what I’m looking for now.',
 t3_l:'Get to know me',
 ask_b:'Ask',
 cards_a:'Sections',
@@ -751,20 +742,11 @@ window.ES_TOP={};
 <section class="askwrap" id="ask-sec" style="scroll-margin-top:72px">
   <div class="wrap">
     <header class="ask-head">
-      <h2 class="h2" data-i18n="ask_l">Pregúntale a mi CV</h2>
+      <h2 class="h2" data-i18n="ans_h">Lo que dice mi CV</h2>
       <p class="how" data-i18n="how">Búsqueda por palabras clave (BM25) sobre este mismo CV, dentro de tu navegador. No hay un modelo generando texto: nada se inventa y cada respuesta cita su fuente.</p>
     </header>
     <hr class="ask-rule">
     <div class="grid">
-      <div class="g-form">
-        <form id="ask" autocomplete="off">
-          <label class="vh" for="q" data-i18n="ask_h">Escribe una pregunta sobre mi CV</label>
-          <div class="ask">
-            <span class="q-wrap"><input id="q" name="q" type="text" maxlength="140" placeholder="Por ejemplo: ¿has trabajado con colas?"><button class="q-x" id="q-clear" type="button" hidden data-i18n-aria="clear" aria-label="Limpiar la búsqueda">×</button></span>
-            <button class="btn red" type="submit" data-i18n="ask_b">Preguntar</button>
-          </div>
-        </form>
-      </div>
       <div class="g-chips">
         <p class="ask-h" data-i18n="ask_h2">O toca una de estas preguntas:</p>
         <div class="chips" id="chips">
@@ -785,6 +767,7 @@ window.ES_TOP={};
       <div class="g-ans">
         <div class="answer" id="answer" aria-live="polite"></div>
         <div class="hist" id="hist" hidden></div>
+        <button class="again" id="ask-again" type="button"><span data-i18n="ask_again">Hacer otra pregunta</span> ↑</button>
       </div>
     </div>
   </div>
@@ -792,7 +775,7 @@ window.ES_TOP={};
 
 <section class="doc" id="cv">
   <article class="sheet" id="sheet">
-    <header class="sh">
+    <header class="sh cv-only">
       <div>
         <p class="sh-name">Ana Izaguirre</p>
         <p class="sh-role" data-i18n="role">Ingeniera full stack, especializada en backend</p>
@@ -805,13 +788,19 @@ window.ES_TOP={};
       </div>
     </header>
 
-    <section aria-labelledby="h-perfil">
+    <section class="about no-print" id="sobre-mi" aria-labelledby="h-about">
+      <h2 id="h-about" data-i18n="s_about">Sobre mí</h2>
+      <p class="txt" data-i18n="about1">Ingeniera backend y full stack con más de 8 años en producción, la última etapa en Allergan Data Labs (AbbVie) e Intel. Trabajo con arquitecturas orientadas a eventos en AWS, APIs REST y GraphQL, y desarrollo asistido por IA en el día a día.</p>
+      <p class="txt" data-i18n="about2">Vivo en Zaragoza y busco un puesto indefinido: híbrido en Zaragoza o remoto desde España. Incorporación inmediata.</p>
+    </section>
+
+    <section class="cv-only" aria-labelledby="h-perfil">
       <h2 id="h-perfil" data-i18n="s_perfil">Perfil</h2>
       <p class="txt" id="c-perfil" data-chunk data-sec="perfil" data-line data-i18n="perfil">Ingeniera full stack con más de 8 años construyendo sistemas en producción, con trabajos recientes en Allergan Data Labs (AbbVie) e Intel. Mi punto fuerte es el backend: arquitecturas orientadas a eventos en AWS, APIs REST y GraphQL, y guardias on-call con Datadog. Dos años liderando y mentoreando equipos. Desarrollo asistido por IA en mi flujo de trabajo diario.</p>
       <p class="txt" id="c-disp" data-chunk data-sec="disp" data-line data-i18n="disp">Vivo en Zaragoza. Busco un puesto indefinido como ingeniera backend o full stack: híbrido en Zaragoza o remoto desde España. Incorporación inmediata.</p>
     </section>
 
-    <section aria-labelledby="h-exp">
+    <section class="cv-only" aria-labelledby="h-exp">
       <h2 id="h-exp" data-i18n="s_exp">Experiencia</h2>
       <div class="row" id="c-pausa" data-n2-es="Proyectos propios: crianza y backend construido en abierto." data-n2-en="Own projects: parenting and backend built in the open." data-n3-es="Un año y seis meses. Ahora vuelvo." data-n3-en="A year and six months. Now I am coming back." data-co-name="Pausa profesional" data-co-name-en="Career break" data-dur-es="1 año y 6 meses" data-dur-en="1 year 6 months" data-sec-es="Proyectos propios" data-sec-en="Own projects" data-role-es="Crianza y proyectos backend propios" data-role-en="Parenting and my own backend projects" data-s="2025.4" data-e="2026.9" data-short="Pausa" data-short-en="Break" data-y="2025" data-co="0" data-pr="3" data-tech="Python,MCP,SQLite FTS5,TypeScript,Deno,Gemini" data-chunk data-sec="exp">
         <span class="when">2025–<span data-i18n="hoy">hoy</span></span>
@@ -891,7 +880,7 @@ window.ES_TOP={};
       </div>
     </section>
 
-    <section aria-labelledby="h-sk">
+    <section class="cv-only" aria-labelledby="h-sk">
       <h2 id="h-sk" data-i18n="s_sk">Competencias</h2>
       <ul class="yrs" id="c-yrs" data-chunk data-sec="skills" data-line>
         <li><b>8</b><span>Node.js</span></li>
@@ -914,22 +903,13 @@ window.ES_TOP={};
       </div>
     </section>
 
-    <section aria-labelledby="h-edu">
+    <section class="cv-only" aria-labelledby="h-edu">
       <h2 id="h-edu" data-i18n="s_edu">Formación e idiomas</h2>
       <div class="row" id="c-edu" data-chunk data-sec="edu"><span class="when k" data-i18n="k_edu">Formación</span>
         <div><p data-line data-i18n="e1">Máster en Computación de Altas Prestaciones, Universidade da Coruña (2022–2026).</p>
           <p data-line data-i18n="e2">Licenciatura en Ciencias de la Computación, UNAH (2010–2015).</p></div></div>
       <div class="row" id="c-lang" data-chunk data-sec="lang"><span class="when k" data-i18n="k_lang">Idiomas</span>
         <p data-line data-i18n="l1">Español nativo. Inglés profesional: más de 6 años con equipos de ingeniería de Estados Unidos. Portugués básico.</p></div>
-    </section>
-    <section aria-labelledby="h-contact" class="contact no-print">
-      <h2 id="h-contact" data-i18n="s_contact">Contacto</h2>
-      <p class="txt" data-i18n="p_contact">Busco un puesto indefinido como ingeniera backend o full stack, híbrido en Zaragoza o remoto desde España. Incorporación inmediata.</p>
-      <div class="cta">
-        <a class="btn red" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=ana.izaguirrematamoros@gmail.com&amp;su=Oportunidad%20backend" target="_blank" rel="noopener">Gmail</a>
-        <a class="btn ghost2" href="https://www.linkedin.com/in/ana-izaguirre/">LinkedIn</a>
-        <a class="btn ghost2" href="https://github.com/ana-izaguirre">GitHub</a>
-      </div>
     </section>
   </article>
   <footer><span data-i18n="foot">© 2026 Ana Izaguirre. Hecha a mano, sin frameworks ni rastreadores.</span></footer>
