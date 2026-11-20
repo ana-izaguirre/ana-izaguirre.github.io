@@ -600,6 +600,24 @@ test.describe('stat row, reduced motion', () => {
   });
 });
 
+// Spec 018: three figures per project, each one already stated in its case.
+test.describe('project metrics', () => {
+  for (const lang of ['es', 'en']) {
+    test(`each project leads with three figures from its own case — ${lang}`, async ({ page }) => {
+      await open(page, `?quiet=1&lang=${lang}`);
+      for (const key of ['trainer', 'mcp', 'latino']) {
+        const pm = page.locator(`#case-${key}`).locator('xpath=preceding-sibling::dl[1]');
+        await expect(pm.locator('dt')).toHaveCount(3);
+        const caseText = (await page.locator(`#case-${key}`).textContent()).replace(/\s+/g, ' ');
+        for (const fig of await pm.locator('dt').allTextContents()) {
+          if (fig === '0' || fig === '1') continue; // counted, not quoted: checked by hand in the spec
+          expect(caseText, `${fig} is not in the ${key} case`).toContain(fig.replace(' %', ' %').replace('%', lang === 'es' ? '%' : '%'));
+        }
+      }
+    });
+  }
+});
+
 // Spec 006: the Curiosity Switch picks which parts of each case a reader sees.
 test.describe('the Curiosity Switch', () => {
   const view = (page, v) => page.locator('#views label', { has: page.locator(`input[value="${v}"]`) });
