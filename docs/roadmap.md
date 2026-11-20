@@ -14,8 +14,8 @@ metrics on every project, honest "good fit / bad fit").
 | 3 | Ask my CV: query modes and visible evidence | High | Low | M | Done (specs 003, 005) |
 | 4 | Exploratory cover: hover changes the scene and message | Medium-high, memorable | Medium (CLS, performance) | M | Done (spec 004) |
 | 5 | The Curiosity Switch: recruiter / engineer perspective | High, signature feature | Medium | M-L | Done (spec 006) |
-| 6 | Interactive diagrams in the case studies | Medium | Low | M | Planned |
-| 7 | Small lessons: code, simulation, feedback | Medium | High (scope) | L | Later |
+| 6 | Interactive diagrams in the case studies | Medium | Low | M | Done (spec 024) |
+| 7 | Small lessons: code, simulation, feedback | Medium | High (scope) | L | First lesson done (spec 024) |
 | 8 | Editorial navigation, deliberate micro-animations | Medium | Low | S-M | With 4-6 |
 | 9 | Motion on scroll: sections reveal, cover parallax, reading progress | **High**: the page reads as static | Medium (CLS, performance) | M | Done (spec 010) |
 | 10 | Pointer response: gentle tilt on cards and projects, answers that write in | Medium | Medium (motion sickness) | M | Done (spec 011) |
