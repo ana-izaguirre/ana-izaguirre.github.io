@@ -495,7 +495,7 @@ test.describe('the Honduras and Zaragoza signs', () => {
     test(`Honduras on the left, Zaragoza toward the basilica — ${name}`, async ({ page }) => {
       await page.setViewportSize(viewport);
       await open(page, '?quiet=1');
-      const [h, z] = await page.$$eval('.signs span', (els) => els.map((e) => { const r = e.getBoundingClientRect(); return (r.left + r.width / 2) / innerWidth; }));
+      const [h, z] = await page.$$eval('.signs > span', (els) => els.map((e) => { const r = e.getBoundingClientRect(); return (r.left + r.width / 2) / innerWidth; }));
       expect(h, 'Honduras is not on the left').toBeLessThan(0.3);
       expect(z, 'Zaragoza is not on the right half').toBeGreaterThan(0.5);
     });
@@ -758,6 +758,33 @@ test.describe('section exits', () => {
     await open(page, '?quiet=1&lang=en');
     await expect(page.locator('.exit a')).toHaveText(['A specific question? Ask my CV →', 'Go on to who I am and what I have built →', "Do I fit your team? Let's talk →"]);
   });
+});
+
+// Spec 023: hovering a sign raises its flag.
+test.describe('flags on the signs', () => {
+  const op = (page, i) => page.locator('.signs .egg').nth(i).evaluate((e) => Number(getComputedStyle(e).opacity));
+  test('each sign raises its flag under the pointer, and lowers it after', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await expect(page.locator('#loader')).toHaveClass(/gone/);
+    for (const i of [0, 1]) {
+      expect(await op(page, i), 'the premise: the flag starts hidden').toBe(0);
+      await page.locator('.signs > span').nth(i).hover();
+      await expect.poll(() => op(page, i)).toBe(1);
+      await page.mouse.move(5, 5);
+      await expect.poll(() => op(page, i)).toBe(0);
+    }
+  });
+});
+
+test.describe('flags on the signs, touch', () => {
+  test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  test('a tap never raises a flag', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await page.locator('.signs > span').first().tap({ force: true });
+    await page.waitForTimeout(400);
+    expect(await op(page, 0)).toBe(0);
+  });
+  const op = (page, i) => page.locator('.signs .egg').nth(i).evaluate((e) => Number(getComputedStyle(e).opacity));
 });
 
 // Spec 006: the Curiosity Switch picks which parts of each case a reader sees.
