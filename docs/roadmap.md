@@ -26,7 +26,7 @@ metrics on every project, honest "good fit / bad fit").
 | 15 | Entering the page: always at the top, the story at its first scene, everything collapsed | High (first impression) | Low | S | Done (spec 013) |
 | 16 | Fireflies scaled to the screen: clearly flying on phones, unchanged on desktop | Medium | Low | S | Done (spec 014) |
 | 17 | Who she is in one screen: a live availability signal, the companies she worked at | **High** for recruiters | Low | S-M | Done (spec 015) |
-| 18 | Metric-led project cards: three figures per project, from each repository | High | Low (must cite) | S | Planned |
+| 18 | Metric-led project cards: three figures per project, from each repository | High | Low (must cite) | S | Done (spec 018) |
 | 19 | Site controls as play: a motion on/off switch next to theme and language | Medium | Low | S | Planned |
 | 20 | Hover easter eggs: "Honduras" and "Zaragoza" reveal a small picture | Low-medium, memorable | Low | S | Planned |
 | 21 | Short FAQ for recruiters: start date, remote, English, contract | Medium | Low | S | Planned |
