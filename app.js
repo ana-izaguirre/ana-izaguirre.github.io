@@ -17,7 +17,7 @@ const EN={...window.EN_TOP,
 // Case studies (docs/specs/002). Spanish lives in the markup; keep both in step.
 case_open:"See the case",
 case_hint:"problem, decisions, architecture, trade-offs, results",
-case_hint_b:"problem and results",cta_mail:"Write to me",more_q:"More questions",trust_h:"Has worked at",eb_story:"Journey",eb_ask:"Ask my CV",eb_about:"Profile",eb_proj:"Own work",eb_talk:"Let's talk",idx_a:"Index",st_a:"In figures",st_years:"years in production",st_cos:"companies",st_tech:"technologies",st_own:"own projects",view_l:"Read it as",view_brief:"Hiring",view_deep:"Engineering",
+case_hint_b:"problem and results",cta_mail:"Write to me",more_q:"More questions",pm_trainer1_n:"100%",pm_trainer1:"coverage required on the critical modules",pm_trainer2_n:"100%",pm_trainer2:"nightly mutation score, file by file, on the non-negotiable ones",pm_trainer3_n:"0",pm_trainer3:"AI rows left after the E2E that runs the product without AI",pm_mcp1_n:"0.44",pm_mcp1:"recall@3 over 50 questions without the corpus vocabulary",pm_mcp2_n:"50",pm_mcp2:"evaluation questions, every change judged with McNemar's test",pm_mcp3_n:"1",pm_mcp3:"runtime dependency: mcp",pm_latino1_n:"65%",pm_latino1:"coverage as a ratchet: it only goes up",pm_latino2_n:"0",pm_latino2:"data in the browser once signed in",pm_latino3_n:"1",pm_latino3:"access control: the Firestore rules",trust_h:"Has worked at",eb_story:"Journey",eb_ask:"Ask my CV",eb_about:"Profile",eb_proj:"Own work",eb_talk:"Let's talk",idx_a:"Index",st_a:"In figures",st_years:"years in production",st_cos:"companies",st_tech:"technologies",st_own:"own projects",view_l:"Read it as",view_brief:"Hiring",view_deep:"Engineering",
 case_src:"Sources in the repository:",
 case_p:"Problem",
 case_d:"Decisions",

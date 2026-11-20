@@ -345,6 +345,12 @@ mark{background:var(--mark);color:inherit;border-radius:3px;padding:0 .12em}
 .when{color:var(--slate);font-size:.92rem;font-variant-numeric:tabular-nums;padding-top:.12rem}
 /* Case studies (docs/specs/002): a native <details> under each project, aligned
    with the row's content column, closed by default so skimming stays fast. */
+/* Project metrics (spec 018): three figures per project, each one stated in
+   its case study and its repository. Where a case sits, they sit. */
+.pm{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.4rem 1.2rem;margin:.2rem 0 .8rem calc(7.4rem + 1.4rem)}
+.pm div{display:flex;flex-direction:column;gap:.2rem;padding-left:.7rem;border-left:2px solid color-mix(in srgb,var(--red) 35%,transparent)}
+.pm dt{font:400 1.6rem/1 var(--serif);color:var(--text)}
+.pm dd{margin:0;font-size:.8rem;line-height:1.35;color:var(--slate)}
 .case{margin:0 0 .9rem calc(7.4rem + 1.4rem)}
 .case summary{display:inline-flex;align-items:baseline;gap:.5rem;cursor:pointer;list-style:none;padding:.35rem .8rem;border:1.5px dashed color-mix(in srgb,var(--red) 40%,transparent);border-radius:12px 8px 13px 7px/8px 13px 7px 12px;font-size:.9rem}
 .case summary::-webkit-details-marker{display:none}
@@ -368,7 +374,8 @@ mark{background:var(--mark);color:inherit;border-radius:3px;padding:0 .12em}
 @media (min-width:641px){.sheet:has(#views [value=brief]:checked) .case-hint.brief{display:inline}}
 .case-src a{color:var(--red-t)}
 @media (max-width:640px){
-  .case{margin-left:0}
+  .case,.pm{margin-left:0}
+  .pm{grid-template-columns:1fr;gap:.6rem}
   .case-hint{display:none}
   .case-body{grid-template-columns:1fr;gap:.2rem;padding:.85rem}
   .case dd{margin-bottom:.55rem}
@@ -644,7 +651,7 @@ section.replay{-webkit-backdrop-filter:none;backdrop-filter:none;position:relati
   @media (min-width:681px){.sys>.world{animation:cover-sink linear both;animation-timeline:--cover;animation-range:exit 0% exit 100%}}
   .hero-l{animation:cover-lift linear both;animation-timeline:--cover;animation-range:exit 0% exit 90%}
   /* Arriving content rises into place as it enters, then stays put. */
-  :is(.replay,.ask-head,.g-chips,.sheet>section>h2,.sheet .eyebrow,.about .txt,.row,.case,.views,.cta):not(.flash){animation:arrive linear both;animation-timeline:view();animation-range:entry 0% entry 70%}
+  :is(.replay,.ask-head,.g-chips,.sheet>section>h2,.sheet .eyebrow,.pm,.about .txt,.row,.case,.views,.cta):not(.flash){animation:arrive linear both;animation-timeline:view();animation-range:entry 0% entry 70%}
   /* The stitched rules draw themselves across. */
   .ask-rule{transform-origin:0 50%;animation:stitch linear both;animation-timeline:view();animation-range:entry 20% cover 30%}
 }
@@ -1079,6 +1086,7 @@ window.ES_TOP={};
           <p data-line>TypeScript, Deno, Supabase, Gemini. <a href="https://github.com/ana-izaguirre/trainer-flow">github.com/ana-izaguirre/trainer-flow</a></p>
           <ul class="tr" data-line><li data-i18n="c-trainer_0">Máquina de estados estricta</li><li data-i18n="c-trainer_1">Webhooks idempotentes</li><li data-i18n="c-trainer_2">Dominio aislado de la IA</li><li data-i18n="c-trainer_3">100 % en autorización</li></ul></div>
       </div>
+      <dl class="pm no-print"><div><dt data-i18n="pm_trainer1_n">100 %</dt><dd data-i18n="pm_trainer1">cobertura exigida en los módulos críticos</dd></div><div><dt data-i18n="pm_trainer2_n">100 %</dt><dd data-i18n="pm_trainer2">mutación nocturna, archivo por archivo, en los no negociables</dd></div><div><dt data-i18n="pm_trainer3_n">0</dt><dd data-i18n="pm_trainer3">filas de IA tras el E2E que recorre el producto sin IA</dd></div></dl>
       <details class="case no-print" id="case-trainer" data-chunk data-sec="case" data-name="trainer-flow">
         <summary><span class="case-open" data-i18n="case_open">Ver el caso</span> <span class="case-hint" data-i18n="case_hint">problema, decisiones, arquitectura, trade-offs, resultados</span><span class="case-hint brief" data-i18n="case_hint_b">problema y resultados</span></summary>
         <dl class="case-body">
@@ -1113,6 +1121,7 @@ window.ES_TOP={};
           <p data-line>Python, SQLite FTS5, pytest, mypy. <a href="https://github.com/ana-izaguirre/mcp-docs-search">github.com/ana-izaguirre/mcp-docs-search</a></p>
           <ul class="tr" data-line><li data-i18n="c-mcp_0">SQLite FTS5 + BM25</li><li data-i18n="c-mcp_1">Arnés de evaluación</li><li data-i18n="c-mcp_2">Protocolo MCP</li><li data-i18n="c-mcp_3">Tipado estricto con mypy</li></ul></div>
       </div>
+      <dl class="pm no-print"><div><dt data-i18n="pm_mcp1_n">0,44</dt><dd data-i18n="pm_mcp1">recall@3 en 50 preguntas sin el vocabulario del corpus</dd></div><div><dt data-i18n="pm_mcp2_n">50</dt><dd data-i18n="pm_mcp2">preguntas de evaluación, cada cambio con prueba de McNemar</dd></div><div><dt data-i18n="pm_mcp3_n">1</dt><dd data-i18n="pm_mcp3">dependencia de ejecución: mcp</dd></div></dl>
       <details class="case no-print" id="case-mcp" data-chunk data-sec="case" data-name="mcp-docs-search">
         <summary><span class="case-open" data-i18n="case_open">Ver el caso</span> <span class="case-hint" data-i18n="case_hint">problema, decisiones, arquitectura, trade-offs, resultados</span><span class="case-hint brief" data-i18n="case_hint_b">problema y resultados</span></summary>
         <dl class="case-body">
@@ -1142,6 +1151,7 @@ window.ES_TOP={};
           <p data-line>React 19, TypeScript, Express, Firestore. <a href="https://latino-migra.vercel.app">latino-migra.vercel.app</a></p>
           <ul class="tr" data-line><li data-i18n="c-latino_0">Proxy que guarda las claves</li><li data-i18n="c-latino_1">React 19 + TypeScript</li><li data-i18n="c-latino_2">Firestore</li></ul></div>
       </div>
+      <dl class="pm no-print"><div><dt data-i18n="pm_latino1_n">65 %</dt><dd data-i18n="pm_latino1">cobertura como trinquete: solo sube</dd></div><div><dt data-i18n="pm_latino2_n">0</dt><dd data-i18n="pm_latino2">datos en el navegador con sesión iniciada</dd></div><div><dt data-i18n="pm_latino3_n">1</dt><dd data-i18n="pm_latino3">control de acceso: las reglas de Firestore</dd></div></dl>
       <details class="case no-print" id="case-latino" data-chunk data-sec="case" data-name="latino-migra">
         <summary><span class="case-open" data-i18n="case_open">Ver el caso</span> <span class="case-hint" data-i18n="case_hint">problema, decisiones, arquitectura, trade-offs, resultados</span><span class="case-hint brief" data-i18n="case_hint_b">problema y resultados</span></summary>
         <dl class="case-body">

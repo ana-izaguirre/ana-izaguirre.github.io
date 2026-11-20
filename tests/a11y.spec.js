@@ -30,6 +30,10 @@ for (const ctx of CONTEXTS) {
   });
 }
 
+test.describe('hiring view', () => {
+  // Content fading in as it scrolls into view (spec 010) is mid-animation
+  // wherever the cases happen to sit; axe checks the settled page.
+  test.use({ reducedMotion: 'reduce' });
 test('no axe violations in the hiring view, cases open — light', async ({ page }) => {
   await page.goto('/index.html?theme=light&quiet=1');
   await page.waitForTimeout(1200);
@@ -38,7 +42,8 @@ test('no axe violations in the hiring view, cases open — light', async ({ page
   await page.addScriptTag({ content: AXE });
   const { violations } = await page.evaluate(() => window.axe.run(document, { resultTypes: ['violations'] }));
   expect(violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`)).toEqual([]);
-});
+});});
+
 
 test('every interactive control has an accessible name', async ({ page }) => {
   await page.goto('/index.html?quiet=1');
