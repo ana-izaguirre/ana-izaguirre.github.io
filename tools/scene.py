@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Paisaje del hero: un horizonte continuo de Honduras (izquierda, cálido) a
-Zaragoza (derecha, frío). Todo trazo propio generado en código.
+Hero landscape: one continuous horizon from Honduras (left, warm) to Zaragoza
+(right, cool). Every stroke is original and generated here.
 
-Un único SVG sirve para los dos temas: los colores no van escritos en el
-dibujo sino en variables CSS (--w0, --w1, …) que cambian con data-theme.
-Así la noche no duplica la geometría ni los id de los degradados.
+A single SVG serves both themes: colours are not written into the drawing but
+into CSS variables (--w0, --w1, ...) that change with data-theme, so the night
+duplicates neither the geometry nor the gradient ids.
 
-Uso:  python3 tools/scene.py        # reescribe el bloque marcado en index.html
+Usage:  python3 tools/scene.py        # rewrites the marked block in index.html
 """
 import math, random, re, pathlib
 W,H=1680,900
@@ -23,7 +23,7 @@ def ridge(seed,y,amp,n,sharp=0.,at=.2):
         a,b_=pts[i-1],pts[i];d+=f"Q{a[0]:.0f} {a[1]:.0f} {(a[0]+b_[0])/2:.0f} {(a[1]+b_[1])/2:.0f}"
     return d+f"L{pts[-1][0]:.0f} {H+80}Z"
 def trees(seed,y,x0,x1,hmin,hmax):
-    """Arbolado con ritmo roto: cúmulos de varios tamaños y alguna conífera."""
+    """Woodland with a broken rhythm: clumps of several sizes and the odd conifer."""
     rnd=random.Random(seed);d=f"M{x0} {H+80}L{x0} {y}";x=x0
     while x<x1:
         cluster=rnd.randint(2,5)
@@ -162,7 +162,7 @@ for _ in range(34):
 
 SVG=(f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
 <defs>
-<!-- 2 octavas: a esta frecuencia las de más no se ven tras el desplazamiento y cuestan pintado en móvil. -->
+<!-- 2 octaves: at this frequency more are invisible after displacement and cost paint time on phones. -->
 <filter id="rough" x="-6%" y="-6%" width="112%" height="112%">
 <feTurbulence type="fractalNoise" baseFrequency="0.009 0.016" numOctaves="2" seed="7" result="n"/>
 <feDisplacementMap in="SourceGraphic" in2="n" scale="11" xChannelSelector="R" yChannelSelector="G"/>
@@ -207,7 +207,7 @@ SVG=(f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" preserveA
 <g fill="none" stroke="#2E4A32" stroke-width="7" stroke-linecap="round"><path d="{b2s}"/></g>
 </svg>''')
 
-# noche: cada color del día tiene su pareja nocturna
+# night: every day colour has a night counterpart
 NIGHT={
  '#A4D6EC':'#1B1838','#D2E8EB':'#2E2550','#F4E7CB':'#5B3A62','#FAE0B6':'#8E5468',
  '#FFF7E2':'#FFF1CF','#FFDFA0':'#F6C77E','#FFFAEC':'#FFF3D8',
@@ -231,14 +231,14 @@ def themable(svg):
     return svg,light,dark
 
 def night_extras():
-    """Estrellas y ventanas encendidas: solo se ven de noche."""
+    """Stars and lit windows: only visible at night."""
     r=random.Random(4)
     stars=''.join(f'<circle cx="{r.uniform(0,W):.0f}" cy="{r.uniform(0,420):.0f}" r="{r.uniform(.7,1.9):.1f}" opacity="{r.uniform(.3,.9):.2f}"/>' for _ in range(90))
     win=''.join(f'<rect x="{x}" y="{y}" width="5" height="8" rx="2"/>' for x in range(1070,1240,22) for y in (482,500))
     return f'<g class="w-stars">{stars}</g>', f'<g class="w-win">{win}</g>'
 
 def scoped(svg):
-    """Los id del dibujo son globales en la página: van con prefijo para no chocar."""
+    """The drawing's ids are global to the page: they get a prefix so they cannot clash."""
     for i in set(re.findall(r'id="([^"]+)"',svg)):
         svg=svg.replace(f'id="{i}"',f'id="w-{i}"').replace(f'url(#{i})',f'url(#w-{i})')
     return svg
@@ -249,7 +249,7 @@ def build():
     svg,light,dark=themable(svg)
     stars,win=night_extras()
     svg=svg.replace('<circle class="sunpulse"',stars+'<circle class="sunpulse"',1)
-    # las ventanas van justo después de la basílica
+    # the windows go right after the basilica
     k=svg.index('<path d="'+PIL[:40])
     k=svg.index('</g>',k)+4
     svg=svg[:k]+win+svg[k:]
@@ -263,4 +263,4 @@ if __name__=="__main__":
     html=re.sub(r'<!-- scene:svg -->.*?<!-- /scene:svg -->',lambda m:'<!-- scene:svg -->'+svg+'<!-- /scene:svg -->',html,flags=re.S)
     html=re.sub(r'/\* scene:css \*/.*?/\* /scene:css \*/',lambda m:'/* scene:css */'+css+'/* /scene:css */',html,flags=re.S)
     p.write_text(html,encoding='utf-8')
-    print(f'paisaje: {len(svg):,} bytes de SVG, {css.count("--w")//2} colores con pareja nocturna')
+    print(f'landscape: {len(svg):,} bytes of SVG, {css.count("--w")//2} colours with a night counterpart')
