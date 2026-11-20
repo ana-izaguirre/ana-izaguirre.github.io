@@ -298,14 +298,17 @@ idle(()=>{
    const high=Math.random()<.18;
    el.style.left=r(3,97).toFixed(1)+'%';
    el.style.top=(high?r(18,48):(small?r(30,88):r(50,78))).toFixed(1)+'%';
-   for(const k of [1,2,3]){el.style.setProperty('--x'+k,r(-reach,reach).toFixed(0)+'px');el.style.setProperty('--y'+k,r(-reach*.6,reach*.6).toFixed(0)+'px')}
    el.style.setProperty('--s',r(3.5,6.5).toFixed(1)+'px');
-   el.style.setProperty('--d',r(9,15).toFixed(1)+'s');
    el.style.setProperty('--b',r(2.2,4.6).toFixed(1)+'s');
-   el.style.animationDelay=(-r(0,15)).toFixed(1)+'s';
    dot.style.animationDelay=(-r(0,4)).toFixed(1)+'s';
-   if(reduce){el.style.animation='none';dot.style.animation='none';dot.style.opacity='.8'}
    el.appendChild(dot);f.appendChild(el);
+   if(reduce){dot.style.animation='none';dot.style.opacity='.8';continue}
+   // A loop through three points and back, never retracing a line. Explicit px
+   // values, not var() in @keyframes: Safari on iPhone ignored those (spec 007).
+   const pt=()=>`translate(${r(-reach,reach).toFixed(0)}px,${r(-reach*.6,reach*.6).toFixed(0)}px)`;
+   const d=r(9,15)*1000;
+   el.animate([{transform:'translate(0,0)'},{transform:pt()},{transform:pt()},{transform:pt()},{transform:'translate(0,0)'}],
+     {duration:d,iterations:Infinity,easing:'ease-in-out',delay:-r(0,d)});
  }
  host.appendChild(f);
 });

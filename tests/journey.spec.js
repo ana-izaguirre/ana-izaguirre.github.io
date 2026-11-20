@@ -775,8 +775,8 @@ test.describe('fireflies', () => {
     const n = await page.locator('.fly').count();
     expect(n, 'too few or too many fireflies').toBeGreaterThanOrEqual(8);
     expect(n).toBeLessThanOrEqual(30);
-    const moving = await page.$eval('.fly', (e) => getComputedStyle(e).animationName);
-    expect(moving).toBe('wander');
+    const running = await page.$eval('.fly', (e) => e.getAnimations().filter((a) => a.playState === 'running').length);
+    expect(running, 'the firefly is not flying').toBeGreaterThan(0);
   });
 });
 
@@ -796,6 +796,16 @@ test.describe('fireflies on a phone', () => {
     const avg = a.reduce((s, p, i) => s + Math.hypot(b[i][0] - p[0], b[i][1] - p[1]), 0) / a.length;
     expect(avg, `fireflies moved ${avg.toFixed(1)} px in 2 s on average`).toBeGreaterThan(18);
   });
+
+  // Spec 007: Safari on iPhone did not move keyframes that read var(), so the
+  // dots only blinked. Chromium moves either kind, so check the cause itself.
+  test('their flight is written in plain values, not var()', async ({ page }) => {
+    await open(page);
+    await expect(page.locator('.fly').first()).toBeAttached();
+    const frames = await page.$$eval('.fly', (els) => els.flatMap((e) => e.getAnimations().flatMap((a) => a.effect.getKeyframes().map((k) => k.transform))));
+    expect(frames.length, 'no flight animations at all').toBeGreaterThan(0);
+    expect(frames.filter((t) => /var\(/.test(t))).toEqual([]);
+  });
 });
 
 test.describe('reduced motion', () => {
@@ -805,7 +815,7 @@ test.describe('reduced motion', () => {
     // The premise first: without fireflies on the page this would pass for nothing.
     await expect(page.locator('.fly').first()).toBeAttached();
     const moving = await page.evaluate(() =>
-      [...document.querySelectorAll('.fly, .fly i, .land *')].some((e) => getComputedStyle(e).animationName !== 'none')
+      [...document.querySelectorAll('.fly, .fly i, .land *')].some((e) => getComputedStyle(e).animationName !== 'none' || e.getAnimations().length > 0)
     );
     expect(moving, 'something animates under prefers-reduced-motion').toBe(false);
     await expect(page.locator('#sheet')).toBeVisible();
