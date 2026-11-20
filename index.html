@@ -829,6 +829,9 @@ window.ES_TOP={};
   if(l!=='es'&&l!=='en'){try{l=localStorage.getItem('lang')}catch(e){l=null}}
   if(l!=='es'&&l!=='en')l=navigator.language.toLowerCase().indexOf('es')===0?'es':'en';
   window.LANG0=l; // app.js starts with this same language: one rule
+  // Every visit starts at the top (spec 013): a reload must not drop the visitor
+  // halfway down, where the story has already played. A shared #link still lands.
+  if('scrollRestoration' in history)history.scrollRestoration='manual';
   var keep=function(k,v){if(!(k in ES_TOP))ES_TOP[k]=v};
   d.querySelectorAll('a.dl').forEach(function(a){if(a.dataset.i18n==='dl')keep('dl',a.textContent)});
   if(l==='en'){
