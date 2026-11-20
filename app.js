@@ -439,8 +439,8 @@ function askInner(text,silent){
   }else if(!res.hits.length){
     const p=mk('p','none',UI[lang].none+' '),a=mk('a',null,MAIL);a.href='mailto:'+MAIL;p.appendChild(a);box.appendChild(p);
   }
-  res.hits.forEach(h=>{
-    const art=mk('article','hit');art.appendChild(mk('p','hit-src',titleOf(h.el)));
+  res.hits.forEach((h,i)=>{
+    const art=mk('article','hit');art.style.setProperty('--i',i);art.appendChild(mk('p','hit-src',titleOf(h.el)));
     const why=mk('p','hit-why');why.appendChild(mk('span',null,UI[lang].why));
     h.matched.slice(0,6).forEach(t=>{
       const syn=h.synonyms.has(t),ev=mk('span','ev'+(syn?' syn':''),surfaceForm(h.el.textContent,t));
@@ -487,6 +487,18 @@ $('#ask-mini').addEventListener('submit',e=>{
 const box=$('#ask-mini'),boxHome=box.parentElement,phoneMQ=matchMedia('(max-width:680px)');
 const placeBox=()=>phoneMQ.matches?$('#ask-sec .grid').prepend(box):boxHome.append(box);
 phoneMQ.addEventListener('change',placeBox);placeBox();
+// Pointer response (spec 011): the cover cards lean toward the pointer, and a
+// project row glows where the pointer is. Only for a mouse or trackpad, never
+// for touch, and never under reduced motion. The values feed CSS; the CSS
+// decides the motion.
+if(!reduce&&matchMedia('(hover:hover) and (pointer:fine)').matches){
+  const at=(e,f)=>{const el=e.currentTarget,r=el.getBoundingClientRect();f(el,(e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height,r)};
+  $$('.tile').forEach(el=>{
+    el.addEventListener('pointermove',e=>at(e,(el,x,y)=>{el.style.setProperty('--tx',((x-.5)*9).toFixed(2)+'deg');el.style.setProperty('--ty',((.5-y)*9).toFixed(2)+'deg')}));
+    el.addEventListener('pointerleave',()=>{el.style.removeProperty('--tx');el.style.removeProperty('--ty')});
+  });
+  $$('.sheet .row').forEach(el=>el.addEventListener('pointermove',e=>at(e,(el,x,y,r)=>{el.style.setProperty('--mx',Math.round(x*r.width)+'px');el.style.setProperty('--my',Math.round(y*r.height)+'px')})));
+}
 // In-page links land where they point (spec 009). The sections below the story
 // skip rendering until seen (content-visibility), so the browser aims at their
 // estimated heights and stops short. Once the scroll settles, aim again at the

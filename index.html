@@ -264,6 +264,9 @@ html[data-theme=light] .i-moon{display:block}
 .ans-q{font:400 1.7rem/1.24 var(--serif);margin:0 2rem .35rem 0}
 .ans-meta{font:.8rem/1.5 var(--mono);color:var(--muted);margin:0 0 1rem}
 .hit{padding:.95rem 0;border-top:1px solid var(--line)}
+/* Answers write in, one source after another (spec 011). */
+.hit{animation:hit-in .45s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--i,0) * 110ms)}
+@keyframes hit-in{from{opacity:0;transform:translateY(10px)}}
 .hit-src{font-weight:600;font-size:.9rem;color:var(--red-t);margin:0 0 .35rem}
 .hit-txt{margin:0 0 .35rem}
 /* Search modes (docs/specs/003): native radios styled as pills, so arrow keys,
@@ -406,6 +409,12 @@ html:not([data-theme=light]) .world{--w0:#1B1838;--w1:#2E2550;--w2:#5B3A62;--w3:
 .tile:nth-child(2){transform:rotate(1deg) translateY(-3px)}
 .tile:nth-child(3){transform:rotate(-.7deg) translateY(8px)}
 .tile:hover,.tile:focus-visible{transform:rotate(0) translateY(-7px)}
+/* Pointer response (spec 011): app.js writes where the pointer is; the card
+   leans toward it, and a project row glows under it. Mouse and trackpad only. */
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  .tile:hover{transform:perspective(800px) rotateX(var(--ty,0deg)) rotateY(var(--tx,0deg)) translateY(-7px);transition:transform .25s ease-out}
+  .sheet .row:hover{background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--red) 10%,transparent),transparent 70%)}
+}
 .tape{position:absolute;top:-11px;left:50%;width:74px;height:22px;margin-left:-37px;background:var(--tape);border-radius:2px;transform:rotate(-3deg);box-shadow:0 1px 2px rgba(0,0,0,.08)}
 .tile:nth-child(2) .tape{transform:rotate(4deg);left:30%}
 .whisper{position:absolute;left:1rem;right:1rem;bottom:calc(100% + 3.4rem);padding:.35rem .75rem;border-radius:10px;
