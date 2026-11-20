@@ -2,7 +2,7 @@
 // Run: npm run test:unit
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { tokenize, normalize, createIndex, search, isHit, DEFAULT_BOOST } from '../../js/search.js';
+import { tokenize, normalize, createIndex, search, isHit, surfaceForm, DEFAULT_BOOST } from '../../js/search.js';
 
 const doc = (id, text, section = 'exp', lines) => ({ id, section, text, ...(lines ? { lines: lines.map((t) => ({ text: t })) } : {}) });
 
@@ -99,4 +99,35 @@ test('bad input fails loudly, with a message that says what was wrong', () => {
   assert.throws(() => search(index, 42), /query must be a string/);
   assert.throws(() => search({}, 'x'), /index must come from createIndex/);
   assert.throws(() => search(index, null), TypeError, 'and the error is a TypeError');
+});
+
+test('sections restrict the search, without changing how words are weighted', () => {
+  const index = createIndex([doc('job', 'aws lambda', 'exp'), doc('side', 'aws lambda', 'proj'), doc('list', 'aws', 'skills')]);
+  assert.deepEqual(search(index, 'aws', { sections: ['proj'] }).hits.map((h) => h.id), ['side']);
+  assert.deepEqual(search(index, 'aws', { sections: ['exp', 'skills'], cutoff: 0 }).hits.map((h) => h.id).sort(), ['job', 'list']);
+  assert.deepEqual(search(index, 'aws', { sections: ['edu'] }).hits, [], 'a section with no match returns nothing');
+  const all = search(index, 'aws').hits.find((h) => h.id === 'side').score;
+  const only = search(index, 'aws', { sections: ['proj'] }).hits[0].score;
+  assert.equal(only, all, 'idf still comes from the whole CV');
+});
+
+test('sections must be a non-empty list of strings', () => {
+  const index = createIndex([doc('a', 'x')]);
+  assert.throws(() => search(index, 'x', { sections: 'exp' }), /sections must be a non-empty array of strings/);
+  assert.throws(() => search(index, 'x', { sections: [] }), /sections must be a non-empty array of strings/);
+  assert.throws(() => search(index, 'x', { sections: [1] }), /sections must be a non-empty array of strings/);
+});
+
+test('each hit says which of its matches came only through a synonym', () => {
+  const index = createIndex([doc('db', 'PostgreSQL and sql reports')]);
+  const [hit] = search(index, 'sql').hits;
+  assert.ok(hit.matched.includes('sql') && hit.matched.includes('postgresql'));
+  assert.deepEqual(hit.synonyms, ['postgresql'], 'typed words are not synonyms');
+});
+
+test('a matched stem is shown as the text writes it', () => {
+  assert.equal(surfaceForm('Docker, Kubernetes y GitHub Actions', 'kubernete'), 'Kubernetes');
+  assert.equal(surfaceForm('Node.js con TypeScript', 'j'), 'j', 'no word produces it: the stem itself');
+  assert.equal(surfaceForm('Formación en C#', 'formacion'), 'Formación', 'accents survive');
+  assert.equal(surfaceForm('', 'aws'), 'aws', 'empty text');
 });
