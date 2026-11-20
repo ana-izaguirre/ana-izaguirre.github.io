@@ -4,6 +4,8 @@ const PORT = 8000;
 
 module.exports = defineConfig({
   testDir: './tests',
+  // Node's own runner handles the unit tests (npm run test:unit).
+  testIgnore: 'unit/**',
   timeout: 45_000,
   expect: { timeout: 8_000 },
   fullyParallel: false,

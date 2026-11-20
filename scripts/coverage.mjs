@@ -1,5 +1,8 @@
-// Merges the V8 coverage the suite recorded (coverage/raw/, see tests/fixtures.js)
-// and reports how much of the page's own JavaScript actually ran.
+// Merges the V8 coverage recorded by the browser suite (coverage/raw/, see
+// tests/fixtures.js) and by the Node unit tests (coverage/node/, written by
+// NODE_V8_COVERAGE), and reports how much of the page's own JavaScript ran.
+// A script is keyed by its path in the site, so /js/search.mjs run by the
+// browser and by Node merges into one.
 //
 // Code coverage is measured in non-whitespace characters: V8 reports executed
 // ranges, not lines, and the scripts are dense enough that "lines" would mean
@@ -8,26 +11,45 @@
 // Writes coverage/summary.json and coverage/badge.json (shields.io endpoint
 // format; the deploy publishes it as /coverage.json). Fails below COVERAGE_MIN.
 import { readdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { relative } from 'node:path';
 import { createHash } from 'node:crypto';
 
 // A ratchet: raise it when the suite covers more, never lower it to pass.
 const COVERAGE_MIN = Number(process.env.COVERAGE_MIN ?? 100);
 
 const RAW = 'coverage/raw';
+const NODE = 'coverage/node';
 if (!existsSync(RAW)) {
   console.error('No coverage recorded. Run the Playwright suite first.');
   process.exit(1);
 }
 
+/** Browser entries carry their source; Node's do not, so it is read from disk. */
+function* entries() {
+  for (const file of readdirSync(RAW)) yield* JSON.parse(readFileSync(`${RAW}/${file}`, 'utf8'));
+  if (!existsSync(NODE)) return;
+  for (const file of readdirSync(NODE)) {
+    for (const r of JSON.parse(readFileSync(`${NODE}/${file}`, 'utf8')).result) {
+      if (!/\/js\/[\w-]+\.mjs$/.test(r.url) || !r.url.startsWith('file:')) continue;
+      const path = fileURLToPath(r.url);
+      yield { url: '/' + relative(process.cwd(), path), source: readFileSync(path, 'utf8'), functions: r.functions };
+    }
+  }
+}
+
+/** Where the script lives in the site: the same for the browser and for Node. */
+const sitePath = (url) => url.replace(/\?.*$/, '').replace(/^https?:\/\/[^/]+/, '');
+
 /** One script, identified by where it lives and what it contains. */
 const scripts = new Map();
 
-for (const file of readdirSync(RAW)) {
-  for (const entry of JSON.parse(readFileSync(`${RAW}/${file}`, 'utf8'))) {
-    const key = entry.url.replace(/\?.*$/, '') + '#' + createHash('sha1').update(entry.source).digest('hex').slice(0, 8);
+{
+  for (const entry of entries()) {
+    const key = sitePath(entry.url) + '#' + createHash('sha1').update(entry.source).digest('hex').slice(0, 8);
     let s = scripts.get(key);
     if (!s) {
-      s = { url: entry.url.replace(/\?.*$/, ''), source: entry.source, hits: new Uint8Array(entry.source.length), fns: new Map() };
+      s = { url: sitePath(entry.url), source: entry.source, hits: new Uint8Array(entry.source.length), fns: new Map() };
       scripts.set(key, s);
     }
     // V8 lists the whole function first, then nested blocks; a nested range
