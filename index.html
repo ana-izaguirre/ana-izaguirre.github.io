@@ -107,7 +107,26 @@ html[data-theme=light] .i-moon{display:block}
 .facts li.live{display:inline-flex;align-items:center;gap:.4rem}
 .facts li.live::before{content:"";width:.5rem;height:.5rem;border-radius:50%;background:#3FB46A;box-shadow:0 0 0 0 rgba(63,180,106,.55);animation:live 2.2s ease-out infinite}
 @keyframes live{70%,100%{box-shadow:0 0 0 .5rem rgba(63,180,106,0)}}
-.trust{position:relative;z-index:1;background:var(--bg);padding:1.1rem 0 1.3rem;border-block:1px solid var(--line);overflow:hidden}
+.trust{position:relative;z-index:1;background:var(--bg);padding:1.1rem 0 1.3rem;border-block:1px solid var(--line);overflow:clip}
+/* The stat row (spec 017): the story's own totals, under the cover. Where
+   scroll-driven animations run, each figure counts up as it comes into view,
+   drawn by a CSS counter; the real figure stays in the text for assistive
+   technology and is the only thing shown everywhere else. */
+.stats{display:flex;flex-wrap:wrap;justify-content:center;gap:.8rem clamp(1.4rem,5vw,3.6rem);margin:0 0 1.2rem;padding:0 1rem;list-style:none}
+.stats li{display:flex;flex-direction:column;align-items:center;text-align:center}
+.st-n{font:400 clamp(2rem,5vw,2.8rem)/1 var(--serif);color:var(--text)}
+.st-n b{font-weight:400}
+.st-l{margin-top:.3rem;font-size:.82rem;color:var(--slate)}
+@property --n{syntax:'<integer>';inherits:false;initial-value:0}
+@supports (animation-timeline:view()){
+@media screen and (prefers-reduced-motion:no-preference){
+  .st-n b{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  .st-n::before{content:counter(n) attr(data-suffix) / ""}
+  /* --n does not inherit, so the counter is set on the figure, not its ::before. */
+  .st-n{counter-reset:n var(--n);animation:count-up linear both;animation-timeline:view();animation-range:entry 0% cover 50%}
+}
+}
+@keyframes count-up{from{--n:0}to{--n:var(--to)}}
 .trust-h{margin:0 0 .7rem;text-align:center;font:700 .74rem/1.3 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--slate)}
 .mq-win{display:flex;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
 .mq{display:flex;flex:none;gap:3rem;margin:0;padding:0 1.5rem;list-style:none;animation:marquee 32s linear infinite}
@@ -874,6 +893,7 @@ window.ES_TOP={};
 })();
 </script>
 <section class="trust" aria-labelledby="trust-h">
+  <ul class="stats" aria-label="En cifras" data-i18n-aria="st_a"><li><span class="st-n" style="--to:8" data-suffix="+"><b>8+</b></span><span class="st-l" data-i18n="st_years">años en producción</span></li><li><span class="st-n" style="--to:6" data-suffix=""><b>6</b></span><span class="st-l" data-i18n="st_cos">empresas</span></li><li><span class="st-n" style="--to:25" data-suffix=""><b>25</b></span><span class="st-l" data-i18n="st_tech">tecnologías</span></li><li><span class="st-n" style="--to:3" data-suffix=""><b>3</b></span><span class="st-l" data-i18n="st_own">proyectos propios</span></li></ul>
   <p class="trust-h" id="trust-h" data-i18n="trust_h">Ha trabajado en</p>
   <div class="mq-win"><ul class="mq"><li>Allergan Data Labs (AbbVie)</li><li>Intel</li><li>AutoFi</li><li>Laureate Education</li><li>Agile Solutions</li><li>INFOP</li></ul><ul class="mq" aria-hidden="true"><li>Allergan Data Labs (AbbVie)</li><li>Intel</li><li>AutoFi</li><li>Laureate Education</li><li>Agile Solutions</li><li>INFOP</li></ul></div>
 </section>
