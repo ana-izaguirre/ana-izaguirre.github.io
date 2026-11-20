@@ -17,7 +17,7 @@ const EN={...window.EN_TOP,
 // Case studies (docs/specs/002). Spanish lives in the markup; keep both in step.
 case_open:"See the case",
 case_hint:"problem, decisions, architecture, trade-offs, results",
-case_hint_b:"problem and results",cta_mail:"Write to me",view_l:"Read it as",view_brief:"Hiring",view_deep:"Engineering",
+case_hint_b:"problem and results",cta_mail:"Write to me",more_q:"More questions",view_l:"Read it as",view_brief:"Hiring",view_deep:"Engineering",
 case_src:"Sources in the repository:",
 case_p:"Problem",
 case_d:"Decisions",
@@ -503,6 +503,18 @@ $('#ask-again').addEventListener('click',()=>{
   if(phoneMQ.matches)box.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
   else scrollTo({top:0,behavior:reduce?'auto':'smooth'});
   mini.focus({preventScroll:true});
+});
+// On phones the questions come four at a time (spec 012). Each tap brings the
+// next four in, one after another, and focus goes to the first new question.
+// Wider screens show all twelve and never see the button (CSS).
+const chips=$('#chips'),more=$('#chips-more'),BATCH=4;
+more.addEventListener('click',()=>{
+  const from=+chips.dataset.shown,all=$$('#chips .chip'),next=all.slice(from,from+BATCH);
+  next.forEach((c,k)=>{c.style.setProperty('--k',k);c.classList.add('in')});
+  chips.dataset.shown=from+BATCH;
+  const left=all.length-from-BATCH;
+  more.hidden=left<=0;more.querySelector('.n').textContent='+'+left;
+  next[0].focus();
 });
 $('#chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(b)ask(b.textContent)});
 // Switching mode re-asks whatever is on screen, in the new scope.

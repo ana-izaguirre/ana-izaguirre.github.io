@@ -308,18 +308,38 @@ test.describe('ask my CV: case studies', () => {
 test.describe('ask my CV on a phone', () => {
   test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
 
-  test('one box, right above the questions, which sit on one swipeable row', async ({ page }) => {
+  test('one box, right above the questions', async ({ page }) => {
     await open(page, '?quiet=1');
     await expect(page.locator('input#q-mini')).toHaveCount(1);
     await expect(page.locator('#ask-sec #ask-mini')).toHaveCount(1);
     const before = await page.evaluate(() => !!(document.querySelector('#ask-mini').compareDocumentPosition(document.querySelector('#chips')) & Node.DOCUMENT_POSITION_FOLLOWING));
     expect(before, 'the box is not before the questions').toBe(true);
-    const tops = await page.locator('#chips .chip').evaluateAll((cs) => new Set(cs.map((c) => c.offsetTop)).size);
-    expect(tops, 'questions wrap onto more than one row').toBe(1);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
     await page.fill('#q-mini', 'docker');
     await page.press('#q-mini', 'Enter');
     await expect(page.locator('.ans-q')).toHaveText('docker');
+  });
+
+  // Spec 012: no sideways scrolling; four questions, then four more per tap.
+  test('the questions come four at a time, and the new ones take the focus', async ({ page }) => {
+    await open(page, '?quiet=1');
+    const shown = () => page.locator('#chips .chip').evaluateAll((cs) => cs.filter((c) => c.offsetParent).length);
+    expect(await shown()).toBe(4);
+    await expect(page.locator('#chips-more')).toHaveText('Más preguntas +8');
+    await page.locator('#chips-more').tap();
+    expect(await shown()).toBe(8);
+    await expect(page.locator('#chips .chip').nth(4)).toBeFocused();
+    expect(await page.locator('#chips .chip').nth(5).evaluate((c) => [c.style.getPropertyValue('--k'), getComputedStyle(c).animationName])).toEqual(['1', 'chip-in']);
+    await page.locator('#chips-more').tap();
+    expect(await shown()).toBe(12);
+    await expect(page.locator('#chips-more')).toBeHidden();
+    const sideways = await page.$eval('#chips', (e) => e.scrollWidth > e.clientWidth);
+    expect(sideways, 'the questions scroll sideways').toBe(false);
+  });
+
+  test('the button speaks English', async ({ page }) => {
+    await open(page, '?quiet=1&lang=en');
+    await expect(page.locator('#chips-more')).toHaveText('More questions +8');
   });
 
   test('"ask something else" brings the box back into view', async ({ page }) => {
@@ -339,9 +359,11 @@ test.describe('ask my CV on a phone', () => {
   });
 });
 
-test('on a desktop the box stays on the cover', async ({ page }) => {
+test('on a desktop the box stays on the cover, with every question and no button', async ({ page }) => {
   await open(page, '?quiet=1');
   await expect(page.locator('#top #ask-mini')).toHaveCount(1);
+  await expect(page.locator('#chips .chip:visible')).toHaveCount(12);
+  await expect(page.locator('#chips-more')).toBeHidden();
 });
 
 // Spec 009: a call to action on the cover and where the page ends.

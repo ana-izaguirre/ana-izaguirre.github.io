@@ -247,6 +247,10 @@ html[data-theme=light] .i-moon{display:block}
 .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 .ask-h{margin:1.3rem 0 .6rem;font-size:.88rem;color:var(--slate)}
 .chips{display:flex;flex-wrap:wrap;gap:.55rem;margin:0}
+.chips-more{display:none;align-items:center;gap:.45rem;margin-top:.7rem;padding:.55rem 1rem;border:1.5px dashed color-mix(in srgb,var(--red) 50%,transparent);border-radius:999px;background:transparent;color:var(--text);font:600 .9rem/1 var(--sans);cursor:pointer}
+.chips-more .n{color:var(--red-t)}
+.chips-more[hidden]{display:none!important}
+@keyframes chip-in{from{opacity:0;transform:translateY(12px) scale(.97)}}
 .chip{font:500 .95rem/1.25 var(--sans);color:var(--text);background:var(--sheet);border:1px solid var(--rule);border-radius:999px;padding:.55rem .95rem;cursor:pointer;text-align:left;box-shadow:0 1px 2px rgba(0,0,0,.08);transition:border-color .2s,transform .15s,box-shadow .2s}
 .chip:hover{border-color:var(--red);transform:translateY(-1px);box-shadow:0 4px 10px -4px rgba(0,0,0,.3)}
 .how{margin:1.2rem 0 0;font-size:.88rem;line-height:1.55;color:var(--slate);max-width:54ch}
@@ -546,14 +550,16 @@ section.replay{-webkit-backdrop-filter:none;backdrop-filter:none;position:relati
 
 @media (min-width:701px){.doc{scroll-margin-top:60px}}
 @media (max-width:900px){.grid{grid-template-columns:1fr;grid-template-areas:"a" "c"}}
-/* Phones (spec 008): the box, then its questions in one swipeable row, then the answer. */
+/* Phones (specs 008, 012): the box, then its questions, then the answer. */
 @media (max-width:680px){
   /* Hidden from the first frame, so the cover does not shrink when app.js moves the box. */
   #top .hero-r{display:none}
   .askwrap .grid{grid-template-columns:minmax(0,1fr);grid-template-areas:"q" "c" "a"}
   .askwrap .ask-mini{grid-area:q;width:100%;transform:none}
-  .chips{flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;padding:.15rem .1rem .6rem;scrollbar-width:thin}
-  .chip{flex:none;width:min(15rem,72vw);scroll-snap-align:start}
+  /* Four questions at first; "More questions" brings the next four in, one after another. */
+  #chips[data-shown="4"] .chip:nth-child(n+5),#chips[data-shown="8"] .chip:nth-child(n+9){display:none}
+  .chip.in{animation:chip-in .42s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--k,0) * 70ms)}
+  .chips-more{display:inline-flex}
 }
 @media (max-width:640px){
   .row{grid-template-columns:1fr}
@@ -845,7 +851,7 @@ window.ES_TOP={};
     <div class="grid">
       <div class="g-chips">
         <p class="ask-h" data-i18n="ask_h2">O toca una de estas preguntas:</p>
-        <div class="chips" id="chips">
+        <div class="chips" id="chips" data-shown="4">
           <button class="chip" type="button" data-i18n="c1">¿Cómo gestionaste la arquitectura de colas y eventos en AWS?</button>
           <button class="chip" type="button" data-i18n="c2">¿Qué experiencia tienes en guardias on-call y observabilidad con Datadog?</button>
           <button class="chip" type="button" data-i18n="c3">¿Cómo aplicas IA y desarrollo con agentes en tu flujo diario?</button>
@@ -859,6 +865,7 @@ window.ES_TOP={};
           <button class="chip" type="button" data-i18n="c5">¿Dónde vives y qué puesto buscas?</button>
           <button class="chip" type="button" data-i18n="c6">¿Qué nivel de inglés tienes?</button>
         </div>
+        <button class="chips-more" id="chips-more" type="button" aria-controls="chips"><span data-i18n="more_q">Más preguntas</span> <span class="n" aria-hidden="true">+8</span></button>
       </div>
       <div class="g-ans">
         <fieldset class="modes" id="modes">
