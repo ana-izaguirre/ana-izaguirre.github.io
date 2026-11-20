@@ -8,8 +8,9 @@
     "test": "playwright test",
     "test:headed": "playwright test --headed",
     "lighthouse": "node scripts/lighthouse.mjs",
-    "qa": "npm run test && npm run coverage && npm run lighthouse",
-    "coverage": "node scripts/coverage.mjs"
+    "qa": "npm run test:unit && npm run test && npm run coverage && npm run lighthouse",
+    "coverage": "node scripts/coverage.mjs",
+    "test:unit": "NODE_V8_COVERAGE=coverage/node node --test tests/unit/*.test.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.63.0",

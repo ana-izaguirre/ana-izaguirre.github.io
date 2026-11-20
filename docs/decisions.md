@@ -71,3 +71,14 @@ was decided, why, and what would change the decision.
 - **Why.** Run in a single job, `deploy-pages` raced the upload: it found no
   artifact, then two on the re-run. Two jobs is also what GitHub's own Pages
   workflow does.
+
+## D9. Pure modules use `.mjs`
+
+- **Decision.** Modules shared by the page and by Node live in `js/*.mjs`.
+- **Why.** Node treats `.js` as CommonJS unless `package.json` declares
+  `"type": "module"`, and the Playwright config and specs here use `require`.
+  `.mjs` is an ES module everywhere, so the same file runs in the page and in
+  `node --test` with no build step and no change to the existing tests.
+- **Alternative.** Name them `js/*.js`, add `"type": "module"`, and move the
+  specs and config to `import`, or rename them `.cjs`. Cleaner in the long
+  run; worth it when the specs are migrated for another reason.

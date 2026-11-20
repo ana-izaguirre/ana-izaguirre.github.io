@@ -9,7 +9,7 @@ metrics on every project, honest "good fit / bad fit").
 | # | Phase | Impact | Risk | Effort | Status |
 |---|---|---|---|---|---|
 | 0 | `AGENTS.md`, decisions, roadmap, English comments | Foundation | Low | S | Done |
-| 1 | Search decoupled from the DOM, unit-tested, validated | High for reviewers | Low | M | Next |
+| 1 | Search decoupled from the DOM, unit-tested, validated | High for reviewers | Low | M | Done (spec 001) |
 | 2 | Projects as case studies | **Highest** for recruiters | Medium (must not invent) | M | Planned |
 | 3 | Ask my CV: query modes and visible evidence | High | Low | M | Planned |
 | 4 | Exploratory cover: hover changes the scene and message | Medium-high, memorable | Medium (CLS, performance) | M | Planned |

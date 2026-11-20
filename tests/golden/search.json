@@ -1,0 +1,1206 @@
+{
+ "es": {
+  "¿Cómo gestionaste la arquitectura de colas y eventos en AWS?": {
+   "terms": [
+    "arquitectura",
+    "aws",
+    "cola",
+    "evento",
+    "gestionaste"
+   ],
+   "hits": [
+    [
+     "c-laureate",
+     [
+      "Verificación de identidad con AWS Rekognition en una platafo"
+     ]
+    ],
+    [
+     "c-allergan",
+     [
+      "Envío de correo a gran volumen sobre una arquitectura orient"
+     ]
+    ],
+    [
+     "c-sk2",
+     [
+      "SNS, SQS y RabbitMQ: colas, eventos y mensajería asíncrona"
+     ]
+    ]
+   ]
+  },
+  "¿Qué experiencia tienes en guardias on-call y observabilidad con Datadog?": {
+   "terms": [
+    "call",
+    "datadog",
+    "experiencia",
+    "guardia",
+    "observabilidad"
+   ],
+   "hits": [
+    [
+     "c-allergan",
+     [
+      "Reportes de campañas en Snowflake y guardias on-call con Dat"
+     ]
+    ],
+    [
+     "c-perfil",
+     [
+      "Ingeniera full stack con más de 8 años construyendo sistemas"
+     ]
+    ]
+   ]
+  },
+  "¿Cómo aplicas IA y desarrollo con agentes en tu flujo diario?": {
+   "terms": [
+    "agente",
+    "aplica",
+    "desarrollo",
+    "diario",
+    "flujo",
+    "ia"
+   ],
+   "hits": [
+    [
+     "c-perfil",
+     [
+      "Ingeniera full stack con más de 8 años construyendo sistemas"
+     ]
+    ],
+    [
+     "c-mcp",
+     [
+      "Servidor MCP que da a agentes de IA búsqueda por palabras cl",
+      "Python, SQLite FTS5, pytest, mypy. github.com/ana-izaguirre/"
+     ]
+    ],
+    [
+     "c-sk6",
+     [
+      "Gemini API, MCP y desarrollo con agentes de código (Claude C"
+     ]
+    ]
+   ]
+  },
+  "¿Has liderado o mentorizado equipos?": {
+   "terms": [
+    "equipo",
+    "liderado",
+    "mentorizado"
+   ],
+   "hits": [
+    [
+     "c-intel",
+     [
+      "Lideré el CI/CD del equipo con Docker, GitHub Actions y Kube",
+      "Mentoría e incorporación de ingenieros nuevos, prácticas de "
+     ]
+    ],
+    [
+     "c-perfil",
+     [
+      "Ingeniera full stack con más de 8 años construyendo sistemas"
+     ]
+    ],
+    [
+     "c-lang",
+     [
+      "Español nativo. Inglés profesional: más de 6 años con equipo"
+     ]
+    ]
+   ]
+  },
+  "¿Has diseñado APIs REST y GraphQL?": {
+   "terms": [
+    "api",
+    "disenado",
+    "graphql",
+    "rest"
+   ],
+   "hits": [
+    [
+     "c-perfil",
+     [
+      "Ingeniera full stack con más de 8 años construyendo sistemas"
+     ]
+    ],
+    [
+     "c-sk1",
+     [
+      "Node.js, TypeScript, REST, GraphQL (Apollo), Express, Python"
+     ]
+    ],
+    [
+     "c-autofi",
+     [
+      "Servicios GraphQL con Apollo Server, TypeScript y Express pa"
+     ]
+    ]
+   ]
+  },
+  "¿Cómo haces testing?": {
+   "terms": [
+    "testing"
+   ],
+   "hits": [
+    [
+     "c-agile",
+     [
+      "Servicios Node.js contra SAP HANA en la plataforma fiscal TI"
+     ]
+    ],
+    [
+     "c-autofi",
+     [
+      "Mensajería asíncrona entre servicios con RabbitMQ y pruebas "
+     ]
+    ],
+    [
+     "c-intel",
+     [
+      "Mentoría e incorporación de ingenieros nuevos, prácticas de "
+     ]
+    ]
+   ]
+  },
+  "¿Usas Docker y Kubernetes?": {
+   "terms": [
+    "docker",
+    "kubernete"
+   ],
+   "hits": [
+    [
+     "c-intel",
+     [
+      "Lideré el CI/CD del equipo con Docker, GitHub Actions y Kube"
+     ]
+    ],
+    [
+     "c-sk3",
+     [
+      "AWS (Lambda, S3, DynamoDB), Docker, Kubernetes, GitHub Actio"
+     ]
+    ]
+   ]
+  },
+  "¿Qué decisiones de arquitectura tomaste en trainer-flow?": {
+   "terms": [
+    "arquitectura",
+    "decisione",
+    "flow",
+    "tomaste",
+    "trainer"
+   ],
+   "hits": [
+    [
+     "c-trainer",
+     [
+      "TypeScript, Deno, Supabase, Gemini. github.com/ana-izaguirre"
+     ]
+    ],
+    [
+     "c-latino",
+     [
+      "React 19, TypeScript, Express, Firestore. latino-migra.verce"
+     ]
+    ]
+   ]
+  },
+  "¿Qué bases de datos has usado?": {
+   "terms": [
+    "base",
+    "dato"
+   ],
+   "hits": [
+    [
+     "c-laureate",
+     [
+      "Verificación de identidad con AWS Rekognition en una platafo",
+      "Integraciones con Blackboard LMS en Java EE y MongoDB."
+     ]
+    ],
+    [
+     "c-allergan",
+     [
+      "Reportes de campañas en Snowflake y guardias on-call con Dat"
+     ]
+    ],
+    [
+     "c-sk4",
+     [
+      "PostgreSQL, MongoDB, Snowflake"
+     ]
+    ]
+   ]
+  },
+  "¿Qué has hecho desde 2025?": {
+   "terms": [
+    "2025"
+   ],
+   "hits": [
+    [
+     "c-pausa",
+     [
+      "Dedicación completa a la crianza tras una reducción de plant"
+     ]
+    ],
+    [
+     "c-allergan",
+     [
+      "Funcionalidades de extremo a extremo con Node.js, GraphQL y "
+     ]
+    ]
+   ]
+  },
+  "¿Dónde vives y qué puesto buscas?": {
+   "terms": [
+    "busca",
+    "donde",
+    "puesto",
+    "vive"
+   ],
+   "hits": [
+    [
+     "c-disp",
+     [
+      "Vivo en Zaragoza. Busco un puesto indefinido como ingeniera "
+     ]
+    ]
+   ]
+  },
+  "¿Qué nivel de inglés tienes?": {
+   "terms": [
+    "ingle"
+   ],
+   "hits": [
+    [
+     "c-lang",
+     [
+      "Español nativo. Inglés profesional: más de 6 años con equipo"
+     ]
+    ]
+   ]
+  },
+  "sql": {
+   "terms": [
+    "sql"
+   ],
+   "hits": [
+    [
+     "c-laureate",
+     [
+      "Verificación de identidad con AWS Rekognition en una platafo",
+      "Integraciones con Blackboard LMS en Java EE y MongoDB."
+     ]
+    ],
+    [
+     "c-allergan",
+     [
+      "Reportes de campañas en Snowflake y guardias on-call con Dat"
+     ]
+    ],
+    [
+     "c-sk4",
+     [
+      "PostgreSQL, MongoDB, Snowflake"
+     ]
+    ]
+   ]
+  },
+  "kubernetes": {
+   "terms": [
+    "kubernete"
+   ],
+   "hits": [
+    [
+     "c-intel",
+     [
+      "Lideré el CI/CD del equipo con Docker, GitHub Actions y Kube"
+     ]
+    ],
+    [
+     "c-sk3",
+     [
+      "AWS (Lambda, S3, DynamoDB), Docker, Kubernetes, GitHub Actio"
+     ]
+    ]
+   ]
+  },
+  "graphql": {
+   "terms": [
+    "graphql"
+   ],
+   "hits": [
+    [
+     "c-autofi",
+     [
+      "Servicios GraphQL con Apollo Server, TypeScript y Express pa"
+     ]
+    ],
+    [
+     "c-allergan",
+     [
+      "Funcionalidades de extremo a extremo con Node.js, GraphQL y ",
+      "Endpoint batch con permisos por rol multi-tenant que automat"
+     ]
+    ],
+    [
+     "c-perfil",
+     [
+      "Ingeniera full stack con más de 8 años construyendo sistemas"
+     ]
+    ]
+   ]
+  },
+  "aws": {
+   "terms": [
+    "aws"
+   ],
+   "hits": [
+    [
+     "c-laureate",
+     [
+      "Verificación de identidad con AWS Rekognition en una platafo"
+     ]
+    ],
+    [
+     "c-allergan",
+     [
+      "Envío de correo a gran volumen sobre una arquitectura orient"
+     ]
+    ]
+   ]
+  },
+  "jest": {
+   "terms": [
+    "jest"
+   ],
+   "hits": [
+    [
+     "c-autofi",
+     [
+      "Mensajería asíncrona entre servicios con RabbitMQ y pruebas "
+     ]
+    ],
+    [
+     "c-agile",
+     [
+      "Servicios Node.js contra SAP HANA en la plataforma fiscal TI"
+     ]
+    ],
+    [
+     "c-sk5",
+     [
+      "React, Angular, Jest, Cypress"
+     ]
+    ]
+   ]
+  },
+  "docker": {
+   "terms": [
+    "docker"
+   ],
+   "hits": [
+    [
+     "c-intel",
+     [
+      "Lideré el CI/CD del equipo con Docker, GitHub Actions y Kube"
+     ]
+    ],
+    [
+     "c-sk3",
+     [
+      "AWS (Lambda, S3, DynamoDB), Docker, Kubernetes, GitHub Actio"
+     ]
+    ]
+   ]
+  },
+  "snowflake": {
+   "terms": [
+    "snowflake"
+   ],
+   "hits": [
+    [
+     "c-allergan",
+     [
+      "Reportes de campañas en Snowflake y guardias on-call con Dat"
+     ]
+    ],
+    [
+     "c-laureate",
+     [
+      "Verificación de identidad con AWS Rekognition en una platafo",
+      "Integraciones con Blackboard LMS en Java EE y MongoDB."
+     ]
+    ],
+    [
+     "c-sk4",
+     [
+      "PostgreSQL, MongoDB, Snowflake"
+     ]
+    ]
+   ]
+  },
+  "supabase": {
+   "terms": [
+    "supabase"
+   ],
+   "hits": [
+    [
+     "c-trainer",
+     [
+      "TypeScript, Deno, Supabase, Gemini. github.com/ana-izaguirre"
+     ]
+    ]
+   ]
+  },
+  "intel": {
+   "terms": [
+    "intel"
+   ],
+   "hits": [
+    [
+     "c-intel",
+     [
+      "Desarrollo full stack (Angular, Node.js) en una plataforma i"
+     ]
+    ],
+    [
+     "c-perfil",
+     [
+      "Ingeniera full stack con más de 8 años construyendo sistemas"
+     ]
+    ]
+   ]
+  },
+  "zzzqqq": {
+   "terms": [
+    "zzzqqq"
+   ],
+   "hits": []
+  },
+  "¿Qué?": {
+   "terms": [],
+   "hits": []
+  },
+  "react angular": {
+   "terms": [
+    "angular",
+    "react"
+   ],
+   "hits": [
+    [
+     "c-sk5",
+     [
+      "React, Angular, Jest, Cypress"
+     ]
+    ],
+    [
+     "c-latino",
+     [
+      "React 19, TypeScript, Express, Firestore. latino-migra.verce"
+     ]
+    ],
+    [
+     "c-intel",
+     [
+      "Desarrollo full stack (Angular, Node.js) en una plataforma i"
+     ]
+    ]
+   ]
+  },
+  "python": {
+   "terms": [
+    "python"
+   ],
+   "hits": [
+    [
+     "c-mcp",
+     [
+      "Python, SQLite FTS5, pytest, mypy. github.com/ana-izaguirre/"
+     ]
+    ],
+    [
+     "c-sk1",
+     [
+      "Node.js, TypeScript, REST, GraphQL (Apollo), Express, Python"
+     ]
+    ]
+   ]
+  },
+  "liderazgo": {
+   "terms": [
+    "liderazgo"
+   ],
+   "hits": [
+    [
+     "c-intel",
+     [
+      "Lideré el CI/CD del equipo con Docker, GitHub Actions y Kube",
+      "Mentoría e incorporación de ingenieros nuevos, prácticas de "
+     ]
+    ],
+    [
+     "c-perfil",
+     [
+      "Ingeniera full stack con más de 8 años construyendo sistemas"
+     ]
+    ]
+   ]
+  },
+  "remote": {
+   "terms": [
+    "remote"
+   ],
+   "hits": [
+    [
+     "c-disp",
+     [
+      "Vivo en Zaragoza. Busco un puesto indefinido como ingeniera "
+     ]
+    ]
+   ]
+  },
+  "c#": {
+   "terms": [
+    "c#"
+   ],
+   "hits": [
+    [
+     "c-infop",
+     [
+      "Desarrollo full stack en plataformas de e-learning con C#, P"
+     ]
+    ]
+   ]
+  },
+  "node.js": {
+   "terms": [
+    "js",
+    "node"
+   ],
+   "hits": [
+    [
+     "c-allergan",
+     [
+      "Funcionalidades de extremo a extremo con Node.js, GraphQL y "
+     ]
+    ],
+    [
+     "c-agile",
+     [
+      "Servicios Node.js contra SAP HANA en la plataforma fiscal TI"
+     ]
+    ],
+    [
+     "c-intel",
+     [
+      "Desarrollo full stack (Angular, Node.js) en una plataforma i"
+     ]
+    ]
+   ]
+  }
+ },
+ "en": {
+  "How did you handle queue and event architecture on AWS?": {
+   "terms": [
+    "architecture",
+    "aws",
+    "event",
+    "handle",
+    "queue"
+   ],
+   "hits": [
+    [
+     "c-laureate",
+     [
+      "Identity verification with AWS Rekognition on a remote-proct"
+     ]
+    ],
+    [
+     "c-allergan",
+     [
+      "High-volume email delivery on an event-driven architecture o"
+     ]
+    ],
+    [
+     "c-sk2",
+     [
+      "SNS, SQS and RabbitMQ: queues, events and asynchronous messa"
+     ]
+    ]
+   ]
+  },
+  "What is your experience with on-call and observability with Datadog?": {
+   "terms": [
+    "call",
+    "datadog",
+    "experience",
+    "observability"
+   ],
+   "hits": [
+    [
+     "c-allergan",
+     [
+      "Campaign reporting in Snowflake and on-call rotations with D"
+     ]
+    ],
+    [
+     "c-perfil",
+     [
+      "Full stack engineer with 8+ years building production system"
+     ]
+    ]
+   ]
+  },
+  "How do you use AI and agentic development day to day?": {
+   "terms": [
+    "agentic",
+    "ai",
+    "day",
+    "development"
+   ],
+   "hits": [
+    [
+     "c-mcp",
+     [
+      "MCP server that gives AI agents keyword search over markdown",
+      "Python, SQLite FTS5, pytest, mypy. github.com/ana-izaguirre/"
+     ]
+    ],
+    [
+     "c-sk6",
+     [
+      "Gemini API, MCP and development with coding agents (Claude C"
+     ]
+    ],
+    [
+     "c-latino",
+     [
+      "Web platform for Latin American students and professionals w"
+     ]
+    ]
+   ]
+  },
+  "Have you led or mentored engineers?": {
+   "terms": [
+    "engineer",
+    "led",
+    "mentored"
+   ],
+   "hits": [
+    [
+     "c-intel",
+     [
+      "Led the team's CI/CD with Docker, GitHub Actions and Kuberne",
+      "Mentoring and onboarding of new engineers, code review pract"
+     ]
+    ],
+    [
+     "c-perfil",
+     [
+      "Full stack engineer with 8+ years building production system"
+     ]
+    ]
+   ]
+  },
+  "Have you designed REST and GraphQL APIs?": {
+   "terms": [
+    "api",
+    "designed",
+    "graphql",
+    "rest"
+   ],
+   "hits": [
+    [
+     "c-perfil",
+     [
+      "Full stack engineer with 8+ years building production system"
+     ]
+    ],
+    [
+     "c-sk1",
+     [
+      "Node.js, TypeScript, REST, GraphQL (Apollo), Express, Python"
+     ]
+    ],
+    [
+     "c-autofi",
+     [
+      "GraphQL services with Apollo Server, TypeScript and Express "
+     ]
+    ]
+   ]
+  },
+  "How do you approach testing?": {
+   "terms": [
+    "testing"
+   ],
+   "hits": [
+    [
+     "c-agile",
+     [
+      "Node.js services against SAP HANA on the TIMP tax platform, "
+     ]
+    ],
+    [
+     "c-autofi",
+     [
+      "Asynchronous service-to-service messaging with RabbitMQ and "
+     ]
+    ],
+    [
+     "c-intel",
+     [
+      "Mentoring and onboarding of new engineers, code review pract"
+     ]
+    ]
+   ]
+  },
+  "Do you use Docker and Kubernetes?": {
+   "terms": [
+    "docker",
+    "kubernete"
+   ],
+   "hits": [
+    [
+     "c-intel",
+     [
+      "Led the team's CI/CD with Docker, GitHub Actions and Kuberne"
+     ]
+    ],
+    [
+     "c-sk3",
+     [
+      "AWS (Lambda, S3, DynamoDB), Docker, Kubernetes, GitHub Actio"
+     ]
+    ]
+   ]
+  },
+  "What architectural decisions did you make in trainer-flow?": {
+   "terms": [
+    "architectural",
+    "decision",
+    "flow",
+    "make",
+    "trainer"
+   ],
+   "hits": [
+    [
+     "c-trainer",
+     [
+      "Workout planning over Telegram where AI proposes and the tra",
+      "TypeScript, Deno, Supabase, Gemini. github.com/ana-izaguirre"
+     ]
+    ],
+    [
+     "c-latino",
+     [
+      "React 19, TypeScript, Express, Firestore. latino-migra.verce"
+     ]
+    ],
+    [
+     "c-pausa",
+     [
+      "Full-time parenting after a company-wide layoff. During this"
+     ]
+    ]
+   ]
+  },
+  "Which databases have you used?": {
+   "terms": [
+    "database"
+   ],
+   "hits": [
+    [
+     "c-laureate",
+     [
+      "Identity verification with AWS Rekognition on a remote-proct",
+      "Blackboard LMS integrations in Java EE and MongoDB."
+     ]
+    ],
+    [
+     "c-allergan",
+     [
+      "Campaign reporting in Snowflake and on-call rotations with D"
+     ]
+    ],
+    [
+     "c-sk4",
+     [
+      "PostgreSQL, MongoDB, Snowflake"
+     ]
+    ]
+   ]
+  },
+  "What have you done since 2025?": {
+   "terms": [
+    "2025",
+    "done"
+   ],
+   "hits": [
+    [
+     "c-pausa",
+     [
+      "Full-time parenting after a company-wide layoff. During this"
+     ]
+    ],
+    [
+     "c-allergan",
+     [
+      "End-to-end features with Node.js, GraphQL and TypeScript on "
+     ]
+    ]
+   ]
+  },
+  "Where do you live and what role are you looking for?": {
+   "terms": [
+    "live",
+    "looking",
+    "role",
+    "where"
+   ],
+   "hits": [
+    [
+     "c-disp",
+     [
+      "I live in Zaragoza, Spain. I am looking for a permanent role"
+     ]
+    ]
+   ]
+  },
+  "What is your English level?": {
+   "terms": [
+    "english"
+   ],
+   "hits": [
+    [
+     "c-lang",
+     [
+      "Native Spanish. Professional English: 6+ years with US engin"
+     ]
+    ]
+   ]
+  },
+  "sql": {
+   "terms": [
+    "sql"
+   ],
+   "hits": [
+    [
+     "c-laureate",
+     [
+      "Identity verification with AWS Rekognition on a remote-proct",
+      "Blackboard LMS integrations in Java EE and MongoDB."
+     ]
+    ],
+    [
+     "c-allergan",
+     [
+      "Campaign reporting in Snowflake and on-call rotations with D"
+     ]
+    ],
+    [
+     "c-sk4",
+     [
+      "PostgreSQL, MongoDB, Snowflake"
+     ]
+    ]
+   ]
+  },
+  "kubernetes": {
+   "terms": [
+    "kubernete"
+   ],
+   "hits": [
+    [
+     "c-intel",
+     [
+      "Led the team's CI/CD with Docker, GitHub Actions and Kuberne"
+     ]
+    ],
+    [
+     "c-sk3",
+     [
+      "AWS (Lambda, S3, DynamoDB), Docker, Kubernetes, GitHub Actio"
+     ]
+    ]
+   ]
+  },
+  "graphql": {
+   "terms": [
+    "graphql"
+   ],
+   "hits": [
+    [
+     "c-autofi",
+     [
+      "GraphQL services with Apollo Server, TypeScript and Express "
+     ]
+    ],
+    [
+     "c-allergan",
+     [
+      "End-to-end features with Node.js, GraphQL and TypeScript on ",
+      "Batch endpoint with multi-tenant, role-based permissions tha"
+     ]
+    ],
+    [
+     "c-perfil",
+     [
+      "Full stack engineer with 8+ years building production system"
+     ]
+    ]
+   ]
+  },
+  "aws": {
+   "terms": [
+    "aws"
+   ],
+   "hits": [
+    [
+     "c-laureate",
+     [
+      "Identity verification with AWS Rekognition on a remote-proct"
+     ]
+    ],
+    [
+     "c-allergan",
+     [
+      "High-volume email delivery on an event-driven architecture o"
+     ]
+    ]
+   ]
+  },
+  "jest": {
+   "terms": [
+    "jest"
+   ],
+   "hits": [
+    [
+     "c-autofi",
+     [
+      "Asynchronous service-to-service messaging with RabbitMQ and "
+     ]
+    ],
+    [
+     "c-agile",
+     [
+      "Node.js services against SAP HANA on the TIMP tax platform, "
+     ]
+    ],
+    [
+     "c-intel",
+     [
+      "Mentoring and onboarding of new engineers, code review pract"
+     ]
+    ]
+   ]
+  },
+  "docker": {
+   "terms": [
+    "docker"
+   ],
+   "hits": [
+    [
+     "c-intel",
+     [
+      "Led the team's CI/CD with Docker, GitHub Actions and Kuberne"
+     ]
+    ],
+    [
+     "c-sk3",
+     [
+      "AWS (Lambda, S3, DynamoDB), Docker, Kubernetes, GitHub Actio"
+     ]
+    ]
+   ]
+  },
+  "snowflake": {
+   "terms": [
+    "snowflake"
+   ],
+   "hits": [
+    [
+     "c-allergan",
+     [
+      "Campaign reporting in Snowflake and on-call rotations with D"
+     ]
+    ],
+    [
+     "c-laureate",
+     [
+      "Identity verification with AWS Rekognition on a remote-proct",
+      "Blackboard LMS integrations in Java EE and MongoDB."
+     ]
+    ],
+    [
+     "c-sk4",
+     [
+      "PostgreSQL, MongoDB, Snowflake"
+     ]
+    ]
+   ]
+  },
+  "supabase": {
+   "terms": [
+    "supabase"
+   ],
+   "hits": [
+    [
+     "c-trainer",
+     [
+      "TypeScript, Deno, Supabase, Gemini. github.com/ana-izaguirre"
+     ]
+    ]
+   ]
+  },
+  "intel": {
+   "terms": [
+    "intel"
+   ],
+   "hits": [
+    [
+     "c-intel",
+     [
+      "Full stack development (Angular, Node.js) on an internal eng"
+     ]
+    ],
+    [
+     "c-perfil",
+     [
+      "Full stack engineer with 8+ years building production system"
+     ]
+    ]
+   ]
+  },
+  "zzzqqq": {
+   "terms": [
+    "zzzqqq"
+   ],
+   "hits": []
+  },
+  "¿Qué?": {
+   "terms": [],
+   "hits": []
+  },
+  "react angular": {
+   "terms": [
+    "angular",
+    "react"
+   ],
+   "hits": [
+    [
+     "c-sk5",
+     [
+      "React, Angular, Jest, Cypress"
+     ]
+    ],
+    [
+     "c-latino",
+     [
+      "React 19, TypeScript, Express, Firestore. latino-migra.verce"
+     ]
+    ],
+    [
+     "c-intel",
+     [
+      "Full stack development (Angular, Node.js) on an internal eng"
+     ]
+    ]
+   ]
+  },
+  "python": {
+   "terms": [
+    "python"
+   ],
+   "hits": [
+    [
+     "c-mcp",
+     [
+      "Python, SQLite FTS5, pytest, mypy. github.com/ana-izaguirre/"
+     ]
+    ],
+    [
+     "c-sk1",
+     [
+      "Node.js, TypeScript, REST, GraphQL (Apollo), Express, Python"
+     ]
+    ]
+   ]
+  },
+  "liderazgo": {
+   "terms": [
+    "liderazgo"
+   ],
+   "hits": [
+    [
+     "c-intel",
+     [
+      "Led the team's CI/CD with Docker, GitHub Actions and Kuberne",
+      "Mentoring and onboarding of new engineers, code review pract"
+     ]
+    ],
+    [
+     "c-perfil",
+     [
+      "Full stack engineer with 8+ years building production system"
+     ]
+    ]
+   ]
+  },
+  "remote": {
+   "terms": [
+    "remote"
+   ],
+   "hits": [
+    [
+     "c-disp",
+     [
+      "I live in Zaragoza, Spain. I am looking for a permanent role"
+     ]
+    ]
+   ]
+  },
+  "c#": {
+   "terms": [
+    "c#"
+   ],
+   "hits": [
+    [
+     "c-infop",
+     [
+      "Full stack development on e-learning platforms with C#, PHP,"
+     ]
+    ]
+   ]
+  },
+  "node.js": {
+   "terms": [
+    "js",
+    "node"
+   ],
+   "hits": [
+    [
+     "c-allergan",
+     [
+      "End-to-end features with Node.js, GraphQL and TypeScript on "
+     ]
+    ],
+    [
+     "c-agile",
+     [
+      "Node.js services against SAP HANA on the TIMP tax platform, "
+     ]
+    ],
+    [
+     "c-intel",
+     [
+      "Full stack development (Angular, Node.js) on an internal eng"
+     ]
+    ]
+   ]
+  }
+ }
+}

@@ -55,8 +55,10 @@ Lightweight spec-driven development:
 
 - `npm test` runs Playwright: journeys, layout at six sizes, axe, and first
   paint.
+- `npm run test:unit` runs Node's built-in test runner over the pure modules
+  in `js/`, with no dependencies.
 - `npm run coverage` reports V8 coverage of the page's own JavaScript. The gate
-  is 100% of code and functions. It is a ratchet: write the test, or delete
+  is 100% of code and functions, browser and Node data merged. It is a ratchet: write the test, or delete
   the dead code it exposes; never lower the minimum.
 - `npm run lighthouse` runs the Lighthouse gate.
 - **A test must prove its own premise.** Break the fix and watch the test
@@ -74,6 +76,7 @@ Lightweight spec-driven development:
 | Markup, critical CSS | `index.html` | CSS stays inline on purpose (D1) |
 | First-frame script | inline in `index.html` | theme, language, cover translation (`EN_TOP`) |
 | Page logic | `app.js` | requested after the first frame (D2) |
+| Pure modules | `js/*.mjs` | no DOM access; unit-tested in Node (D9) |
 | Landscape | `tools/scene.py` → `index.html` | generated; edit the generator, not the SVG |
 | CV content | `index.html` | Spanish in the markup, English in `app.js` |
 | Print and PDF | print rules in `index.html` | `.cv-only` is hidden on screen, printed in the PDF |
@@ -90,12 +93,15 @@ Lightweight spec-driven development:
   races; build and deploy are separate jobs.
 - A coverage branch can depend on how fast the CI runner is. Pin both sides
   with a test.
+- A ranking change must be deliberate: `tests/golden/search.json` pins the
+  results; regenerate it and review its diff in the same PR.
 
 ## Commands
 
 ```bash
 python3 -m http.server 8000              # serve locally
 npm test                                 # Playwright (needs the server or starts one)
+npm run test:unit                        # pure modules, Node only
 npm run coverage                         # after npm test
 CHROME_PATH=… LH_RUNS=3 npm run lighthouse
 python3 tools/scene.py                   # regenerate the landscape
