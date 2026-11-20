@@ -564,6 +564,31 @@ section.replay{-webkit-backdrop-filter:none;backdrop-filter:none;position:relati
   .rp-top{grid-template-columns:minmax(0,1fr) auto}
   .rp-ev{grid-column:1/-1;order:3;min-height:8.6rem;justify-content:flex-start}
 }
+/* Motion on scroll (spec 010), in CSS alone: scroll-driven animations run on
+   the compositor and need no script. Where they are not supported, or motion
+   is reduced, or on paper, everything simply stands still and fully visible.
+   Only transform and opacity change, so nothing reflows or shifts layout. */
+@supports (animation-timeline:view()){
+@media screen and (prefers-reduced-motion:no-preference){
+  /* Reading progress: a thin line under the bar fills as the page is read. */
+  .bar::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--red);transform-origin:0 50%;transform:scaleX(0);animation:read-progress linear both;animation-timeline:scroll(root)}
+  /* Leaving the cover: the landscape sinks slower than the page, the words lift
+     away faster. Movement only: a faded cover would fail contrast checks. */
+  .sys{view-timeline:--cover block}
+  /* Not on phones: there the landscape is a band in the flow, and sinking would cover the cards. */
+  @media (min-width:681px){.sys>.world{animation:cover-sink linear both;animation-timeline:--cover;animation-range:exit 0% exit 100%}}
+  .hero-l{animation:cover-lift linear both;animation-timeline:--cover;animation-range:exit 0% exit 90%}
+  /* Arriving content rises into place as it enters, then stays put. */
+  :is(.replay,.ask-head,.g-chips,.sheet>section>h2,.about .txt,.row,.case,.views,.cta):not(.flash){animation:arrive linear both;animation-timeline:view();animation-range:entry 0% entry 70%}
+  /* The stitched rules draw themselves across. */
+  .ask-rule{transform-origin:0 50%;animation:stitch linear both;animation-timeline:view();animation-range:entry 20% cover 30%}
+}
+}
+@keyframes read-progress{to{transform:scaleX(1)}}
+@keyframes cover-sink{to{transform:translateY(16%)}}
+@keyframes cover-lift{to{transform:translateY(-14%)}}
+@keyframes arrive{from{opacity:0;transform:translateY(32px)}}
+@keyframes stitch{from{transform:scaleX(0)}}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{transition:none!important;animation:none!important}
