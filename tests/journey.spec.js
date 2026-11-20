@@ -435,6 +435,8 @@ test.describe('motion on scroll', () => {
     const rows = await page.$$eval('.sheet .row', (els) => els.map((e) => [getComputedStyle(e).opacity, getComputedStyle(e).animationName]));
     expect(rows.length).toBeGreaterThan(5);
     expect(rows.filter(([o, a]) => o !== '1' || a !== 'none')).toEqual([]);
+  });
+});
 
 // Spec 011: the page answers where the pointer is.
 test.describe('pointer response', () => {
