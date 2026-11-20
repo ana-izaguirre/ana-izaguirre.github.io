@@ -11,7 +11,9 @@ Portafolio y CV en una sola página estática, dentro de un paisaje ilustrado or
 ## Lo que vale la pena mirar
 
 - **Pregúntale a mi CV.** Búsqueda BM25 sobre el propio CV, construida con el marcado de la página al cargar. Ningún modelo genera texto: cada respuesta cita el CV.
-- **Nada del exterior.** Sin framework, CDN, analítica ni servicio de fuentes: un HTML, un script y cuatro fuentes alojadas.
+- **Casos que se pueden tocar.** Cada proyecto abre con cifras de su repositorio y se despliega en problema, decisiones, arquitectura, trade-offs y resultados, con un diagrama cuyas piezas se explican solas y la máquina de estados de trainer-flow para intentar romperla.
+- **Movimiento sin script.** El contenido que entra, el parallax de la portada y las cifras que cuentan son CSS guiado por el scroll. Un interruptor en la barra lo detiene todo, y se respeta el movimiento reducido.
+- **Nada del exterior.** Sin framework, CDN, analítica ni servicio de fuentes: un HTML, dos módulos de script y cuatro fuentes alojadas.
 - **Pinta antes que el script.** `app.js` se pide después del primer frame. La portada ya sale en el idioma del visitante y nada se mueve cuando llega el script.
 - **La hoja de impresión es el PDF.** Los dos CV descargables salen de las reglas de impresión de la propia página, una página A4 cada uno.
 
@@ -36,6 +38,8 @@ python3 -m http.server 8000   # http://localhost:8000
 ```
 
 - **Contenido:** el español vive en `index.html` y el inglés en `app.js`; el de la primera pantalla está en `EN_TOP`, dentro de `index.html`.
+- **Búsqueda:** `js/search.js`, un módulo puro con sus propias pruebas unitarias (`npm run test:unit`).
+- **Decisiones y specs:** `docs/`.
 - **Paisaje:** lo genera `tools/scene.py`.
 
 ## Créditos
