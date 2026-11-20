@@ -458,7 +458,9 @@ test.describe('pointer response', () => {
   test('a project row glows where the pointer is', async ({ page }) => {
     await open(page, '?quiet=1');
     const row = page.locator('#c-trainer');
-    // hover() waits for the row to stop moving: the page scrolls smoothly.
+    // Centred first, instantly: a row still arriving (spec 010) is shifted, and a
+    // hover aimed at it can land beside it. hover() then waits for it to settle.
+    await row.evaluate((e) => e.scrollIntoView({ block: 'center', behavior: 'instant' }));
     await row.hover({ position: { x: 40, y: 20 } });
     await row.hover({ position: { x: 60, y: 30 } });
     const [mx, bg] = await row.evaluate((e) => [e.style.getPropertyValue('--mx'), getComputedStyle(e).backgroundImage]);
@@ -720,6 +722,24 @@ test.describe('case parts unfold, reduced motion', () => {
     await page.click('#case-trainer summary');
     expect(await page.$$eval('#case-trainer .case-body > *', (els) => els.filter((e) => getComputedStyle(e).animationName !== 'none').length)).toBe(0);
   });
+});
+
+// "1 companies" read wrong: a counter's label follows its number.
+test.describe('story counters', () => {
+  for (const [lang, one, many] of [['es', ['empresa', 'tecnologías', 'proyectos propios'], 'empresas'], ['en', ['company', 'technologies', 'own projects'], 'companies']]) {
+    test(`one company is singular, more are plural — ${lang}`, async ({ page }) => {
+      await open(page, `?quiet=1&lang=${lang}`);
+      const labels = () => page.$$eval('#k-co, #k-te, #k-pr', (els) => els.map((e) => [e.textContent, e.nextElementSibling.textContent]));
+      const first = await labels();
+      expect(first[0]).toEqual(['1', one[0]]);
+      expect(first[1]).toEqual(['0', one[1]]);
+      await page.locator('.seg').last().click();
+      expect((await labels())[0]).toEqual(['6', many]);
+      await page.locator('.seg').first().click();
+      await page.click('#lang');
+      expect((await labels())[0][1]).toBe(lang === 'es' ? 'company' : 'empresa');
+    });
+  }
 });
 
 // Spec 006: the Curiosity Switch picks which parts of each case a reader sees.
