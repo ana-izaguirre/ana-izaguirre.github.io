@@ -552,6 +552,19 @@ html:not([data-theme=light]) .w-cloud{opacity:.22}
 .l-hills{position:absolute;left:0;right:0;bottom:0;width:100%;height:30vh;opacity:0;animation:fadeup 1s ease-out .15s forwards}
 @keyframes fadeup{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 footer{max-width:900px;margin:0 auto;padding:1.6rem clamp(1.1rem,4vw,2rem) 0;color:var(--slate);font-size:.88rem}
+/* Editorial index (spec 016): each section opens with a numbered label over
+   its heading, and the footer lists them in the same order. */
+.eyebrow{display:flex;align-items:center;gap:.55rem;margin:0 0 .5rem;font:700 .72rem/1.2 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--red-t)}
+.eyebrow::after{content:"";width:2.4rem;height:1px;background:currentColor;opacity:.5}
+.eb-n{font-family:var(--mono);letter-spacing:.04em;opacity:.8}
+.sheet .eyebrow{margin-top:2.2rem}
+.sheet .eyebrow+h2{margin-top:0}
+.cta .eyebrow{justify-content:center}
+.cta .eyebrow::after{display:none}
+.idx ol{display:flex;flex-wrap:wrap;gap:.4rem 1.4rem;margin:0 0 1rem;padding:0;list-style:none}
+.idx a{display:inline-flex;gap:.45rem;align-items:baseline;color:var(--text);text-decoration:none;font-weight:600;font-size:.9rem}
+.idx a:hover span:last-child{text-decoration:underline;text-decoration-color:var(--red);text-underline-offset:3px}
+.idx .eb-n{color:var(--red-t);font-size:.78rem}
 
 /* ── Paper: the cover's material, in plain CSS ──
    The cover uses filter:url(#tear) for the torn edge. Not here: on the CV sheet
@@ -612,7 +625,7 @@ section.replay{-webkit-backdrop-filter:none;backdrop-filter:none;position:relati
   @media (min-width:681px){.sys>.world{animation:cover-sink linear both;animation-timeline:--cover;animation-range:exit 0% exit 100%}}
   .hero-l{animation:cover-lift linear both;animation-timeline:--cover;animation-range:exit 0% exit 90%}
   /* Arriving content rises into place as it enters, then stays put. */
-  :is(.replay,.ask-head,.g-chips,.sheet>section>h2,.about .txt,.row,.case,.views,.cta):not(.flash){animation:arrive linear both;animation-timeline:view();animation-range:entry 0% entry 70%}
+  :is(.replay,.ask-head,.g-chips,.sheet>section>h2,.sheet .eyebrow,.about .txt,.row,.case,.views,.cta):not(.flash){animation:arrive linear both;animation-timeline:view();animation-range:entry 0% entry 70%}
   /* The stitched rules draw themselves across. */
   .ask-rule{transform-origin:0 50%;animation:stitch linear both;animation-timeline:view();animation-range:entry 20% cover 30%}
 }
@@ -867,6 +880,7 @@ window.ES_TOP={};
 <section class="story" id="story">
   <div class="wrap">
     <section class="replay" aria-labelledby="rp-h">
+      <p class="eyebrow" aria-hidden="true"><span class="eb-n">01</span><span data-i18n="eb_story">Trayectoria</span></p>
       <h2 class="h2" id="rp-h" data-i18n="rp_h">Mi carrera, contada en siete escenas</h2>
       <p class="note" data-i18n="rp_note">En cada parada: quién, en qué sector, cuánto tiempo y con qué tecnologías.</p>
       <div class="scene" id="scene">
@@ -907,6 +921,7 @@ window.ES_TOP={};
 <section class="askwrap" id="ask-sec" style="scroll-margin-top:72px">
   <div class="wrap">
     <header class="ask-head">
+      <p class="eyebrow" aria-hidden="true"><span class="eb-n">02</span><span data-i18n="eb_ask">Pregúntale a mi CV</span></p>
       <h2 class="h2" data-i18n="ans_h">Lo que dice mi CV</h2>
       <p class="how" data-i18n="how">Búsqueda por palabras clave (BM25) sobre este mismo CV, dentro de tu navegador. No hay un modelo generando texto: nada se inventa y cada respuesta cita su fuente.</p>
     </header>
@@ -962,6 +977,7 @@ window.ES_TOP={};
     </header>
 
     <section class="about no-print" id="sobre-mi" aria-labelledby="h-about">
+      <p class="eyebrow" aria-hidden="true"><span class="eb-n">03</span><span data-i18n="eb_about">Perfil</span></p>
       <h2 id="h-about" data-i18n="s_about">Sobre mí</h2>
       <p class="txt" data-i18n="about1">Ingeniera backend y full stack con más de 8 años en producción, la última etapa en Allergan Data Labs (AbbVie) e Intel. Trabajo con arquitecturas orientadas a eventos en AWS, APIs REST y GraphQL, y desarrollo asistido por IA en el día a día.</p>
       <p class="txt" data-i18n="about2">Vivo en Zaragoza y busco un puesto indefinido: híbrido en Zaragoza o remoto desde España. Incorporación inmediata.</p>
@@ -1029,6 +1045,7 @@ window.ES_TOP={};
     </section>
 
     <section aria-labelledby="h-proj">
+      <p class="eyebrow" aria-hidden="true"><span class="eb-n">04</span><span data-i18n="eb_proj">Trabajo propio</span></p>
       <h2 id="h-proj" data-i18n="s_proj">Proyectos</h2>
       <fieldset class="modes views no-print" id="views">
         <legend data-i18n="view_l">Léelo como</legend>
@@ -1162,6 +1179,7 @@ window.ES_TOP={};
     </section>
   </article>
   <section class="cta no-print" id="hablemos" aria-labelledby="h-cta">
+    <p class="eyebrow" aria-hidden="true"><span class="eb-n">05</span><span data-i18n="eb_talk">Hablemos</span></p>
     <h2 id="h-cta" data-i18n="pop_t">Disponible para incorporarme ya</h2>
     <p data-i18n="pop_d">Puesto indefinido como ingeniera full stack o backend: híbrido en Zaragoza o remoto desde España.</p>
     <div class="cta-b">
@@ -1170,7 +1188,7 @@ window.ES_TOP={};
       <a class="btn ghost2" href="https://www.linkedin.com/in/ana-izaguirre/">LinkedIn</a>
     </div>
   </section>
-  <footer><span data-i18n="foot">© 2026 Ana Izaguirre. Hecha a mano, sin frameworks ni rastreadores.</span></footer>
+  <footer><nav class="idx" aria-label="Índice" data-i18n-aria="idx_a"><ol><li><a href="#story"><span class="eb-n">01</span><span data-i18n="eb_story">Trayectoria</span></a></li><li><a href="#ask-sec"><span class="eb-n">02</span><span data-i18n="eb_ask">Pregúntale a mi CV</span></a></li><li><a href="#sobre-mi"><span class="eb-n">03</span><span data-i18n="eb_about">Perfil</span></a></li><li><a href="#h-proj"><span class="eb-n">04</span><span data-i18n="eb_proj">Trabajo propio</span></a></li><li><a href="#hablemos"><span class="eb-n">05</span><span data-i18n="eb_talk">Hablemos</span></a></li></ol></nav><span data-i18n="foot">© 2026 Ana Izaguirre. Hecha a mano, sin frameworks ni rastreadores.</span></footer>
 </section>
 </main>
 
