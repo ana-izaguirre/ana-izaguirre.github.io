@@ -214,6 +214,56 @@ test.describe('one question box', () => {
 
 // Spec 002: each project opens into a case with the same five parts, in order,
 // citing its own repository.
+// Spec 003: search modes and visible evidence.
+test.describe('ask my CV: modes and evidence', () => {
+  const sources = (page) => page.locator('#answer .hit-src').allTextContents();
+
+  test('a mode limits which part of the CV may answer', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await page.fill('#q-mini', 'typescript');
+    await page.press('#q-mini', 'Enter');
+    expect((await sources(page)).some((s) => s.startsWith('Experiencia')), 'the premise: it answers from experience first').toBe(true);
+    await page.locator('#modes label', { has: page.locator('input[value="proj"]') }).click();
+    await expect(page.locator('.ans-q')).toHaveText('typescript');
+    const only = await sources(page);
+    expect(only.length).toBeGreaterThan(0);
+    expect(only.every((s) => s.startsWith('Proyectos')), `non-project sources: ${only}`).toBe(true);
+  });
+
+  test('the modes are a radio group the keyboard can drive', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await page.focus('#modes input[value="all"]');
+    await page.keyboard.press('ArrowRight');
+    await expect(page.locator('#modes input[value="exp"]')).toBeChecked();
+    await expect(page.locator('#modes input[value="exp"]')).toBeFocused();
+  });
+
+  test('nothing in a mode offers the whole CV instead of a dead end', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await page.locator('#modes label', { has: page.locator('input[value="proj"]') }).click();
+    await page.fill('#q-mini', 'jmeter');
+    await page.press('#q-mini', 'Enter');
+    await expect(page.locator('#answer')).toContainText('No aparece en Proyectos.');
+    await page.click('.try-all');
+    await expect(page.locator('#modes input[value="all"]')).toBeChecked();
+    await expect(page.locator('#answer .hit')).toHaveCount(1);
+  });
+
+  test('each answer shows the words that matched, synonyms marked as such', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await page.fill('#q-mini', 'sql');
+    await page.press('#q-mini', 'Enter');
+    const first = page.locator('#answer .hit').first();
+    await expect(first.locator('.hit-why .ev').first()).toBeVisible();
+    // "sql" is never written in the CV; everything it reaches is through synonyms.
+    await expect(first.locator('.ev:not(.syn)')).toHaveCount(0);
+    await expect(first.locator('.ev.syn').first()).toContainText('(sinónimo)');
+    await page.fill('#q-mini', 'kubernetes');
+    await page.press('#q-mini', 'Enter');
+    await expect(page.locator('#answer .hit').first().locator('.ev:not(.syn)')).toContainText(['Kubernetes']);
+  });
+});
+
 test.describe('case studies', () => {
   const PARTS = {
     es: ['Problema', 'Decisiones', 'Arquitectura', 'Trade-offs', 'Resultados'],
@@ -523,6 +573,16 @@ test.describe('in English', () => {
     await page.click('#pop-copy');
     await expect(page.locator('#pop-copy')).toHaveText('Copied');
     await expect(page.locator('#pop-copy')).toHaveText('Copy email', { timeout: 4000 });
+  });
+
+  test('the search modes and evidence speak English', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await expect(page.locator('#modes legend')).toHaveText('Search in');
+    await page.locator('#modes label', { has: page.locator('input[value="skills"]') }).click();
+    await page.fill('#q-mini', 'jmeter');
+    await page.press('#q-mini', 'Enter');
+    await expect(page.locator('#answer')).toContainText('Nothing in Skills.');
+    await expect(page.locator('.try-all')).toHaveText('Search the whole CV');
   });
 
   test('a failed search apologises in English', async ({ page }) => {
