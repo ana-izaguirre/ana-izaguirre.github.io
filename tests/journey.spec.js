@@ -742,6 +742,24 @@ test.describe('story counters', () => {
   }
 });
 
+// Spec 022: each section closes on one link onward.
+test.describe('section exits', () => {
+  test('three exits, each landing on the section after it', async ({ page }) => {
+    await open(page, '?quiet=1');
+    const hrefs = await page.$$eval('.exit a', (as) => as.map((a) => a.getAttribute('href')));
+    expect(hrefs).toEqual(['#ask-sec', '#sobre-mi', '#hablemos']);
+    for (const href of hrefs) {
+      await page.click(`.exit a[href="${href}"]`);
+      await expect(page.locator(href)).toBeInViewport({ timeout: 4000 });
+    }
+  });
+
+  test('they speak English', async ({ page }) => {
+    await open(page, '?quiet=1&lang=en');
+    await expect(page.locator('.exit a')).toHaveText(['A specific question? Ask my CV →', 'Go on to who I am and what I have built →', "Do I fit your team? Let's talk →"]);
+  });
+});
+
 // Spec 006: the Curiosity Switch picks which parts of each case a reader sees.
 test.describe('the Curiosity Switch', () => {
   const view = (page, v) => page.locator('#views label', { has: page.locator(`input[value="${v}"]`) });
