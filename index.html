@@ -921,7 +921,7 @@ window.ES_TOP={};
 <script>
 // app.js is requested after the first frame, so the page paints without waiting
 // to download or run it. rAF runs just before the paint; the setTimeout, after it.
-requestAnimationFrame(()=>setTimeout(()=>{const s=document.createElement('script');s.src='app.js';document.body.appendChild(s)}));
+requestAnimationFrame(()=>setTimeout(()=>{const s=document.createElement('script');s.type='module';s.src='app.js';document.body.appendChild(s)}));
 </script>
 </body>
 </html>

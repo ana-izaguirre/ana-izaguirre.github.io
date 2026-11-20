@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 
 const RAW = path.join(__dirname, '..', 'coverage', 'raw');
-const OURS = /\/(app\.js|index\.html)(\?|$)/;
+const OURS = /\/(app\.js|index\.html|js\/[\w-]+\.mjs)(\?|$)/;
 
 const test = base.test.extend({
   page: async ({ page }, use, testInfo) => {

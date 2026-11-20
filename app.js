@@ -1,5 +1,6 @@
 // Page logic: BM25 search, career story, language, theme and fireflies.
 // Loaded after the first frame, so the HTML paints without waiting to download or run it.
+import {createIndex,search as rank,tokenize,normalize as norm,isHit} from './js/search.mjs';
 (()=>{
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -311,66 +312,34 @@ let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(measure,150
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>idle(measure));
 
 /* ---------- index: the CV below is the corpus ---------- */
-const STOP=new Set('de la el en y a que los las con por para un una es su se al lo como mas o tu tus tienes tiene has ha he mi mis sobre cual cuales del te usas usa sabes trabajado hecho hace haces puedes cuanto cuanta cuantos cuantas eres soy esta estas tipo nivel algo alguna vez desde usado the an of in on and or to is are do does you your have has with what which how for about tell me i my can did any it at as be been that this level kind ever since used use approach'.split(' '));
-const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-const stem=w=>w.length>3&&w.endsWith('s')?w.slice(0,-1):w;
-const toks=s=>(norm(s).match(/[a-z0-9#+]+/g)||[]).filter(w=>!STOP.has(w)).map(stem);
-const GROUPS=[
- 'aws lambda sqs sns s3 dynamodb cloud nube serverless rekognition',
- 'cola queue mensajeria messaging evento event sqs sns rabbitmq asincrona asynchronous',
- 'ia ai inteligencia artificial llm gemini mcp agente agent',
- 'liderazgo lider liderado liderar lidere liderando leadership lead led leading mentoria mentoreado mentoreando mentoring mentored mentor onboarding equipo team',
- 'ingles english idioma language portugues portuguese espanol spanish',
- 'vives vive vivo ubicacion location live based donde where zaragoza remoto remote hibrido hybrid puesto role contrato contract indefinido permanent busca buscas busco looking disponibilidad availability inmediata available',
- 'test testing prueba calidad quality jest cypress cobertura coverage pytest selenium',
- 'frontend front react angular',
- 'dato data base database sql postgresql mongodb snowflake dynamodb firestore',
- 'devops ci cd docker kubernetes pipeline actions despliegue deploy',
- 'estudio estudiaste estudiar estudiado carrera study studied studies formacion education universidad university master licenciatura degree titulo bachelor',
- 'guardia oncall call incidente incident datadog observabilidad observability monitoring',
- 'api graphql apollo endpoint disenado designed',
- 'pausa break hueco gap crianza parenting ahora now actualmente currently',
- 'backend back node nodejs typescript express',
- 'proyecto project github portfolio portafolio trainer flow latino migra'
-].map(g=>g.split(' ').map(stem));
-const SYN=new Map();GROUPS.forEach(g=>g.forEach(w=>{if(!SYN.has(w))SYN.set(w,new Set());g.forEach(x=>x!==w&&SYN.get(w).add(x))}));
-const BOOST={exp:1.3,proj:1.15,skills:.55};
-let chunks=[],avg=1,df=new Map(),indexReady=false;
+// The ranking lives in js/search.mjs, pure and unit-tested. This adapter turns
+// the CV's [data-chunk] blocks into plain passages and maps ids back to elements.
+let index=null,passageEls=new Map(),indexReady=false;
 function buildIndex(){
-  df=new Map();
-  chunks=$$('[data-chunk]').map(el=>{
-    const t=toks(el.textContent),tf=new Map();t.forEach(w=>tf.set(w,(tf.get(w)||0)+1));
-    tf.forEach((_,w)=>df.set(w,(df.get(w)||0)+1));
+  const docs=[];passageEls=new Map();
+  for(const el of $$('[data-chunk]')){
+    // A block with no [data-line] would be rejected by createIndex, loudly.
     const lines=el.matches('[data-line]')?[el]:[...el.querySelectorAll('[data-line]')];
-    return{el,tf,len:t.length,lines:lines.map(l=>({el:l,set:new Set(toks(l.textContent))}))};
-  });
-  avg=chunks.reduce((a,c)=>a+c.len,0)/chunks.length;indexReady=true;
+    passageEls.set(el.id,{el,lines});
+    docs.push({id:el.id,section:el.dataset.sec,text:el.textContent,lines:lines.map(l=>({text:l.textContent}))});
+  }
+  index=createIndex(docs);indexReady=true;
 }
 function search(q){
   if(!indexReady)buildIndex();
-  const w=new Map();toks(q).forEach(t=>{w.set(t,1);(SYN.get(t)||[]).forEach(x=>{if(!w.has(x))w.set(x,.55)})});
-  const N=chunks.length,k1=1.4,b=.6;
-  const hits=chunks.map(c=>{
-    let s=0;w.forEach((wt,t)=>{const f=c.tf.get(t);if(!f)return;const idf=Math.log(1+(N-df.get(t)+.5)/(df.get(t)+.5));s+=wt*idf*f*(k1+1)/(f+k1*(1-b+b*c.len/avg))});
-    return{c,s:s*(BOOST[c.el.dataset.sec]||1)};
-  }).filter(h=>h.s>0).sort((a,b)=>b.s-a.s).filter((h,i,all)=>h.s>=all[0].s*.35).slice(0,3);
-  return{terms:new Set(toks(q)),hits:hits.map(h=>{
-    const ranked=h.c.lines.map((l,i)=>({l,i,n:[...l.set].filter(t=>w.has(t)).length})).filter(x=>x.n>0).sort((a,b)=>b.n-a.n).slice(0,2).sort((a,b)=>a.i-b.i);
-    return{el:h.c.el,lines:(ranked.length?ranked.map(x=>x.l.el):h.c.lines.slice(0,1).map(l=>l.el))};
+  const res=rank(index,q);
+  return{terms:new Set(res.terms),hits:res.hits.map(h=>{
+    const p=passageEls.get(h.id);
+    return{el:p.el,lines:h.lines.map(i=>p.lines[i]),matched:h.matched};
   })};
 }
 
 /* ---------- questions ---------- */
 const answer=$('#answer'),hist=$('#hist'),asked=[];
-function isHit(t,terms){
-  if(!t)return false;
-  for(const q of terms){if(t===q)return true;if(q.length>=3&&(t.includes(q)||q.includes(t)))return true}
-  return false;
-}
 function marked(text,terms){
   const p=mk('p','hit-txt');
   text.split(/([\p{L}\p{N}#+]+)/u).forEach(piece=>{
-    if(!piece)return;const t=toks(piece)[0];
+    if(!piece)return;const t=tokenize(piece)[0];
     p.appendChild(isHit(t,terms)?mk('mark',null,piece):document.createTextNode(piece));
   });return p;
 }
