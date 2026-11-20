@@ -787,6 +787,60 @@ test.describe('flags on the signs, touch', () => {
   const op = (page, i) => page.locator('.signs .egg').nth(i).evaluate((e) => Number(getComputedStyle(e).opacity));
 });
 
+// Spec 024: each case's pieces explain themselves, and trainer-flow's rule can be tried.
+test.describe('case diagrams', () => {
+  test('pressing a piece explains it, and only that piece is pressed', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await page.click('#case-mcp summary');
+    const fig = page.locator('#case-mcp [data-flow]');
+    await expect(fig.locator('.fl-cap')).toHaveText('Toca una pieza para ver qué hace.');
+    await fig.locator('.node', { hasText: 'SQLite FTS5' }).click();
+    await expect(fig.locator('.fl-cap')).toContainText('BM25');
+    await expect(fig.locator('.node[aria-pressed=true]')).toHaveText('SQLite FTS5');
+    await fig.locator('.node', { hasText: 'search_docs' }).click();
+    await expect(fig.locator('.node[aria-pressed=true]')).toHaveCount(1);
+    await expect(fig.locator('.fl-cap')).toContainText('get_document');
+    await fig.locator('.fl-t').click(); // not a piece: nothing changes
+    await expect(fig.locator('.node[aria-pressed=true]')).toHaveText('search_docs');
+    await page.click('#lang');
+    await expect(fig.locator('.fl-cap')).toContainText('Three MCP tools');
+    await fig.locator('.node', { hasText: 'Markdown' }).click();
+    await expect(fig.locator('.fl-cap')).toHaveText('The markdown files are the source of truth.');
+  });
+
+  test('the state machine refuses DRAFT → SENT and explains why', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await page.click('#case-trainer summary');
+    const sm = page.locator('[data-sm]');
+    const act = (a) => sm.locator(`[data-act=${a}]`).click();
+    await act('send');
+    await expect(sm.locator('.sm-cur')).toHaveText('DRAFT');
+    await expect(sm.locator('.sm-msg')).toContainText('DRAFT → SENT no existe');
+    await expect(sm.locator('.sm-msg')).toHaveClass(/no/);
+    await act('approve');
+    await expect(sm.locator('.sm-cur')).toHaveText('APPROVED');
+    await act('approve');
+    await expect(sm.locator('.sm-msg')).toContainText('Solo se aprueba un borrador');
+    await act('send');
+    await expect(sm.locator('.sm-cur')).toHaveText('SENT');
+    await expect(sm.locator('.sm-msg')).not.toHaveClass(/no/);
+    await act('send');
+    await expect(sm.locator('.sm-msg')).toContainText('Ya se envió');
+    await sm.locator('.sm-state').click(); // not a button: nothing changes
+    await act('reset');
+    await expect(sm.locator('.sm-cur')).toHaveText('DRAFT');
+  });
+
+  test('the Hiring view hides the diagrams and the lesson', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await page.click('#case-trainer summary');
+    await expect(page.locator('#case-trainer [data-flow]')).toBeVisible();
+    await page.locator('#views label', { has: page.locator('input[value="brief"]') }).click();
+    await expect(page.locator('#case-trainer [data-flow]')).toBeHidden();
+    await expect(page.locator('[data-sm]')).toBeHidden();
+  });
+});
+
 // Spec 006: the Curiosity Switch picks which parts of each case a reader sees.
 test.describe('the Curiosity Switch', () => {
   const view = (page, v) => page.locator('#views label', { has: page.locator(`input[value="${v}"]`) });
