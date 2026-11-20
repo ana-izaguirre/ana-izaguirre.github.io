@@ -22,7 +22,15 @@ metrics on every project, honest "good fit / bad fit").
 | 11 | Transitions with intent: case parts unfold in sequence, figures count up | Medium | Low | S-M | Planned |
 | 12 | A clear call to action: hire / contact, visible without hunting | **High** for recruiters | Low | S | Done (spec 009) |
 | 13 | Fireflies that drift on phones, as on desktop | Medium | Low | S | Done (spec 007) |
-| 14 | On phones, "Ask my CV" sits with the suggested questions, one place | Medium | Low | S | Done (spec 008) |
+| 14 | On phones, "Ask my CV" sits with the suggested questions, one place | Medium | Low | S | Done (specs 008, 012) |
+| 15 | Entering the page: always at the top, the story at its first scene, everything collapsed | High (first impression) | Low | S | Next |
+| 16 | Fireflies scaled to the screen: clearly flying on phones, unchanged on desktop | Medium | Low | S | Next |
+| 17 | Who she is in one screen: availability badge in the bar, a value-proposition headline, the companies she shipped for | **High** for recruiters | Low | S-M | Planned |
+| 18 | Metric-led project cards: three figures per project, from each repository | High | Low (must cite) | S | Planned |
+| 19 | Site controls as play: a motion on/off switch next to theme and language | Medium | Low | S | Planned |
+| 20 | Hover easter eggs: "Honduras" and "Zaragoza" reveal a small picture | Low-medium, memorable | Low | S | Planned |
+| 21 | Short FAQ for recruiters: start date, remote, English, contract | Medium | Low | S | Planned |
+| 22 | Good fit / bad fit, in Ana's own words | High, distinctive | Needs Ana: not to be invented | S | Needs Ana |
 
 ## Why this order
 
@@ -50,6 +58,17 @@ metrics on every project, honest "good fit / bad fit").
 - **12 to 14 from the same review.** There is no call to action, the
   fireflies look still on a phone, and on a phone the question box is apart
   from its suggested questions.
+
+- **15 and 16 from Ana's review (2026-11-20, second pass).** A visitor
+  should always enter at the top, with the story at its start, and the
+  fireflies' fix must not change how they look on a desktop: behaviour
+  scales with the screen.
+- **17 to 22 from janneparri.com, which presents the developer in one
+  screen.** It has an availability badge and a value proposition up top, a
+  "trusted by" row, metrics on every project card, site controls as play,
+  playful hover details, an FAQ and honest good-fit/bad-fit lists. Each is
+  adapted only with Ana's real facts. Good fit / bad fit needs her own
+  words, and testimonials stay out until real ones exist.
 
 ## Out of scope
 
