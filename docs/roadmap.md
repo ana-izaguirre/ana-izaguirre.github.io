@@ -23,14 +23,17 @@ metrics on every project, honest "good fit / bad fit").
 | 12 | A clear call to action: hire / contact, visible without hunting | **High** for recruiters | Low | S | Done (spec 009) |
 | 13 | Fireflies that drift on phones, as on desktop | Medium | Low | S | Done (spec 007) |
 | 14 | On phones, "Ask my CV" sits with the suggested questions, one place | Medium | Low | S | Done (specs 008, 012) |
-| 15 | Entering the page: always at the top, the story at its first scene, everything collapsed | High (first impression) | Low | S | Next |
+| 15 | Entering the page: always at the top, the story at its first scene, everything collapsed | High (first impression) | Low | S | Done (spec 013) |
 | 16 | Fireflies scaled to the screen: clearly flying on phones, unchanged on desktop | Medium | Low | S | Done (spec 014) |
-| 17 | Who she is in one screen: availability badge in the bar, a value-proposition headline, the companies she shipped for | **High** for recruiters | Low | S-M | Planned |
+| 17 | Who she is in one screen: a live availability signal, the companies she worked at | **High** for recruiters | Low | S-M | Done (spec 015) |
 | 18 | Metric-led project cards: three figures per project, from each repository | High | Low (must cite) | S | Planned |
 | 19 | Site controls as play: a motion on/off switch next to theme and language | Medium | Low | S | Planned |
 | 20 | Hover easter eggs: "Honduras" and "Zaragoza" reveal a small picture | Low-medium, memorable | Low | S | Planned |
 | 21 | Short FAQ for recruiters: start date, remote, English, contract | Medium | Low | S | Planned |
 | 22 | Good fit / bad fit, in Ana's own words | High, distinctive | Needs Ana: not to be invented | S | Needs Ana |
+| 23 | Numbered editorial sections: "01 — Journey", "02 — Ask my CV"… as eyebrows over each heading, and a numbered footer index | Medium | Low | S | Planned |
+| 24 | A stat row on the cover: years in production, companies, own projects, from the story's own counters | Medium-high | Low | S | Planned |
+| 25 | Section exits: each section ends in one text link to the next ("See the projects →", "Let's talk →") | Medium | Low | S | Planned |
 
 ## Why this order
 
@@ -69,6 +72,12 @@ metrics on every project, honest "good fit / bad fit").
   playful hover details, an FAQ and honest good-fit/bad-fit lists. Each is
   adapted only with Ana's real facts. Good fit / bad fit needs her own
   words, and testimonials stay out until real ones exist.
+
+- **23 to 25 from ar2design.com.** That site reads like an index: numbered
+  sections with a small label over a large headline, a row of four figures
+  under the statement, and every section closing on one link onward. They
+  map onto phase 8 (editorial navigation). Every figure comes from data the
+  page already holds.
 
 ## Out of scope
 

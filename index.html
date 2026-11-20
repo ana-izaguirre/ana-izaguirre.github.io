@@ -102,6 +102,18 @@ html[data-theme=light] .i-moon{display:block}
 .facts{display:flex;flex-wrap:wrap;gap:.4rem;list-style:none;margin:0 0 .8rem;padding:0;min-width:0;max-width:100%}
 .facts li{font-size:.82rem;font-weight:500;border:1px solid var(--line);border-radius:999px;padding:.3rem .7rem;color:var(--text)}
 .facts li:first-child{border-color:var(--red);color:var(--red-t)}
+/* Who she is in one screen (spec 015). Availability is a live signal, and the
+   companies she shipped for pass by in a band, as on a studio's client wall. */
+.facts li.live{display:inline-flex;align-items:center;gap:.4rem}
+.facts li.live::before{content:"";width:.5rem;height:.5rem;border-radius:50%;background:#3FB46A;box-shadow:0 0 0 0 rgba(63,180,106,.55);animation:live 2.2s ease-out infinite}
+@keyframes live{70%,100%{box-shadow:0 0 0 .5rem rgba(63,180,106,0)}}
+.trust{position:relative;z-index:1;background:var(--bg);padding:1.1rem 0 1.3rem;border-block:1px solid var(--line);overflow:hidden}
+.trust-h{margin:0 0 .7rem;text-align:center;font:700 .74rem/1.3 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--slate)}
+.mq-win{display:flex;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.mq{display:flex;flex:none;gap:3rem;margin:0;padding:0 1.5rem;list-style:none;animation:marquee 32s linear infinite}
+.mq li{font:400 clamp(1.05rem,2.2vw,1.35rem)/1.2 var(--serif);color:var(--text);white-space:nowrap;opacity:.85}
+.mq-win:hover .mq{animation-play-state:paused}
+@keyframes marquee{to{transform:translateX(-100%)}}
 .lead{font-size:1.02rem;line-height:1.5;color:var(--muted);max-width:76ch;margin:0 0 1.1rem}
 .h2{font:400 1.75rem/1.2 var(--serif);margin:0 0 .35rem}
 .note{color:var(--muted);font-size:.93rem;margin:0 0 .6rem;max-width:76ch}
@@ -613,6 +625,10 @@ section.replay{-webkit-backdrop-filter:none;backdrop-filter:none;position:relati
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{transition:none!important;animation:none!important}
+  /* A still band: every company in view, wrapped, once. */
+  .mq-win{-webkit-mask-image:none;mask-image:none}
+  .mq{flex:1;flex-wrap:wrap;justify-content:center;row-gap:.5rem}
+  .mq[aria-hidden]{display:none}
 }
 @media (max-width:700px){
   .fab{width:54px;height:54px;padding:0;justify-content:center;border-radius:50%}
@@ -746,7 +762,7 @@ section.replay{-webkit-backdrop-filter:none;backdrop-filter:none;position:relati
       <ul class="facts" id="facts">
         <li data-i18n="f1">Zaragoza, remoto o híbrido</li>
         <li data-i18n="f2">Contrato indefinido</li>
-        <li data-i18n="f3">Incorporación inmediata</li>
+        <li class="live" data-i18n="f3">Incorporación inmediata</li>
         <li data-i18n="f4">Español nativo, inglés profesional</li>
       </ul>
       <ul class="stack" id="stack" aria-label="Stack principal" data-i18n-aria="stack_a"></ul>
@@ -844,6 +860,10 @@ window.ES_TOP={};
   if(matchMedia('(max-width:430px)').matches)d.querySelectorAll('a.dl').forEach(function(a){if(a.dataset.i18n==='dl')a.textContent='CV'});
 })();
 </script>
+<section class="trust" aria-labelledby="trust-h">
+  <p class="trust-h" id="trust-h" data-i18n="trust_h">Ha trabajado en</p>
+  <div class="mq-win"><ul class="mq"><li>Allergan Data Labs (AbbVie)</li><li>Intel</li><li>AutoFi</li><li>Laureate Education</li><li>Agile Solutions</li><li>INFOP</li></ul><ul class="mq" aria-hidden="true"><li>Allergan Data Labs (AbbVie)</li><li>Intel</li><li>AutoFi</li><li>Laureate Education</li><li>Agile Solutions</li><li>INFOP</li></ul></div>
+</section>
 <section class="story" id="story">
   <div class="wrap">
     <section class="replay" aria-labelledby="rp-h">

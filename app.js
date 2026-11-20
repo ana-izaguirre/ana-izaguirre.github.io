@@ -17,7 +17,7 @@ const EN={...window.EN_TOP,
 // Case studies (docs/specs/002). Spanish lives in the markup; keep both in step.
 case_open:"See the case",
 case_hint:"problem, decisions, architecture, trade-offs, results",
-case_hint_b:"problem and results",cta_mail:"Write to me",more_q:"More questions",view_l:"Read it as",view_brief:"Hiring",view_deep:"Engineering",
+case_hint_b:"problem and results",cta_mail:"Write to me",more_q:"More questions",trust_h:"Has worked at",view_l:"Read it as",view_brief:"Hiring",view_deep:"Engineering",
 case_src:"Sources in the repository:",
 case_p:"Problem",
 case_d:"Decisions",

@@ -500,6 +500,37 @@ test.describe('the Honduras and Zaragoza signs', () => {
   }
 });
 
+// Spec 015: who she is in one screen.
+test.describe('who she is in one screen', () => {
+  const COMPANIES = ['Allergan Data Labs (AbbVie)', 'Intel', 'AutoFi', 'Laureate Education', 'Agile Solutions', 'INFOP'];
+
+  test('the "has worked at" band names each company once, and moves', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await expect(page.locator('.trust .mq:not([aria-hidden]) li')).toHaveText(COMPANIES);
+    await expect(page.locator('.trust .mq[aria-hidden="true"]')).toHaveCount(1);
+    expect(await page.$eval('.trust .mq', (e) => getComputedStyle(e).animationName)).toBe('marquee');
+    await expect(page.locator('#facts li.live')).toHaveText('Incorporación inmediata');
+    expect(await page.$eval('#facts li.live', (e) => getComputedStyle(e, '::before').animationName)).toBe('live');
+  });
+
+  test('the band speaks English', async ({ page }) => {
+    await open(page, '?quiet=1&lang=en');
+    await expect(page.locator('#trust-h')).toHaveText('Has worked at');
+  });
+});
+
+test.describe('who she is in one screen, reduced motion', () => {
+  test.use({ reducedMotion: 'reduce', viewport: { width: 390, height: 844 } });
+  test('the band stands still with every company in view', async ({ page }) => {
+    await open(page, '?quiet=1');
+    expect(await page.$eval('.trust .mq', (e) => getComputedStyle(e).animationName)).toBe('none');
+    await expect(page.locator('.trust .mq[aria-hidden="true"]')).toBeHidden();
+    const inside = await page.$$eval('.trust .mq:not([aria-hidden]) li', (els) => els.every((e) => { const r = e.getBoundingClientRect(); return r.left >= 0 && r.right <= innerWidth; }));
+    expect(inside, 'a company is cut off').toBe(true);
+    expect(await page.$eval('#facts li.live', (e) => getComputedStyle(e, '::before').animationName)).toBe('none');
+  });
+});
+
 // Spec 006: the Curiosity Switch picks which parts of each case a reader sees.
 test.describe('the Curiosity Switch', () => {
   const view = (page, v) => page.locator('#views label', { has: page.locator(`input[value="${v}"]`) });
