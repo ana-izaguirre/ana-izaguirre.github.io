@@ -1018,6 +1018,24 @@ test.describe('fireflies', () => {
   });
 });
 
+// Spec 014: the phone fix must not change the desktop. There they keep their
+// calm drift: 130 px each way over 9-15 s.
+test.describe('fireflies on a desktop', () => {
+  test.use({ viewport: { width: 1440, height: 900 } });
+  test('they keep their calm desktop flight', async ({ page }) => {
+    await open(page);
+    await expect(page.locator('.fly').first()).toBeAttached();
+    const flights = await page.$$eval('.fly', (els) => els.map((e) => {
+      const a = e.getAnimations().find((x) => x.effect.getKeyframes().length === 5);
+      const xs = a.effect.getKeyframes().map((k) => Math.abs(parseFloat(k.transform.slice(10))));
+      return [a.effect.getTiming().duration, Math.max(...xs)];
+    }));
+    expect(flights.length).toBeGreaterThanOrEqual(20);
+    expect(flights.every(([d]) => d >= 9000 && d <= 15000), 'a desktop firefly flies at a phone pace').toBe(true);
+    expect(flights.every(([, x]) => x <= 130), 'a desktop firefly flies too far').toBe(true);
+  });
+});
+
 // They used to drift ~5 px a second: technically animated, visibly still on a
 // phone. A firefly has to be seen flying.
 test.describe('fireflies on a phone', () => {
@@ -1032,7 +1050,8 @@ test.describe('fireflies on a phone', () => {
     const b = await at();
     expect(a.length, 'no fireflies on a phone').toBeGreaterThanOrEqual(8);
     const avg = a.reduce((s, p, i) => s + Math.hypot(b[i][0] - p[0], b[i][1] - p[1]), 0) / a.length;
-    expect(avg, `fireflies moved ${avg.toFixed(1)} px in 2 s on average`).toBeGreaterThan(18);
+    // Spec 014: on a phone they cover a third of the band's width in 5-8 s.
+    expect(avg, `fireflies moved ${avg.toFixed(1)} px in 2 s on average`).toBeGreaterThan(30);
   });
 
   // Spec 007: Safari on iPhone did not move keyframes that read var(), so the

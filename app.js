@@ -290,9 +290,14 @@ const frame=()=>land&&land.setAttribute('viewBox',bandMQ.matches?'465 300 1040 6
 bandMQ.addEventListener('change',frame);frame();
 // Fireflies: about 22 on desktop and 11 on phones, mostly over the landscape.
 // Each flies and blinks at its own pace, so they never glow in unison.
+// Their flight scales with the landscape they fly over (spec 014): on a desktop
+// 130 px each way over 9-15 s, as before; on a phone, where the landscape is a
+// band about 300 px tall, a third of its width over 5-8 s, or they read as still.
+const FLIGHT={wide:{dx:()=>130,dy:()=>78,secs:[9,15]},band:{dx:w=>w*.3,dy:(w,h)=>h*.24,secs:[5,8]}};
 idle(()=>{
  const host=$('#flies');
- const small=innerWidth<=680,n=small?11:22,r=(a,b)=>a+Math.random()*(b-a),reach=small?70:130; // px: far enough to read as flying
+ const small=innerWidth<=680,n=small?11:22,r=(a,b)=>a+Math.random()*(b-a);
+ const fl=FLIGHT[small?'band':'wide'],dx=fl.dx(host.clientWidth),dy=fl.dy(host.clientWidth,host.clientHeight);
  const f=document.createDocumentFragment();
  for(let i=0;i<n;i++){
    const el=mk('span','fly'),dot=mk('i');
@@ -306,8 +311,8 @@ idle(()=>{
    if(reduce){dot.style.animation='none';dot.style.opacity='.8';continue}
    // A loop through three points and back, never retracing a line. Explicit px
    // values, not var() in @keyframes: Safari on iPhone ignored those (spec 007).
-   const pt=()=>`translate(${r(-reach,reach).toFixed(0)}px,${r(-reach*.6,reach*.6).toFixed(0)}px)`;
-   const d=r(9,15)*1000;
+   const pt=()=>`translate(${r(-dx,dx).toFixed(0)}px,${r(-dy,dy).toFixed(0)}px)`;
+   const d=r(...fl.secs)*1000;
    el.animate([{transform:'translate(0,0)'},{transform:pt()},{transform:pt()},{transform:pt()},{transform:'translate(0,0)'}],
      {duration:d,iterations:Infinity,easing:'ease-in-out',delay:-r(0,d)});
  }

@@ -24,7 +24,7 @@ metrics on every project, honest "good fit / bad fit").
 | 13 | Fireflies that drift on phones, as on desktop | Medium | Low | S | Done (spec 007) |
 | 14 | On phones, "Ask my CV" sits with the suggested questions, one place | Medium | Low | S | Done (specs 008, 012) |
 | 15 | Entering the page: always at the top, the story at its first scene, everything collapsed | High (first impression) | Low | S | Next |
-| 16 | Fireflies scaled to the screen: clearly flying on phones, unchanged on desktop | Medium | Low | S | Next |
+| 16 | Fireflies scaled to the screen: clearly flying on phones, unchanged on desktop | Medium | Low | S | Done (spec 014) |
 | 17 | Who she is in one screen: availability badge in the bar, a value-proposition headline, the companies she shipped for | **High** for recruiters | Low | S-M | Planned |
 | 18 | Metric-led project cards: three figures per project, from each repository | High | Low (must cite) | S | Planned |
 | 19 | Site controls as play: a motion on/off switch next to theme and language | Medium | Low | S | Planned |
