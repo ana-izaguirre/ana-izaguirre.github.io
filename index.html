@@ -324,6 +324,10 @@ mark{background:var(--mark);color:inherit;border-radius:3px;padding:0 .12em}
 .case dd ul{margin:0;padding-left:1.1rem}
 .case dd li+li{margin-top:.35rem}
 .case-src{margin:.3rem 0 0;font-size:.82rem;color:var(--slate)}
+/* Curiosity Switch (spec 006): the hiring view keeps Problem and Results. */
+.views{margin:-.3rem 0 1.1rem}
+.case-hint.brief,.sheet:has(#views [value=brief]:checked) .case [data-deep],.sheet:has(#views [value=brief]:checked) .case-hint:not(.brief){display:none}
+@media (min-width:641px){.sheet:has(#views [value=brief]:checked) .case-hint.brief{display:inline}}
 .case-src a{color:var(--red-t)}
 @media (max-width:640px){
   .case{margin-left:0}
@@ -936,6 +940,11 @@ window.ES_TOP={};
 
     <section aria-labelledby="h-proj">
       <h2 id="h-proj" data-i18n="s_proj">Proyectos</h2>
+      <fieldset class="modes views no-print" id="views">
+        <legend data-i18n="view_l">Léelo como</legend>
+        <label><input type="radio" name="view" value="brief"><span data-i18n="view_brief">Quien contrata</span></label>
+        <label><input type="radio" name="view" value="deep" checked><span data-i18n="view_deep">Quien programa</span></label>
+      </fieldset>
       <div class="row" id="c-trainer" data-chunk data-sec="proj">
         <span class="when k">trainer-flow</span>
         <div><h3 hidden>trainer-flow</h3>
@@ -944,21 +953,21 @@ window.ES_TOP={};
           <ul class="tr" data-line><li data-i18n="c-trainer_0">Máquina de estados estricta</li><li data-i18n="c-trainer_1">Webhooks idempotentes</li><li data-i18n="c-trainer_2">Dominio aislado de la IA</li><li data-i18n="c-trainer_3">100 % en autorización</li></ul></div>
       </div>
       <details class="case no-print" id="case-trainer" data-chunk data-sec="case" data-name="trainer-flow">
-        <summary><span class="case-open" data-i18n="case_open">Ver el caso</span> <span class="case-hint" data-i18n="case_hint">problema, decisiones, arquitectura, trade-offs, resultados</span></summary>
+        <summary><span class="case-open" data-i18n="case_open">Ver el caso</span> <span class="case-hint" data-i18n="case_hint">problema, decisiones, arquitectura, trade-offs, resultados</span><span class="case-hint brief" data-i18n="case_hint_b">problema y resultados</span></summary>
         <dl class="case-body">
           <dt data-i18n="case_p">Problema</dt>
           <dd><p data-line data-i18n="cs_trainer_p">Un entrenador personal arma y sigue rutinas con ayuda de IA. Una rutina mal adaptada puede lesionar a alguien, así que la IA no puede tener la última palabra.</p></dd>
-          <dt data-i18n="case_d">Decisiones</dt>
-          <dd><ul>
+          <dt data-deep data-i18n="case_d">Decisiones</dt>
+          <dd data-deep><ul>
             <li data-line data-i18n="cs_trainer_d1">La transición DRAFT → SENT no existe: a SENT solo se llega desde APPROVED, y ahí solo llega una acción del entrenador.</li>
             <li data-line data-i18n="cs_trainer_d2">El dominio solo conoce la interfaz AIProvider. «Gemini» no aparece en el core, y un test lo comprueba.</li>
             <li data-line data-i18n="cs_trainer_d3">Un webhook nunca espera a la IA: recibe, guarda, responde 200 y dispara aparte. Generar tarda 10–30 s y Tally reintenta antes.</li>
             <li data-line data-i18n="cs_trainer_d4">Idempotencia con UNIQUE (source, external_id): se inserta primero. Una comprobación previa dejaría pasar dos peticiones concurrentes.</li>
           </ul></dd>
-          <dt data-i18n="case_a">Arquitectura</dt>
-          <dd><p data-line data-i18n="cs_trainer_a">Edge Functions en Deno sobre Supabase Postgres. El core es TypeScript puro: el linter le prohíbe Deno, fetch y npm, y por eso corre igual bajo Node en los tests. La interfaz es Telegram.</p></dd>
-          <dt data-i18n="case_t">Trade-offs</dt>
-          <dd><ul>
+          <dt data-deep data-i18n="case_a">Arquitectura</dt>
+          <dd data-deep><p data-line data-i18n="cs_trainer_a">Edge Functions en Deno sobre Supabase Postgres. El core es TypeScript puro: el linter le prohíbe Deno, fetch y npm, y por eso corre igual bajo Node en los tests. La interfaz es Telegram.</p></dd>
+          <dt data-deep data-i18n="case_t">Trade-offs</dt>
+          <dd data-deep><ul>
             <li data-line data-i18n="cs_trainer_t1">Con Telegram como única interfaz todo pasa por service_role y RLS no protege nada: la autorización vive en el core, con cobertura del 100 %, casos denegados incluidos.</li>
             <li data-line data-i18n="cs_trainer_t2">Fuera de la V1, a propósito: dashboard web, segundo proveedor de IA y cualquier automatización sin supervisión humana.</li>
           </ul></dd>
@@ -978,19 +987,19 @@ window.ES_TOP={};
           <ul class="tr" data-line><li data-i18n="c-mcp_0">SQLite FTS5 + BM25</li><li data-i18n="c-mcp_1">Arnés de evaluación</li><li data-i18n="c-mcp_2">Protocolo MCP</li><li data-i18n="c-mcp_3">Tipado estricto con mypy</li></ul></div>
       </div>
       <details class="case no-print" id="case-mcp" data-chunk data-sec="case" data-name="mcp-docs-search">
-        <summary><span class="case-open" data-i18n="case_open">Ver el caso</span> <span class="case-hint" data-i18n="case_hint">problema, decisiones, arquitectura, trade-offs, resultados</span></summary>
+        <summary><span class="case-open" data-i18n="case_open">Ver el caso</span> <span class="case-hint" data-i18n="case_hint">problema, decisiones, arquitectura, trade-offs, resultados</span><span class="case-hint brief" data-i18n="case_hint_b">problema y resultados</span></summary>
         <dl class="case-body">
           <dt data-i18n="case_p">Problema</dt>
           <dd><p data-line data-i18n="cs_mcp_p">Un agente de código conoce el lenguaje, pero no la documentación de tu sistema, y pegar la carpeta entera en su contexto no es práctico ni barato.</p></dd>
-          <dt data-i18n="case_d">Decisiones</dt>
-          <dd><ul>
+          <dt data-deep data-i18n="case_d">Decisiones</dt>
+          <dd data-deep><ul>
             <li data-line data-i18n="cs_mcp_d1">SQLite FTS5 en vez de una base vectorial: BM25 con índice invertido desde la librería estándar, sin infraestructura. Los embeddings serían una fase 2 que se suma, no que reemplaza.</li>
             <li data-line data-i18n="cs_mcp_d2">Fragmentos por encabezado, cada uno con su ruta completa (guía › Instalación › Config). Una sola dependencia de ejecución: mcp.</li>
           </ul></dd>
-          <dt data-i18n="case_a">Arquitectura</dt>
-          <dd><p data-line data-i18n="cs_mcp_a">Servidor MCP en Python 3.12 por stdio con tres herramientas: search_docs, list_sources y get_document. El índice es un artefacto de build; los markdown son la fuente de verdad.</p></dd>
-          <dt data-i18n="case_t">Trade-offs</dt>
-          <dd><p data-line data-i18n="cs_mcp_t">La búsqueda por palabras falla cuando la pregunta describe un síntoma con palabras distintas a las de la documentación. Se publica ese límite en vez de esconderlo.</p></dd>
+          <dt data-deep data-i18n="case_a">Arquitectura</dt>
+          <dd data-deep><p data-line data-i18n="cs_mcp_a">Servidor MCP en Python 3.12 por stdio con tres herramientas: search_docs, list_sources y get_document. El índice es un artefacto de build; los markdown son la fuente de verdad.</p></dd>
+          <dt data-deep data-i18n="case_t">Trade-offs</dt>
+          <dd data-deep><p data-line data-i18n="cs_mcp_t">La búsqueda por palabras falla cuando la pregunta describe un síntoma con palabras distintas a las de la documentación. Se publica ese límite en vez de esconderlo.</p></dd>
           <dt data-i18n="case_r">Resultados</dt>
           <dd><ul>
             <li data-line data-i18n="cs_mcp_r1">recall@1 0,30 y recall@3 0,44 en 50 preguntas escritas sin copiar el vocabulario del corpus. Un set anterior daba 0,60/0,87 y medía la redacción de las preguntas, no la búsqueda.</li>
@@ -1007,19 +1016,19 @@ window.ES_TOP={};
           <ul class="tr" data-line><li data-i18n="c-latino_0">Proxy que guarda las claves</li><li data-i18n="c-latino_1">React 19 + TypeScript</li><li data-i18n="c-latino_2">Firestore</li></ul></div>
       </div>
       <details class="case no-print" id="case-latino" data-chunk data-sec="case" data-name="latino-migra">
-        <summary><span class="case-open" data-i18n="case_open">Ver el caso</span> <span class="case-hint" data-i18n="case_hint">problema, decisiones, arquitectura, trade-offs, resultados</span></summary>
+        <summary><span class="case-open" data-i18n="case_open">Ver el caso</span> <span class="case-hint" data-i18n="case_hint">problema, decisiones, arquitectura, trade-offs, resultados</span><span class="case-hint brief" data-i18n="case_hint_b">problema y resultados</span></summary>
         <dl class="case-body">
           <dt data-i18n="case_p">Problema</dt>
           <dd><p data-line data-i18n="cs_latino_p">Estudiantes y profesionales latinoamericanos que migran necesitan becas verificadas y guías de visado con su fuente oficial, en español.</p></dd>
-          <dt data-i18n="case_d">Decisiones</dt>
-          <dd><ul>
+          <dt data-deep data-i18n="case_d">Decisiones</dt>
+          <dd data-deep><ul>
             <li data-line data-i18n="cs_latino_d1">El producto se acotó a propósito: seis pantallas compilan pero no se enlazan, y restaurar una es borrar una línea en navigation.ts.</li>
             <li data-line data-i18n="cs_latino_d2">La clave de Gemini vive en un Express mínimo que solo sirve /api/*. Con sesión iniciada no se guarda nada en el navegador; sin sesión, una cookie con cinco preferencias de visualización.</li>
           </ul></dd>
-          <dt data-i18n="case_a">Arquitectura</dt>
-          <dd><p data-line data-i18n="cs_latino_a">SPA en React 19 con Vite. El navegador habla directamente con Firestore y Firebase Auth, y firestore.rules es el único control de acceso. Despliegue en Vercel.</p></dd>
-          <dt data-i18n="case_t">Trade-offs</dt>
-          <dd><ul>
+          <dt data-deep data-i18n="case_a">Arquitectura</dt>
+          <dd data-deep><p data-line data-i18n="cs_latino_a">SPA en React 19 con Vite. El navegador habla directamente con Firestore y Firebase Auth, y firestore.rules es el único control de acceso. Despliegue en Vercel.</p></dd>
+          <dt data-deep data-i18n="case_t">Trade-offs</dt>
+          <dd data-deep><ul>
             <li data-line data-i18n="cs_latino_t1">Sin capa de validación en servidor, las reglas de Firestore cargan con toda la seguridad.</li>
             <li data-line data-i18n="cs_latino_t2">Cada ruta de Firestore cae a datos estáticos ante un error, y eso escondió una función rota durante mucho tiempo. Ahora la regla es que ningún fallo sea silencioso.</li>
           </ul></dd>

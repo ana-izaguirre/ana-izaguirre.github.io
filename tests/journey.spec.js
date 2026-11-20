@@ -304,6 +304,60 @@ test.describe('ask my CV: case studies', () => {
   });
 });
 
+// Spec 006: the Curiosity Switch picks which parts of each case a reader sees.
+test.describe('the Curiosity Switch', () => {
+  const view = (page, v) => page.locator('#views label', { has: page.locator(`input[value="${v}"]`) });
+  const parts = (page) => page.locator('#case-trainer dt').evaluateAll((ds) => ds.filter((d) => d.offsetParent).map((d) => d.textContent));
+  const hint = (page) => page.locator('#case-trainer .case-hint').evaluateAll((hs) => hs.filter((h) => h.offsetParent).map((h) => h.textContent));
+
+  test('engineering shows the five parts; hiring keeps problem and results', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await page.click('#case-trainer summary');
+    expect(await parts(page)).toEqual(['Problema', 'Decisiones', 'Arquitectura', 'Trade-offs', 'Resultados']);
+    await view(page, 'brief').click();
+    expect(await parts(page)).toEqual(['Problema', 'Resultados']);
+    expect(await hint(page)).toEqual(['problema y resultados']);
+    await view(page, 'deep').click();
+    expect(await parts(page)).toHaveLength(5);
+  });
+
+  test('the arrow keys move between the views', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await page.focus('#views input[value="deep"]');
+    await page.keyboard.press('ArrowLeft');
+    await expect(page.locator('#views input[value="brief"]')).toBeChecked();
+    await expect(page.locator('#views input[value="brief"]')).toBeFocused();
+  });
+
+  test('"see it" on a hidden part switches to engineering and shows the line', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await view(page, 'brief').click();
+    await page.fill('#q-mini', '¿Qué decisiones de arquitectura tomaste en trainer-flow?');
+    await page.press('#q-mini', 'Enter');
+    const hit = page.locator('#answer .hit', { has: page.locator('.hit-src', { hasText: 'Caso de estudio: trainer-flow' }) });
+    await hit.locator('a').click();
+    await expect(page.locator('#views input[value="deep"]')).toBeChecked();
+    expect(await parts(page)).toHaveLength(5);
+    await expect(page.locator('#case-trainer.flash')).toBeInViewport();
+  });
+
+  test('a hit on a part hiring keeps does not change the view', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await view(page, 'brief').click();
+    await page.fill('#q-mini', 'mutación');
+    await page.press('#q-mini', 'Enter');
+    await page.locator('#answer .hit', { has: page.locator('.hit-src', { hasText: 'Caso de estudio' }) }).first().locator('a').click();
+    await expect(page.locator('#views input[value="brief"]')).toBeChecked();
+  });
+
+  test('the switch speaks English', async ({ page }) => {
+    await open(page, '?quiet=1&lang=en');
+    await expect(page.locator('#views')).toContainText('Read it as');
+    await expect(page.locator('#views')).toContainText('Hiring');
+    await expect(page.locator('#views')).toContainText('Engineering');
+  });
+});
+
 // Spec 004: the cover's cards move the light over the landscape and whisper a
 // line about themselves. CSS alone: no script, nothing that shifts layout.
 test.describe('exploratory cover', () => {

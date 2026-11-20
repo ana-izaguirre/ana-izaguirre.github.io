@@ -30,6 +30,16 @@ for (const ctx of CONTEXTS) {
   });
 }
 
+test('no axe violations in the hiring view, cases open — light', async ({ page }) => {
+  await page.goto('/index.html?theme=light&quiet=1');
+  await page.waitForTimeout(1200);
+  await page.locator('#views label', { has: page.locator('input[value="brief"]') }).click();
+  await page.$$eval('details.case', (ds) => ds.forEach((d) => { d.open = true; }));
+  await page.addScriptTag({ content: AXE });
+  const { violations } = await page.evaluate(() => window.axe.run(document, { resultTypes: ['violations'] }));
+  expect(violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`)).toEqual([]);
+});
+
 test('every interactive control has an accessible name', async ({ page }) => {
   await page.goto('/index.html?quiet=1');
   await page.waitForTimeout(1000);

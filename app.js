@@ -17,6 +17,7 @@ const EN={...window.EN_TOP,
 // Case studies (docs/specs/002). Spanish lives in the markup; keep both in step.
 case_open:"See the case",
 case_hint:"problem, decisions, architecture, trade-offs, results",
+case_hint_b:"problem and results",view_l:"Read it as",view_brief:"Hiring",view_deep:"Engineering",
 case_src:"Sources in the repository:",
 case_p:"Problem",
 case_d:"Decisions",
@@ -450,7 +451,7 @@ function askInner(text,silent){
     if(!h.el.closest('.cv-only')){
       const a=mk('a',null,UI[lang].see);a.href='#'+h.el.id;
       // A case lives in a closed <details>: open it, or the scroll lands on a summary.
-      a.addEventListener('click',e=>{e.preventDefault();h.el.open=true;flash(h.el)});
+      a.addEventListener('click',e=>{e.preventDefault();if(h.lines.some(l=>l.closest('[data-deep]')))$('#views [value=deep]').checked=true;h.el.open=true;flash(h.el)});
       art.appendChild(a);
     }
     box.appendChild(art);
