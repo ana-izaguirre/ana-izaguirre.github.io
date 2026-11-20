@@ -148,6 +148,7 @@ html[data-theme=light] .i-moon{display:block}
 .rail-line{position:relative;height:2px;background:var(--line);border-radius:2px}
 .rail-line i{position:absolute;inset:0 auto 0 0;width:0;background:var(--red);border-radius:2px;transition:width .7s cubic-bezier(.22,1,.36,1)}
 .knob{position:absolute;top:50%;left:0;width:13px;height:13px;margin:-6.5px 0 0 -6.5px;border-radius:50%;background:var(--red);border:2px solid var(--bg2);box-shadow:0 0 0 1px var(--red),0 0 14px color-mix(in srgb,var(--red) 70%,transparent);transform:translateX(var(--kx,0px));transition:transform .7s cubic-bezier(.22,1,.36,1);will-change:transform}
+.knob{transition:opacity .3s}.rail-line:not(.playing) .knob{opacity:0}
 .segs{position:relative;height:30px}
 .seg .lb{display:inline-block;transition:opacity .25s}
 .seg.tight .lb{opacity:0;pointer-events:none}
@@ -162,7 +163,7 @@ html[data-theme=light] .i-moon{display:block}
 .seg.on em{opacity:1}
 .seg:hover{opacity:1;color:var(--text)}
 .seg:hover::before{border-color:var(--red)}
-.years{position:relative;height:1rem;font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.years{position:relative;height:1rem;pointer-events:none;font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums}
 .years span{position:absolute;transform:translateX(-50%)}
 .rp-bar{display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:center;margin-top:.8rem;padding-top:.8rem;border-top:1px solid var(--line)}
 .btn.ic{padding:0;width:42px;height:42px;border-radius:50%;display:grid;place-items:center}
@@ -223,7 +224,6 @@ html[data-theme=light] .i-moon{display:block}
 }
 @media (max-width:640px){
   .scene{perspective:900px}
-  .years{display:none}
   .seg{font-size:0;padding:14px 14px 0;margin-left:-14px;height:34px}
   .seg::before{left:13px}
   .segs{height:26px}

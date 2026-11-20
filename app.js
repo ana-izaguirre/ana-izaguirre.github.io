@@ -124,12 +124,18 @@ function fitLabels(){
     const p=prev!==null&&r.left<prev+MIN_HIT?prev+MIN_HIT-r.left:0;
     prev=r.left+p;return p;
   });
-  const seen=[];
+  // La etiqueta de la parada activa se ve siempre; antes se mostraba encima de
+  // su vecina ("INFOPAgile Solutions"). Ahora se reserva primero y las que
+  // chocan con ella, por cualquiera de los dos lados, se ocultan.
+  const box=i=>({left:rects[i].left+push[i],right:rects[i].right+push[i]});
+  const hits=(a,b)=>a.left<b.right+6&&b.left<a.right+6;
+  const seen=[box(idx)];
   evs.forEach((ev,i)=>{
     if(push[i])ev.seg.style.setProperty('--nudge',push[i].toFixed(1)+'px');
-    const left=rects[i].left+push[i],right=rects[i].right+push[i];
-    if(seen.some(p=>left<p.right+6))ev.seg.classList.add('tight');
-    else seen.push({left,right});
+    if(i===idx)return;
+    const b=box(i);
+    if(seen.some(p=>hits(b,p)))ev.seg.classList.add('tight');
+    else seen.push(b);
   });
 }
 let szT;
@@ -217,6 +223,9 @@ function label(){
   playBtn.className='btn red ic '+st;
   const t=playing?UI[lang].pause:(st==='replay'?UI[lang].again:UI[lang].play);
   playBtn.setAttribute('aria-label',t);playBtn.setAttribute('title',t);
+  // El marcador de progreso solo tiene sentido en marcha: parado al final de una
+  // etapa queda justo encima del punto de la siguiente y parece que esa es la activa.
+  railLine.classList.toggle('playing',playing);
 }
 function pause(){playing=false;clearTimeout(timer);label()}
 function tick(){

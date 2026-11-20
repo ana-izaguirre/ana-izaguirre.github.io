@@ -273,6 +273,53 @@ test.describe('career timeline', () => {
     }
   });
 
+  // The active stage's label used to show on top of its neighbour
+  // ("INFOPAgile Solutions"): checked with every stage active, at three widths.
+  for (const width of [1440, 834, 390]) {
+    test(`no labels collide whichever stage is active — ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/index.html?quiet=1');
+      await page.waitForTimeout(900);
+      const n = await page.locator('.seg').count();
+      for (let i = 0; i < n; i++) {
+        await page.evaluate((i) => document.querySelectorAll('.seg')[i].click(), i);
+        await page.waitForTimeout(150);
+        const shown = await page.$$eval('.seg', (els) => els
+          // Read the decision, not the fade: a hidden label is still mid-transition here.
+          .filter((e) => !e.classList.contains('tight') || e.classList.contains('on'))
+          .map((e) => ({ t: e.textContent.trim(), r: e.querySelector('.lb').getBoundingClientRect() }))
+          .filter((x) => x.r.width > 0)
+          .map((x) => ({ t: x.t, l: x.r.left, r: x.r.right })));
+        for (let a = 0; a < shown.length; a++) for (let b = a + 1; b < shown.length; b++) {
+          const overlap = shown[a].l < shown[b].r && shown[b].l < shown[a].r;
+          expect(overlap, `stage ${i + 1}: "${shown[a].t}" overlaps "${shown[b].t}"`).toBe(false);
+        }
+      }
+    });
+  }
+
+  // Stopped at the end of a stage, the marker sat on the next stage's dot and
+  // made that one look active. It only shows while the story plays.
+  test('the progress marker shows only while playing', async ({ page }) => {
+    await page.goto('/index.html?quiet=1');
+    await page.waitForTimeout(900);
+    await expect(page.locator('#knob')).toHaveCSS('opacity', '0');
+    await page.click('#rp-play');
+    await expect(page.locator('#knob')).toHaveCSS('opacity', '1');
+    await page.click('#rp-play');
+    await expect(page.locator('#knob')).toHaveCSS('opacity', '0');
+  });
+
+  test('on a phone the years show and do not swallow taps on the stages', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/index.html?quiet=1');
+    await page.waitForTimeout(900);
+    await page.evaluate(() => document.getElementById('loader').classList.add('gone'));
+    await expect(page.locator('#years span').first()).toBeVisible();
+    await page.locator('.seg').nth(4).click(); // a real click: fails if the years intercept it
+    await expect(page.locator('#rp-step')).toContainText('5/7');
+  });
+
   test('each stage shows icons for its tools and no text labels', async ({ page }) => {
     await page.goto('/index.html?quiet=1');
     await page.waitForTimeout(1200);
