@@ -3,7 +3,9 @@
 import {createIndex,search as rank,tokenize,normalize as norm,isHit,surfaceForm} from './js/search.js';
 (()=>{
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+// Reduced motion: asked by the system, or by the page's own switch (spec 019).
+const osReduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let reduce=osReduce||document.documentElement.dataset.motion==='off';
 const qs=new URLSearchParams(location.search),quiet=qs.has('quiet');
 const MAIL='ana.izaguirrematamoros@gmail.com';
 
@@ -308,13 +310,14 @@ idle(()=>{
    el.style.setProperty('--b',r(2.2,4.6).toFixed(1)+'s');
    dot.style.animationDelay=(-r(0,4)).toFixed(1)+'s';
    el.appendChild(dot);f.appendChild(el);
-   if(reduce){dot.style.animation='none';dot.style.opacity='.8';continue}
+   if(osReduce){dot.style.animation='none';dot.style.opacity='.8';continue}
    // A loop through three points and back, never retracing a line. Explicit px
    // values, not var() in @keyframes: Safari on iPhone ignored those (spec 007).
    const pt=()=>`translate(${r(-dx,dx).toFixed(0)}px,${r(-dy,dy).toFixed(0)}px)`;
    const d=r(...fl.secs)*1000;
-   el.animate([{transform:'translate(0,0)'},{transform:pt()},{transform:pt()},{transform:pt()},{transform:'translate(0,0)'}],
+   const flight=el.animate([{transform:'translate(0,0)'},{transform:pt()},{transform:pt()},{transform:pt()},{transform:'translate(0,0)'}],
      {duration:d,iterations:Infinity,easing:'ease-in-out',delay:-r(0,d)});
+   if(reduce)flight.pause(); // the page's switch is off: ready to fly when it is turned on
  }
  host.appendChild(f);
 });
@@ -497,7 +500,7 @@ phoneMQ.addEventListener('change',placeBox);placeBox();
 // project row glows where the pointer is. Only for a mouse or trackpad, never
 // for touch, and never under reduced motion. The values feed CSS; the CSS
 // decides the motion.
-if(!reduce&&matchMedia('(hover:hover) and (pointer:fine)').matches){
+if(!osReduce&&matchMedia('(hover:hover) and (pointer:fine)').matches){
   const at=(e,f)=>{const el=e.currentTarget,r=el.getBoundingClientRect();f(el,(e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height,r)};
   $$('.tile').forEach(el=>{
     el.addEventListener('pointermove',e=>at(e,(el,x,y)=>{el.style.setProperty('--tx',((x-.5)*9).toFixed(2)+'deg');el.style.setProperty('--ty',((.5-y)*9).toFixed(2)+'deg')}));
@@ -539,6 +542,19 @@ $('#chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(b)
 // Switching mode re-asks whatever is on screen, in the new scope.
 $('#modes').addEventListener('change',e=>{mode=e.target.value;ask(current.text,current.silent)});
 
+/* ---------- motion switch (spec 019) ---------- */
+// Off, CSS stops every animation and transition, the fireflies land, the
+// story stops, and jumps around the page become instant. On again, it all resumes.
+const motionBtn=$('#motion');
+motionBtn.setAttribute('aria-pressed',String(!reduce));
+motionBtn.addEventListener('click',()=>{
+  reduce=!reduce;
+  document.documentElement.dataset.motion=reduce?'off':'on';
+  try{localStorage.setItem('motion',document.documentElement.dataset.motion)}catch(e){}
+  $$('.fly').forEach(f=>f.getAnimations().forEach(a=>reduce?a.pause():a.play()));
+  if(reduce)pause();
+  motionBtn.setAttribute('aria-pressed',String(!reduce));
+});
 /* ---------- theme ---------- */
 const themeBtn=$('#theme'),root=document.documentElement;
 function paintTheme(){

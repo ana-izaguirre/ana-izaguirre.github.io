@@ -618,6 +618,56 @@ test.describe('project metrics', () => {
   }
 });
 
+// Spec 019: a site control that stops the motion.
+test.describe('motion switch', () => {
+  const flights = (page) => page.$$eval('.fly', (els) => els.flatMap((e) => e.getAnimations().map((a) => a.playState)));
+  const cssRunning = (page) => page.$$eval('.sheet .row, .mq, .fly i, .w-stars circle', (els) => els.filter((e) => getComputedStyle(e).animationName !== 'none').length);
+
+  test('off stops everything, on brings it back, and the choice is remembered', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await expect(page.locator('.fly').first()).toBeAttached();
+    await expect(page.locator('#motion')).toHaveAttribute('aria-pressed', 'true');
+    expect(await cssRunning(page), 'the premise: things move').toBeGreaterThan(0);
+    await page.click('#motion');
+    await expect(page.locator('#motion')).toHaveAttribute('aria-pressed', 'false');
+    await expect(page.locator('html')).toHaveAttribute('data-motion', 'off');
+    expect(await cssRunning(page)).toBe(0);
+    expect(new Set(await flights(page))).toEqual(new Set(['paused']));
+    await page.reload();
+    await page.waitForTimeout(1200);
+    await expect(page.locator('html')).toHaveAttribute('data-motion', 'off');
+    await expect(page.locator('#motion')).toHaveAttribute('aria-pressed', 'false');
+    expect(new Set(await flights(page))).toEqual(new Set(['paused']));
+    await page.click('#motion');
+    await expect(page.locator('html')).toHaveAttribute('data-motion', 'on');
+    expect(new Set(await flights(page))).toEqual(new Set(['running']));
+    expect(await cssRunning(page)).toBeGreaterThan(0);
+  });
+
+  test('off, the story stops', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await page.click('#rp-play');
+    await expect(page.locator('#rp-play')).toHaveClass(/pause/);
+    await page.click('#motion');
+    await expect(page.locator('#rp-play')).not.toHaveClass(/pause/);
+  });
+
+  test('the label is English before app.js runs', async ({ page }) => {
+    await page.route('**/app.js', (r) => r.abort());
+    await page.goto('/index.html?lang=en');
+    await page.waitForTimeout(500);
+    await expect(page.locator('#motion')).toHaveAttribute('aria-label', 'Motion');
+  });
+});
+
+test.describe('motion switch, system reduced motion', () => {
+  test.use({ reducedMotion: 'reduce' });
+  test('there is nothing to switch, so no button', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await expect(page.locator('#motion')).toBeHidden();
+  });
+});
+
 // Spec 006: the Curiosity Switch picks which parts of each case a reader sees.
 test.describe('the Curiosity Switch', () => {
   const view = (page, v) => page.locator('#views label', { has: page.locator(`input[value="${v}"]`) });
@@ -989,6 +1039,8 @@ test.describe('storage blocked', () => {
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
     await page.click('#theme');
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+    await page.click('#motion');
+    await expect(page.locator('html')).toHaveAttribute('data-motion', 'off');
   });
 });
 
