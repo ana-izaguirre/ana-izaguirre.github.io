@@ -492,7 +492,8 @@ phoneMQ.addEventListener('change',placeBox);placeBox();
 // estimated heights and stops short. Once the scroll settles, aim again at the
 // real position. The browser's own jump stays: hash, focus, history.
 document.addEventListener('click',e=>{
-  const a=e.target.closest('a[href^="#"]'),t=a&&document.getElementById(a.hash.slice(1));
+  // A link the page already handles ("See it" centres and flashes) is left alone.
+  const a=!e.defaultPrevented&&e.target.closest('a[href^="#"]'),t=a&&document.getElementById(a.hash.slice(1));
   if(!t)return;
   // Whichever comes first, the scroll ending or a fallback for browsers without
   // scrollend, cancels the other: one correction, never a snap back later.
