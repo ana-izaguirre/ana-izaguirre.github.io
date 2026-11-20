@@ -438,6 +438,55 @@ test.describe('motion on scroll', () => {
   });
 });
 
+// Spec 011: the page answers where the pointer is.
+test.describe('pointer response', () => {
+  const tilt = (page) => page.$eval('.tile[data-focus=proj]', (e) => [e.style.getPropertyValue('--tx'), e.style.getPropertyValue('--ty')]);
+
+  test('a cover card leans toward the pointer, and lets go when it leaves', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await expect(page.locator('#loader')).toHaveClass(/gone/);
+    const box = await page.locator('.tile[data-focus=proj]').boundingBox();
+    await page.mouse.move(box.x + box.width * 0.95, box.y + box.height * 0.5);
+    await page.mouse.move(box.x + box.width * 0.9, box.y + box.height * 0.5);
+    const [tx] = await tilt(page);
+    expect(parseFloat(tx), 'leans right').toBeGreaterThan(2);
+    await expect.poll(() => page.$eval('.tile[data-focus=proj]', (e) => getComputedStyle(e).transform)).toMatch(/^matrix3d/);
+    await page.mouse.move(5, 5);
+    expect(await tilt(page)).toEqual(['', '']);
+  });
+
+  test('a project row glows where the pointer is', async ({ page }) => {
+    await open(page, '?quiet=1');
+    const row = page.locator('#c-trainer');
+    // hover() waits for the row to stop moving: the page scrolls smoothly.
+    await row.hover({ position: { x: 40, y: 20 } });
+    await row.hover({ position: { x: 60, y: 30 } });
+    const [mx, bg] = await row.evaluate((e) => [e.style.getPropertyValue('--mx'), getComputedStyle(e).backgroundImage]);
+    expect(mx).toBe('60px');
+    expect(bg).toContain('radial-gradient');
+  });
+
+  test('the sources of an answer arrive one after another', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await page.fill('#q-mini', 'docker kubernetes aws');
+    await page.press('#q-mini', 'Enter');
+    const hits = await page.$$eval('#answer .hit', (els) => els.map((e) => [e.style.getPropertyValue('--i'), getComputedStyle(e).animationName]));
+    expect(hits.length).toBeGreaterThan(1);
+    expect(hits.map(([i]) => i)).toEqual(hits.map((_, i) => String(i)));
+    expect(hits.every(([, a]) => a === 'hit-in')).toBe(true);
+  });
+});
+
+test.describe('pointer response, not for touch', () => {
+  test.use({ viewport: { width: 1024, height: 800 }, isMobile: true, hasTouch: true });
+  test('a tap leaves no card tilted', async ({ page }) => {
+    await open(page, '?quiet=1');
+    expect(await page.evaluate(() => matchMedia('(hover:hover) and (pointer:fine)').matches), 'the premise: a touch device').toBe(false);
+    await page.locator('.tile[data-focus=proj]').dispatchEvent('pointermove', { clientX: 900, clientY: 300 });
+    expect(await page.$eval('.tile[data-focus=proj]', (e) => e.style.getPropertyValue('--tx'))).toBe('');
+  });
+});
+
 // Spec 006: the Curiosity Switch picks which parts of each case a reader sees.
 test.describe('the Curiosity Switch', () => {
   const view = (page, v) => page.locator('#views label', { has: page.locator(`input[value="${v}"]`) });
@@ -954,6 +1003,8 @@ test.describe('reduced motion', () => {
     expect(moving, 'something animates under prefers-reduced-motion').toBe(false);
     const scrolled = await page.$$eval('.sheet .row, .replay, .cta, .ask-rule', (els) => els.filter((e) => getComputedStyle(e).animationName !== 'none' || getComputedStyle(e).opacity !== '1').length);
     expect(scrolled, 'scroll motion runs under prefers-reduced-motion').toBe(0);
+    await page.locator('.tile[data-focus=proj]').dispatchEvent('pointermove', { clientX: 900, clientY: 300 });
+    expect(await page.$eval('.tile[data-focus=proj]', (e) => e.style.getPropertyValue('--tx')), 'a card tilts under reduced motion').toBe('');
     await expect(page.locator('#sheet')).toBeVisible();
     await expect(page.locator('h1')).toBeVisible();
   });
