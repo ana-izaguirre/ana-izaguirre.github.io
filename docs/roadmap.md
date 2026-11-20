@@ -17,7 +17,7 @@ metrics on every project, honest "good fit / bad fit").
 | 6 | Interactive diagrams in the case studies | Medium | Low | M | Planned |
 | 7 | Small lessons: code, simulation, feedback | Medium | High (scope) | L | Later |
 | 8 | Editorial navigation, deliberate micro-animations | Medium | Low | S-M | With 4-6 |
-| 9 | Motion on scroll: sections reveal, cover parallax, reading progress | **High**: the page reads as static | Medium (CLS, performance) | M | Next |
+| 9 | Motion on scroll: sections reveal, cover parallax, reading progress | **High**: the page reads as static | Medium (CLS, performance) | M | Done (spec 010) |
 | 10 | Pointer response: gentle tilt on cards and projects, answers that write in | Medium | Medium (motion sickness) | M | Planned |
 | 11 | Transitions with intent: case parts unfold in sequence, figures count up | Medium | Low | S-M | Planned |
 | 12 | A clear call to action: hire / contact, visible without hunting | **High** for recruiters | Low | S | Done (spec 009) |
