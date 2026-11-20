@@ -28,7 +28,7 @@ metrics on every project, honest "good fit / bad fit").
 | 17 | Who she is in one screen: a live availability signal, the companies she worked at | **High** for recruiters | Low | S-M | Done (spec 015) |
 | 18 | Metric-led project cards: three figures per project, from each repository | High | Low (must cite) | S | Done (spec 018) |
 | 19 | Site controls as play: a motion on/off switch next to theme and language | Medium | Low | S | Done (spec 019) |
-| 20 | Hover easter eggs: "Honduras" and "Zaragoza" reveal a small picture | Low-medium, memorable | Low | S | Planned |
+| 20 | Hover easter eggs: "Honduras" and "Zaragoza" reveal a small picture | Low-medium, memorable | Low | S | Done (spec 023) |
 | 21 | Short FAQ for recruiters: start date, remote, English, contract | Medium | Low | S | Done (spec 020) |
 | 22 | Good fit / bad fit, in Ana's own words | High, distinctive | Needs Ana: not to be invented | S | Needs Ana |
 | 23 | Numbered editorial sections: "01 — Journey", "02 — Ask my CV"… as eyebrows over each heading, and a numbered footer index | Medium | Low | S | Done (spec 016) |
