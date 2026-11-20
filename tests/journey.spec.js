@@ -458,7 +458,9 @@ test.describe('pointer response', () => {
   test('a project row glows where the pointer is', async ({ page }) => {
     await open(page, '?quiet=1');
     const row = page.locator('#c-trainer');
-    // hover() waits for the row to stop moving: the page scrolls smoothly.
+    // Centred first, instantly: a row still arriving (spec 010) is shifted, and a
+    // hover aimed at it can land beside it. hover() then waits for it to settle.
+    await row.evaluate((e) => e.scrollIntoView({ block: 'center', behavior: 'instant' }));
     await row.hover({ position: { x: 40, y: 20 } });
     await row.hover({ position: { x: 60, y: 30 } });
     const [mx, bg] = await row.evaluate((e) => [e.style.getPropertyValue('--mx'), getComputedStyle(e).backgroundImage]);
