@@ -264,6 +264,68 @@ test.describe('ask my CV: modes and evidence', () => {
   });
 });
 
+// Spec 004: the cover's cards move the light over the landscape and whisper a
+// line about themselves. CSS alone: no script, nothing that shifts layout.
+test.describe('exploratory cover', () => {
+  const spot = (page) => page.locator('.spot');
+  const CARDS = { story: 'Todo empezó en Honduras', proj: 'Desde Zaragoza', about: 'Lista para un equipo nuevo' };
+
+  test('hovering each card moves the light and shows its line; leaving clears both', async ({ page }) => {
+    await open(page, '?quiet=1');
+    // The intro overlay covers the page for its first 1.9 s; a pointer that
+    // moved under it is not hovering anything until it moves again.
+    await expect(page.locator('#loader')).toHaveClass(/gone/);
+    await expect(spot(page)).toHaveCSS('opacity', '0');
+    const transforms = new Set();
+    for (const [key, line] of Object.entries(CARDS)) {
+      const tile = page.locator(`.tile[data-focus="${key}"]`);
+      await tile.hover();
+      await expect(spot(page)).toHaveCSS('opacity', '1');
+      await expect(tile.locator('.whisper')).toHaveCSS('opacity', '1');
+      await expect(tile.locator('.whisper')).toContainText(line);
+      await expect.poll(() => spot(page).evaluate((e) => getComputedStyle(e).transform)).not.toBe('none');
+      transforms.add(await spot(page).evaluate((e) => getComputedStyle(e).transform));
+    }
+    expect(transforms.size, 'each card should point the light somewhere else').toBe(3);
+    await page.mouse.move(5, 5);
+    await expect(spot(page)).toHaveCSS('opacity', '0');
+  });
+
+  test('the keyboard gets the same, and nothing on the cover moves', async ({ page }) => {
+    await open(page, '?quiet=1');
+    // Layout boxes (offset*), not visual ones: the focused card's lift is a
+    // transform, which never shifts layout and is not a layout shift.
+    const boxes = () => page.$$eval('h1, .lead, .tile, .signs, #ask-mini', (els) => els.map((e) =>
+      [e.offsetLeft, e.offsetTop, e.offsetWidth, e.offsetHeight]));
+    const before = await boxes();
+    await page.locator('.tile[data-focus="proj"]').focus();
+    await page.keyboard.press('Shift+Tab');
+    await page.keyboard.press('Tab'); // focus-visible needs a keyboard-driven focus
+    await expect(spot(page)).toHaveCSS('opacity', '1');
+    await expect(page.locator('.tile[data-focus="proj"] .whisper')).toHaveCSS('opacity', '1');
+    expect(await boxes(), 'the cover shifted on focus').toEqual(before);
+  });
+
+  test('the whisper is decoration: links keep their own names', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await expect(page.locator('.tile[data-focus="story"]')).toHaveAccessibleName(/Mi trayectoria/);
+    await expect(page.locator('.tile[data-focus="story"]')).not.toHaveAccessibleName(/Honduras, en 2015/);
+  });
+});
+
+test.describe('exploratory cover on a touch screen', () => {
+  test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+
+  test('a tap follows the link without leaving the light on, and no whisper covers a card', async ({ page }) => {
+    await open(page, '?quiet=1');
+    expect(await page.evaluate(() => matchMedia('(hover: hover)').matches), 'the premise: this device cannot hover').toBe(false);
+    await page.evaluate(() => document.getElementById('loader').classList.add('gone'));
+    await page.locator('.tile[data-focus="proj"]').tap();
+    await expect(page.locator('.spot')).toHaveCSS('opacity', '0');
+    await expect(page.locator('.tile[data-focus="proj"] .whisper')).toBeHidden();
+  });
+});
+
 test.describe('case studies', () => {
   const PARTS = {
     es: ['Problema', 'Decisiones', 'Arquitectura', 'Trade-offs', 'Resultados'],

@@ -390,6 +390,14 @@ html:not([data-theme=light]) .world{--w0:#1B1838;--w1:#2E2550;--w2:#5B3A62;--w3:
 .tile:hover,.tile:focus-visible{transform:rotate(0) translateY(-7px)}
 .tape{position:absolute;top:-11px;left:50%;width:74px;height:22px;margin-left:-37px;background:var(--tape);border-radius:2px;transform:rotate(-3deg);box-shadow:0 1px 2px rgba(0,0,0,.08)}
 .tile:nth-child(2) .tape{transform:rotate(4deg);left:30%}
+.whisper{position:absolute;left:1rem;right:1rem;bottom:calc(100% + 3.4rem);padding:.35rem .75rem;border-radius:10px;
+  font:600 .95rem/1.35 var(--serif);text-align:center;color:var(--text);background:color-mix(in srgb,var(--bg) 82%,transparent);
+  box-shadow:0 8px 20px -12px rgba(0,0,0,.5);opacity:0;transform:translateY(.4rem);pointer-events:none;
+  transition:opacity .3s ease,transform .45s cubic-bezier(.22,1,.36,1)}
+.tile:focus-visible .whisper{opacity:1;transform:none}
+/* Stacked cards on phones: a whisper would sit on the card above. The light stays. */
+@media (max-width:680px){.whisper{display:none}}
+@media (hover:hover){.tile:hover .whisper{opacity:1;transform:none}}
 .tl-t{display:flex;align-items:center;gap:.6rem;font:600 1.12rem/1.2 var(--serif);margin:.1rem 0 .35rem;color:var(--text)}
 .blob{display:grid;place-items:center;width:38px;height:38px;flex:none;border-radius:58% 42% 52% 48%/46% 56% 44% 54%;background:color-mix(in srgb,var(--hill2) 22%,transparent);color:var(--hill3)}
 .tile:nth-child(2) .blob{background:color-mix(in srgb,var(--red) 18%,transparent);color:var(--red-t)}
@@ -447,6 +455,24 @@ html:not([data-theme=light]) .w-cloud{opacity:.22}
 @keyframes breathe{0%,100%{opacity:.85}50%{opacity:1}}
 /* fireflies: each with its own path and blink */
 .flies{position:absolute;inset:0;contain:strict}
+/* Exploratory cover (docs/specs/004), in CSS alone. A dimming layer twice the
+   scene's width with a clear circle at its centre: moving it with transform puts
+   the light where the card under the pointer points, composited, no repaint.
+   :hover only where the device can hover, so a tap on a phone just follows the
+   link; :focus-visible covers the keyboard. */
+.spot{position:absolute;top:0;bottom:0;left:-50%;width:200%;pointer-events:none;opacity:0;
+  background:radial-gradient(ellipse 22% 55% at 50% 64%,transparent 0 40%,color-mix(in srgb,var(--bg) 62%,transparent) 100%);
+  transform:translateX(var(--sx,0));transition:opacity .45s ease,transform .7s cubic-bezier(.22,1,.36,1)}
+.sys:has(.tile:focus-visible) .spot{opacity:1}
+.sys:has(.tile[data-focus=story]:focus-visible) .spot{--sx:-17%}
+.sys:has(.tile[data-focus=about]:focus-visible) .spot{--sx:-.5%}
+.sys:has(.tile[data-focus=proj]:focus-visible) .spot{--sx:9%}
+@media (hover:hover){
+  .sys:has(.tile:hover) .spot{opacity:1}
+  .sys:has(.tile[data-focus=story]:hover) .spot{--sx:-17%}
+  .sys:has(.tile[data-focus=about]:hover) .spot{--sx:-.5%}
+  .sys:has(.tile[data-focus=proj]:hover) .spot{--sx:9%}
+}
 .fly{position:absolute;width:var(--s,5px);height:var(--s,5px);will-change:transform;animation:wander var(--d,12s) ease-in-out infinite}
 .fly i{display:block;width:100%;height:100%;border-radius:50%;background:var(--fly);box-shadow:0 0 6px 2px var(--fly-glow),0 0 18px 6px var(--fly-glow);animation:blink var(--b,3s) ease-in-out infinite}
 /* A looping flight through three points and back, never retracing the same
@@ -641,7 +667,7 @@ section.replay{-webkit-backdrop-filter:none;backdrop-filter:none;position:relati
 <g fill="none" style="stroke:var(--w30)" stroke-width="6" stroke-linecap="round"><g class="bough"><path d="M-40 -30Q41 69 140 74Q221 44 320 42Q388 120 470 124Q538 75 620 72"/></g><g class="boughR"><path d="M1720 -24Q1639 71 1540 76Q1569 218 1604 226Q1554 350 1494 356"/></g></g>
 <g style="fill:var(--w31)"><path d="M-16 100Q-11 79 10 83Q5 103 -16 100ZM-16 100Q-7 91 3 100Q-7 108 -16 100ZM-16 100Q-32 110 -23 127Q-7 117 -16 100ZM-16 100Q-4 108 -12 120Q-23 112 -16 100ZM13 127Q23 141 38 133Q28 118 13 127ZM13 127Q30 133 37 116Q20 111 13 127ZM13 127Q1 139 12 152Q24 140 13 127ZM13 127Q-7 135 -1 154Q18 147 13 127ZM41 155Q53 166 65 156Q54 144 41 155ZM41 155Q46 140 62 143Q57 158 41 155ZM41 155Q55 165 45 180Q32 169 41 155ZM41 155Q35 166 46 174Q52 162 41 155ZM70 182Q81 163 100 173Q89 191 70 182ZM70 182Q87 196 102 180Q85 166 70 182ZM70 182Q52 188 56 207Q74 201 70 182ZM70 182Q57 197 71 211Q84 196 70 182ZM79 216Q81 229 94 228Q92 214 79 216ZM79 216Q73 233 89 240Q96 223 79 216ZM79 216Q59 209 51 228Q71 235 79 216ZM79 216Q61 210 55 228Q73 233 79 216ZM69 254Q71 269 86 269Q84 254 69 254ZM69 254Q63 270 78 277Q84 262 69 254ZM69 254Q53 242 40 257Q56 269 69 254ZM69 254Q50 249 43 267Q62 272 69 254ZM59 294Q61 315 83 314Q80 293 59 294ZM59 294Q53 307 67 314Q72 300 59 294ZM59 294Q48 312 29 303Q40 284 59 294ZM59 294Q54 312 35 309Q40 290 59 294ZM49 332Q67 342 59 361Q41 352 49 332ZM49 332Q50 345 62 345Q61 333 49 332ZM49 332Q39 347 24 339Q34 324 49 332ZM49 332Q30 333 29 352Q48 352 49 332ZM53 372Q67 369 71 383Q57 385 53 372ZM53 372Q65 362 76 373Q64 383 53 372ZM53 372Q58 383 47 389Q42 378 53 372ZM53 372Q65 386 51 399Q40 385 53 372ZM71 412Q80 404 88 412Q80 420 71 412ZM71 412Q86 410 89 425Q74 427 71 412ZM71 412Q76 430 58 437Q53 418 71 412ZM71 412Q81 424 71 435Q60 423 71 412ZM89 452Q91 465 104 465Q102 452 89 452ZM89 452Q106 440 120 456Q103 468 89 452ZM89 452Q75 457 79 471Q93 466 89 452ZM89 452Q89 468 73 469Q73 453 89 452ZM107 492Q122 478 138 492Q122 506 107 492ZM107 492Q112 508 128 504Q123 488 107 492ZM107 492Q121 507 107 522Q93 507 107 492ZM107 492Q90 493 90 510Q107 509 107 492Z"/></g>
 <g fill="none" style="stroke:var(--w32)" stroke-width="7" stroke-linecap="round"><path d="M-30 86Q21 190 84 196Q66 344 44 352Q76 504 116 512"/></g>
-</svg><!-- /scene:svg --><div class="flies" id="flies"></div></div>
+</svg><!-- /scene:svg --><div class="flies" id="flies"></div><div class="spot"></div></div>
   <div class="veil" aria-hidden="true"></div>
   <div class="wrap hero">
     <div class="hero-l">
@@ -672,17 +698,17 @@ section.replay{-webkit-backdrop-filter:none;backdrop-filter:none;position:relati
   </div>
   <div class="signs" aria-hidden="true"><span>Honduras ♡</span><span>Zaragoza ♡</span></div>
   <nav class="wrap cards" aria-label="Secciones" data-i18n-aria="cards_a">
-    <a class="paper tile" href="#story"><span class="tape"></span>
+    <a class="paper tile" href="#story" data-focus="story"><span class="tape"></span><span class="whisper" aria-hidden="true" data-i18n="msg_story">Todo empezó en Honduras, en 2015.</span>
       <h2 class="tl-t"><span class="blob"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm3.6 6.4-2.1 5-5 2.1 2.1-5Z"/></svg></span><span data-i18n="t1_t">Mi trayectoria</span></h2>
       <p data-i18n="t1_d">De Honduras a Zaragoza: siete escenas, ocho años en producción.</p>
       <span class="more"><span data-i18n="t1_l">Ver mi experiencia</span> →</span>
     </a>
-    <a class="paper tile" href="#h-proj"><span class="tape"></span>
+    <a class="paper tile" href="#h-proj" data-focus="proj"><span class="tape"></span><span class="whisper" aria-hidden="true" data-i18n="msg_proj">Desde Zaragoza: tres proyectos y sus decisiones.</span>
       <h2 class="tl-t"><span class="blob"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18v13H3Zm2 2v9h14V6ZM2 19h20v2H2Z"/></svg></span><span data-i18n="t2_t">Proyectos</span></h2>
       <p data-i18n="t2_d">Specs antes que código, 1.500 pruebas y decisiones que se sostienen.</p>
       <span class="more"><span data-i18n="t2_l">Ver proyectos</span> →</span>
     </a>
-    <a class="paper tile" href="#sobre-mi"><span class="tape"></span>
+    <a class="paper tile" href="#sobre-mi" data-focus="about"><span class="tape"></span><span class="whisper" aria-hidden="true" data-i18n="msg_about">Lista para un equipo nuevo, desde Zaragoza.</span>
       <h2 class="tl-t"><span class="blob"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c3 2 5 5 5 8a5 5 0 0 1-10 0c0-3 2-6 5-8Zm0 17v-5"/></svg></span><span data-i18n="t3_t">Sobre mí</span></h2>
       <p data-i18n="t3_d">Cómo trabajo y qué estoy buscando ahora.</p>
       <span class="more"><span data-i18n="t3_l">Conóceme</span> →</span>
@@ -696,6 +722,9 @@ section.replay{-webkit-backdrop-filter:none;backdrop-filter:none;position:relati
 // app.js arrives, and the text change would move the page. app.js takes these
 // keys from here (EN_TOP), plus the Spanish originals they overwrite (ES_TOP).
 window.EN_TOP={
+msg_story:'It all started in Honduras, in 2015.',
+msg_proj:'From Zaragoza: three projects and their decisions.',
+msg_about:'Ready for a new team, from Zaragoza.',
 dl:'Download CV',
 h1_k:'Ana Izaguirre · Senior Backend / Full Stack Engineer',
 h1_b:'A curious mind.',
