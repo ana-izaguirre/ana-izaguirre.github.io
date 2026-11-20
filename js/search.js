@@ -111,20 +111,27 @@ function weighted(terms) {
 /**
  * Rank passages for a question.
  * Returns up to `limit` hits within `cutoff` of the best score. Each hit has
- * `lines`, the positions of its best one or two lines (in reading order), and
- * `matched`, the query words, typed or synonym, found in it.
+ * `lines`, the positions of its best one or two lines (in reading order),
+ * `matched`, the query words, typed or synonym, found in it, and `synonyms`,
+ * the subset of `matched` that was not typed: evidence the page can show.
+ * `sections`, when given, restricts which passages may answer; idf still
+ * comes from the whole index, so a word weighs the same in every mode.
  * @param {ReturnType<typeof createIndex>} index
  * @param {string} query
- * @param {{limit?: number, cutoff?: number}} [options]
+ * @param {{limit?: number, cutoff?: number, sections?: string[]}} [options]
  */
-export function search(index, query, { limit = 3, cutoff = 0.35 } = {}) {
+export function search(index, query, { limit = 3, cutoff = 0.35, sections } = {}) {
   check(index && Array.isArray(index.passages), 'index must come from createIndex()');
   check(typeof query === 'string', 'query must be a string');
+  check(sections === undefined || (Array.isArray(sections) && sections.length > 0 && sections.every((x) => typeof x === 'string')),
+    'sections must be a non-empty array of strings');
+  const allowed = sections && new Set(sections);
   const terms = tokenize(query);
   if (!terms.length) return { terms: [], hits: [] };
   const w = weighted(terms);
   const N = index.passages.length;
-  const scored = index.passages.map((p) => {
+  const typed = new Set(terms);
+  const scored = index.passages.filter((p) => !allowed || allowed.has(p.section)).map((p) => {
     let s = 0;
     const matched = [];
     for (const [t, wt] of w) {
@@ -147,9 +154,20 @@ export function search(index, query, { limit = 3, cutoff = 0.35 } = {}) {
       .sort((a, b) => a.i - b.i)
       .map((x) => x.i);
     // A passage matched only in its title has no matching line: quote its first one.
-    return { id: h.p.id, section: h.p.section, score: h.score, matched: h.matched, lines: ranked.length ? ranked : [0] };
+    return { id: h.p.id, section: h.p.section, score: h.score, matched: h.matched,
+      synonyms: h.matched.filter((t) => !typed.has(t)), lines: ranked.length ? ranked : [0] };
   });
   return { terms, hits };
+}
+
+/**
+ * A matched stem as the text writes it: "kubernete" becomes "Kubernetes".
+ * Splits the text the way tokenize() does; returns the stem itself when no
+ * word of the text produces it.
+ */
+export function surfaceForm(text, stem) {
+  for (const word of text.match(/[\p{L}\p{N}#+]+/gu) || []) if (tokenize(word)[0] === stem) return word;
+  return stem;
 }
 
 /**

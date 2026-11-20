@@ -1,6 +1,6 @@
 // Page logic: BM25 search, career story, language, theme and fireflies.
 // Loaded after the first frame, so the HTML paints without waiting to download or run it.
-import {createIndex,search as rank,tokenize,normalize as norm,isHit} from './js/search.js';
+import {createIndex,search as rank,tokenize,normalize as norm,isHit,surfaceForm} from './js/search.js';
 (()=>{
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -47,7 +47,7 @@ cs_latino_a:"A React 19 SPA built with Vite. The browser talks to Firestore and 
 cs_latino_t1:"With no server-side validation layer, the Firestore rules carry all of the security.",
 cs_latino_t2:"Every Firestore path falls back to static data on error, and that hid a broken feature for a long time. The rule now is that no failure stays silent.",
 cs_latino_r:"In active development, with its own project board. Coverage at 65% as a ratchet: every PR that adds behaviour raises it, never lowers it.",
-skip:'Go to the CV',ans_h:'What my CV says',ask_again:'Ask something else',s_about:'About me',
+skip:'Go to the CV',mode_l:'Search in',mode_all:'Whole CV',mode_exp:'Experience',mode_proj:'Projects',mode_skills:'Skills',ans_h:'What my CV says',ask_again:'Ask something else',s_about:'About me',
 about1:'Backend and full stack engineer with 8+ years in production, most recently at Allergan Data Labs (AbbVie) and Intel. I work with event-driven architectures on AWS, REST and GraphQL APIs, and AI-assisted development every day.',
 about2:'I live in Zaragoza and I am looking for a permanent role: hybrid in Zaragoza or remote from Spain. Available immediately.',ask_h2:'Or tap one of these questions:',
 c1:'How did you handle queue and event architecture on AWS?',c2:'What is your experience with on-call and observability with Datadog?',c3:'How do you use AI and agentic development day to day?',c4:'Have you led or mentored engineers?',c5:'Where do you live and what role are you looking for?',c6:'What is your English level?',
@@ -103,9 +103,11 @@ const SEC={es:{perfil:'Perfil',disp:'Disponibilidad',exp:'Experiencia',proj:'Pro
 const num=(ms,l)=>{const s=ms<10?ms.toFixed(1):String(Math.round(ms));return l==='es'?s.replace('.',','):s};
 const UI={
 es:{meta:(n,ms)=>`${n===1?'1 fragmento':n+' fragmentos'} del CV, búsqueda en ${ms} ms`,none:'Eso no aparece en mi CV. Escríbeme y te lo cuento:',
- see:'Ver en el CV',hist:'Ya preguntado:',play:'Reproducir',pause:'Pausar',again:'Reproducir de nuevo',light:'Claro',dark:'Oscuro'},
+ see:'Ver en el CV',hist:'Ya preguntado:',why:'Coincide con:',syn:'sinónimo',
+ noneIn:m=>`No aparece en ${m}.`,tryAll:'Buscar en todo el CV',play:'Reproducir',pause:'Pausar',again:'Reproducir de nuevo',light:'Claro',dark:'Oscuro'},
 en:{meta:(n,ms)=>`${n===1?'1 passage':n+' passages'} from the CV, search took ${ms} ms`,none:'That is not in my CV. Email me and I will tell you:',
- see:'See it in the CV',hist:'Already asked:',play:'Replay',pause:'Pause',again:'Replay again',light:'Light',dark:'Dark'}};
+ see:'See it in the CV',hist:'Already asked:',why:'Matches:',syn:'synonym',
+ noneIn:m=>`Nothing in ${m}.`,tryAll:'Search the whole CV',play:'Replay',pause:'Pause',again:'Replay again',light:'Light',dark:'Dark'}};
 const META={es:{t:document.title,d:$('meta[name=description]').content},
  en:{t:'Ana Izaguirre, full stack and backend engineer in Zaragoza | Node.js, TypeScript, AWS',d:'Interactive CV of Ana Izaguirre, full stack engineer specialising in backend, based in Zaragoza, with 8+ years in production: Node.js, TypeScript, React and AWS.'}};
 let lang='es';
@@ -358,14 +360,19 @@ function buildIndex(){
   }
   index=createIndex(docs);indexReady=true;
 }
+// Search modes (docs/specs/003): which CV sections may answer. "all" searches
+// everything, education and profile included.
+const MODES={all:undefined,exp:['exp'],proj:['proj'],skills:['skills','lang']};
+let mode='all';
 function search(q){
   if(!indexReady)buildIndex();
-  const res=rank(index,q);
+  const res=rank(index,q,{sections:MODES[mode]});
   return{terms:new Set(res.terms),hits:res.hits.map(h=>{
     const p=passageEls.get(h.id);
-    return{el:p.el,lines:h.lines.map(i=>p.lines[i]),matched:h.matched};
+    return{el:p.el,lines:h.lines.map(i=>p.lines[i]),matched:h.matched,synonyms:new Set(h.synonyms)};
   })};
 }
+
 
 /* ---------- questions ---------- */
 const answer=$('#answer'),hist=$('#hist'),asked=[];
@@ -396,17 +403,32 @@ addEventListener('error',e=>{try{if(!answer.children.length)fail('',e.message)}c
 function ask(text,silent){
   try{askInner(text,silent)}catch(err){fail(text,err&&err.message)}
 }
+let current={text:'',silent:true};
 function askInner(text,silent){
-  text=text.trim();
+  text=text.trim();current={text,silent};
   const t0=performance.now(),res=search(text),ms=performance.now()-t0;
   const box=mk('div','ans'+(silent?'':' in'));
   if(!silent){const x=mk('button','ans-x','×');x.type='button';x.setAttribute('aria-label',(lang==='es'?ES:EN).clear);x.addEventListener('click',clearAsk);box.appendChild(x)}
   box.appendChild(mk('h3','ans-q',text));box.appendChild(mk('p','ans-meta',UI[lang].meta(res.hits.length,num(ms,lang))));
-  if(!res.hits.length){
+  if(!res.hits.length&&mode!=='all'){
+    // Nothing in this mode is not "nothing in the CV": offer the wider search.
+    const label=$(`#modes input[value="${mode}"]`).nextElementSibling.textContent;
+    box.appendChild(mk('p','none',UI[lang].noneIn(label)));
+    const b=mk('button','try-all',UI[lang].tryAll);b.type='button';
+    b.addEventListener('click',()=>{$('#modes input[value="all"]').checked=true;mode='all';ask(text)});
+    box.appendChild(b);
+  }else if(!res.hits.length){
     const p=mk('p','none',UI[lang].none+' '),a=mk('a',null,MAIL);a.href='mailto:'+MAIL;p.appendChild(a);box.appendChild(p);
   }
   res.hits.forEach(h=>{
     const art=mk('article','hit');art.appendChild(mk('p','hit-src',titleOf(h.el)));
+    const why=mk('p','hit-why');why.appendChild(mk('span',null,UI[lang].why));
+    h.matched.slice(0,6).forEach(t=>{
+      const syn=h.synonyms.has(t),ev=mk('span','ev'+(syn?' syn':''),surfaceForm(h.el.textContent,t));
+      if(syn){ev.title=UI[lang].syn;ev.appendChild(mk('span','vh',` (${UI[lang].syn})`))}
+      why.appendChild(ev);
+    });
+    art.appendChild(why);
     h.lines.forEach(l=>art.appendChild(marked(l.textContent,res.terms)));
     // Only About and Projects are on screen; the rest of the CV exists for the PDF
     // and for this search. Nobody can be sent to a hidden passage.
@@ -444,6 +466,8 @@ $('#ask-again').addEventListener('click',()=>{
   mini.focus({preventScroll:true});
 });
 $('#chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(b)ask(b.textContent)});
+// Switching mode re-asks whatever is on screen, in the new scope.
+$('#modes').addEventListener('change',e=>{mode=e.target.value;ask(current.text,current.silent)});
 
 /* ---------- theme ---------- */
 const themeBtn=$('#theme'),root=document.documentElement;

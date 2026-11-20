@@ -39,7 +39,9 @@ test('every interactive control has an accessible name', async ({ page }) => {
       .filter((e) => e.offsetParent !== null)
       .filter((e) => {
         const name = (e.getAttribute('aria-label') || e.getAttribute('title') || e.textContent || '').trim();
-        const labelled = e.getAttribute('aria-labelledby') || (e.id && document.querySelector(`label[for="${e.id}"]`));
+        // e.labels covers both <label for> and a <label> wrapping the control,
+        // which is how the search-mode radios are named.
+        const labelled = e.getAttribute('aria-labelledby') || [...(e.labels || [])].some((l) => l.textContent.trim());
         return !name && !labelled;
       })
       .map((e) => e.tagName + (e.id ? '#' + e.id : '') + (e.className ? '.' + String(e.className).split(' ')[0] : ''))
