@@ -561,6 +561,45 @@ test.describe('editorial index', () => {
   });
 });
 
+// Spec 017: the stat row under the cover.
+test.describe('stat row', () => {
+  const n = (page) => page.$$eval('.st-n', (els) => els.map((e) => Number(getComputedStyle(e).getPropertyValue('--n'))));
+  const at = (page, y) => page.evaluate((y) => scrollTo({ top: document.querySelector('.stats').getBoundingClientRect().top + scrollY - innerHeight + y, behavior: 'instant' }), y);
+
+  test('the figures are the story\'s own totals', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await expect(page.locator('.st-n b')).toHaveText(['8+', '6', '25', '3']);
+    await page.locator('.seg').last().click();
+    await page.click('#rp-next'); await page.click('#rp-next'); await page.click('#rp-next');
+    await expect(page.locator('#rp-step')).toContainText('4/4 · 7/7');
+    expect(await page.$$eval('#k-co, #k-te, #k-pr', (els) => els.map((e) => e.textContent))).toEqual(['6', '25', '3']);
+  });
+
+  test('they count up as they come into view', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await at(page, 40);
+    const part = await n(page);
+    expect(part[2], 'the premise: partly in view, 25 has not been reached').toBeLessThan(25);
+    await at(page, 500);
+    await expect.poll(() => n(page)).toEqual([8, 6, 25, 3]);
+  });
+
+  test('the labels speak English', async ({ page }) => {
+    await open(page, '?quiet=1&lang=en');
+    await expect(page.locator('.st-l')).toHaveText(['years in production', 'companies', 'technologies', 'own projects']);
+    await expect(page.locator('.stats')).toHaveAttribute('aria-label', 'In figures');
+  });
+});
+
+test.describe('stat row, reduced motion', () => {
+  test.use({ reducedMotion: 'reduce' });
+  test('the plain figures show and nothing counts', async ({ page }) => {
+    await open(page, '?quiet=1');
+    expect(await page.$$eval('.st-n', (els) => els.map((e) => getComputedStyle(e).animationName))).toEqual(['none', 'none', 'none', 'none']);
+    expect(await page.$eval('.st-n b', (e) => e.getBoundingClientRect().width)).toBeGreaterThan(5);
+  });
+});
+
 // Spec 006: the Curiosity Switch picks which parts of each case a reader sees.
 test.describe('the Curiosity Switch', () => {
   const view = (page, v) => page.locator('#views label', { has: page.locator(`input[value="${v}"]`) });
