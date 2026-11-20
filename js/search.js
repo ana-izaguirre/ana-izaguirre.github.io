@@ -20,6 +20,13 @@ export function tokenize(text) {
 /**
  * Synonym groups. They widen the ranking (asking for "sql" reaches PostgreSQL
  * and Snowflake) but never the highlighting, which stays on what was typed.
+ * Kept out on purpose, because they are false friends in this CV (spec 005):
+ * data (Allergan Data Labs), donde/where, based/role (role-based permissions),
+ * remoto/remote in the location group (remote proctoring; they keep a
+ * work-mode group of their own), education (Laureate Education),
+ * flow (financing flows), github (GitHub Actions). Project names are not
+ * synonyms of each other either: asking about trainer-flow pulled latino-migra.
+ * Typed, they still match.
  */
 const GROUPS = [
   'aws lambda sqs sns s3 dynamodb cloud nube serverless rekognition',
@@ -27,17 +34,18 @@ const GROUPS = [
   'ia ai inteligencia artificial llm gemini mcp agente agent',
   'liderazgo lider liderado liderar lidere liderando leadership lead led leading mentoria mentoreado mentoreando mentoring mentored mentor onboarding equipo team',
   'ingles english idioma language portugues portuguese espanol spanish',
-  'vives vive vivo ubicacion location live based donde where zaragoza remoto remote hibrido hybrid puesto role contrato contract indefinido permanent busca buscas busco looking disponibilidad availability inmediata available',
+  'vives vive vivo ubicacion location live zaragoza puesto contrato contract indefinido permanent busca buscas busco looking disponibilidad availability inmediata available',
+  'remoto remote hibrido hybrid teletrabajo',
   'test testing prueba calidad quality jest cypress cobertura coverage pytest selenium',
   'frontend front react angular',
-  'dato data base database sql postgresql mongodb snowflake dynamodb firestore',
+  'dato base database sql postgresql mongodb snowflake dynamodb firestore',
   'devops ci cd docker kubernetes pipeline actions despliegue deploy',
-  'estudio estudiaste estudiar estudiado carrera study studied studies formacion education universidad university master licenciatura degree titulo bachelor',
+  'estudio estudiaste estudiar estudiado carrera study studied studies formacion universidad university master licenciatura degree titulo bachelor',
   'guardia oncall call incidente incident datadog observabilidad observability monitoring',
   'api graphql apollo endpoint disenado designed',
   'pausa break hueco gap crianza parenting ahora now actualmente currently',
   'backend back node nodejs typescript express',
-  'proyecto project github portfolio portafolio trainer flow latino migra',
+  'proyecto project portfolio portafolio',
 ].map((g) => g.split(' ').map(stem));
 
 const SYNONYMS = new Map();
@@ -49,7 +57,8 @@ for (const group of GROUPS) {
 }
 
 /** Default weight per CV section: experience and projects are the evidence. */
-export const DEFAULT_BOOST = Object.freeze({ exp: 1.3, proj: 1.15, skills: 0.55 });
+// Cases weigh less than the CV they illustrate: detail on projects the CV already lists.
+export const DEFAULT_BOOST = Object.freeze({ exp: 1.3, proj: 1.15, skills: 0.55, case: 0.7 });
 
 /** Synonyms count a little over half a typed word. */
 const SYNONYM_WEIGHT = 0.55;
