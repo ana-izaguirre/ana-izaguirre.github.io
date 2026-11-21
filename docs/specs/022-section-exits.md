@@ -1,6 +1,6 @@
 # 022. Section exits
 
-**Status:** implemented · revised: the story's exit removed · **Roadmap:** phase 25
+**Status:** removed (Ana, 2026-11-21): the links added nothing the page's own order does not
 
 ## Problem
 
