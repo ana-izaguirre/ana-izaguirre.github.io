@@ -1462,3 +1462,28 @@ test('no exit repeats the label of the section it leads to', async ({ page }) =>
   }
   await expect(page.locator('#faq')).toHaveCount(0);
 });
+
+// Ana's review: on a desktop, Honduras stood outside the content column. The
+// signs now follow the cards' columns, and a whisper never covers the buttons.
+test.describe('signs and whispers line up with the cards', () => {
+  for (const [w, h] of [[1280, 720], [1280, 900], [1680, 950], [1920, 1080]]) {
+    test(`${w}×${h}`, async ({ page }) => {
+      await page.setViewportSize({ width: w, height: h });
+      await open(page, '?quiet=1');
+      await expect(page.locator('#loader')).toHaveClass(/gone/);
+      const box = (sel) => page.locator(sel).evaluate((e) => { const r = e.getBoundingClientRect(); return { l: r.left, t: r.top, r: r.right, b: r.bottom }; });
+      const [hs, zs, journey, about] = await Promise.all(['.signs > span:first-child', '.signs > span:last-child', '.tile[data-focus=story]', '.tile[data-focus=about]'].map(box));
+      expect(Math.abs(hs.l - journey.l), 'Honduras is off the "My journey" column').toBeLessThan(40);
+      expect(Math.abs(zs.l - about.l), 'Zaragoza is off the "About me" column').toBeLessThan(60);
+      await page.hover('.tile[data-focus=story]');
+      await page.waitForTimeout(500);
+      const wh = page.locator('.tile[data-focus=story] .whisper');
+      if (await wh.isVisible()) {
+        const [whisper, ctas] = await Promise.all([box('.tile[data-focus=story] .whisper'), box('.ctas')]);
+        expect(whisper.t, 'the whisper covers the buttons').toBeGreaterThan(ctas.b);
+      } else {
+        expect(h, 'the whisper is only dropped on short screens').toBeLessThanOrEqual(780);
+      }
+    });
+  }
+});
