@@ -1541,3 +1541,24 @@ test.describe('touch feedback', () => {
     }
   });
 });
+
+// Ana: the bar's download button says just "CV". Its accessible name still
+// says what it does, in the visitor's language from the first frame.
+test.describe('the bar says CV', () => {
+  for (const [lang, name] of [['es', 'Descargar CV'], ['en', 'Download CV']]) {
+    test(`"CV", named "${name}" — ${lang}`, async ({ page }) => {
+      await page.route('**/app.js', (r) => r.abort());
+      await page.goto(`/index.html?lang=${lang}`);
+      await expect(page.locator('.bar a.dl')).toHaveText('CV');
+      await expect(page.locator('.bar a.dl')).toHaveAttribute('aria-label', name);
+    });
+  }
+
+  test('a language switch renames it, the card keeps its words', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await page.click('#lang');
+    await expect(page.locator('.bar a.dl')).toHaveAttribute('aria-label', 'Download CV');
+    await expect(page.locator('.bar a.dl')).toHaveText('CV');
+    await expect(page.locator('#hablemos a.dl')).toHaveText('Download CV');
+  });
+});
