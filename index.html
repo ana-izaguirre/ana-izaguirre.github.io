@@ -117,12 +117,12 @@ html[data-theme=light] .i-moon{display:block}
 .facts{display:flex;flex-wrap:wrap;gap:.4rem;list-style:none;margin:0 0 .8rem;padding:0;min-width:0;max-width:100%}
 .facts li{font-size:.82rem;font-weight:500;border:1px solid var(--line);border-radius:999px;padding:.3rem .7rem;color:var(--text)}
 .facts li:first-child{border-color:var(--red);color:var(--red-t)}
-/* Who she is in one screen (spec 015). Availability is a live signal, and the
+/* Who she is in one screen (spec 015). The band is a paper card, like the story below it.  Availability is a live signal, and the
    companies she shipped for pass by in a band, as on a studio's client wall. */
 .facts li.live{display:inline-flex;align-items:center;gap:.4rem}
 .facts li.live::before{content:"";width:.5rem;height:.5rem;border-radius:50%;background:#3FB46A;box-shadow:0 0 0 0 rgba(63,180,106,.55);animation:live 2.2s ease-out infinite}
 @keyframes live{70%,100%{box-shadow:0 0 0 .5rem rgba(63,180,106,0)}}
-.trust{position:relative;z-index:1;background:var(--bg);padding:1.1rem 0 1.3rem;border-block:1px solid var(--line);overflow:clip}
+.trust{position:relative;z-index:1;width:min(1016px,calc(100% - 2 * clamp(1.1rem,4vw,2rem)));margin:1.8rem auto 0;padding:1.6rem 0 1.5rem;overflow:clip}
 /* The stat row (spec 017): the story's own totals, under the cover. Where
    scroll-driven animations run, each figure counts up as it comes into view,
    drawn by a CSS counter; the real figure stays in the text for assistive
@@ -130,6 +130,9 @@ html[data-theme=light] .i-moon{display:block}
 .stats{display:flex;flex-wrap:wrap;justify-content:center;gap:.8rem clamp(1.4rem,5vw,3.6rem);margin:0 0 1.2rem;padding:0 1rem;list-style:none}
 .stats li{display:flex;flex-direction:column;align-items:center;text-align:center}
 .st-n{font:400 clamp(2rem,5vw,2.8rem)/1 var(--serif);color:var(--text)}
+/* Two by two on phones, not three and an orphan. */
+@media (max-width:680px){.stats{display:grid;grid-template-columns:1fr 1fr;row-gap:1.1rem}}
+.trust .mq-win{margin:0 1rem}
 .st-n b{font-weight:400}
 .st-l{margin-top:.3rem;font-size:.82rem;color:var(--slate)}
 @property --n{syntax:'<integer>';inherits:false;initial-value:0}
@@ -666,10 +669,10 @@ footer{max-width:900px;margin:0 auto;padding:1.6rem clamp(1.1rem,4vw,2rem) 0;col
    (thousands of px tall) that filter forces a huge off-screen texture to paint.
    Irregular corners, a dashed stitch, a warm shadow and tape are enough to read
    as the same world at no paint cost. */
-section.replay,.ans,.sheet{--stitch:color-mix(in srgb,var(--red) 24%,transparent);background:var(--sheet);border:0;border-radius:24px 16px 26px 14px/16px 26px 14px 24px;box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 2px 4px rgba(60,40,20,.07),0 26px 48px -26px rgba(40,25,10,.5)}
-html:not([data-theme=light]) :is(section.replay,.ans,.sheet){box-shadow:0 1px 0 rgba(255,255,255,.05) inset,0 2px 4px rgba(0,0,0,.2),0 26px 48px -24px rgba(0,0,0,.7)}
+section.replay,.ans,.sheet,.trust{--stitch:color-mix(in srgb,var(--red) 24%,transparent);background:var(--sheet);border:0;border-radius:24px 16px 26px 14px/16px 26px 14px 24px;box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 2px 4px rgba(60,40,20,.07),0 26px 48px -26px rgba(40,25,10,.5)}
+html:not([data-theme=light]) :is(section.replay,.ans,.sheet,.trust){box-shadow:0 1px 0 rgba(255,255,255,.05) inset,0 2px 4px rgba(0,0,0,.2),0 26px 48px -24px rgba(0,0,0,.7)}
 section.replay{-webkit-backdrop-filter:none;backdrop-filter:none;position:relative}
-:is(section.replay,.ans,.sheet)::after{content:"";position:absolute;inset:8px;pointer-events:none;border:1.5px dashed var(--stitch);border-radius:19px 12px 21px 10px/12px 21px 10px 19px}
+:is(section.replay,.ans,.sheet,.trust)::after{content:"";position:absolute;inset:8px;pointer-events:none;border:1.5px dashed var(--stitch);border-radius:19px 12px 21px 10px/12px 21px 10px 19px}
 /* Tape: pins the sheet to the world, with no image. */
 :is(section.replay,.sheet)::before{content:"";position:absolute;top:-12px;left:50%;width:96px;height:24px;margin-left:-48px;background:var(--tape);border-radius:2px;transform:rotate(-2.5deg);box-shadow:0 1px 2px rgba(0,0,0,.08);z-index:1}
 .sheet::before{left:22%;transform:rotate(3deg)}
