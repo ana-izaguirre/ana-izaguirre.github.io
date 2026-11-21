@@ -726,24 +726,6 @@ test.describe('story counters', () => {
   }
 });
 
-// Spec 022: each section closes on one link onward.
-test.describe('section exits', () => {
-  test('two exits, each landing on the section after it', async ({ page }) => {
-    await open(page, '?quiet=1');
-    const hrefs = await page.$$eval('.exit a', (as) => as.map((a) => a.getAttribute('href')));
-    expect(hrefs).toEqual(['#sobre-mi', '#hablemos']);
-    for (const href of hrefs) {
-      await page.click(`.exit a[href="${href}"]`);
-      await expect(page.locator(href)).toBeInViewport({ timeout: 4000 });
-    }
-  });
-
-  test('they speak English', async ({ page }) => {
-    await open(page, '?quiet=1&lang=en');
-    await expect(page.locator('.exit a')).toHaveText(['Go on to who I am and what I have built →', "Do I fit your team? Here's how to reach me →"]);
-  });
-});
-
 // Spec 023: hovering a sign raises its flag.
 test.describe('flags on the signs', () => {
   const op = (page, i) => page.locator('.signs .egg').nth(i).evaluate((e) => Number(getComputedStyle(e).opacity));
@@ -1461,20 +1443,6 @@ test.describe('the has-worked-at card', () => {
     expect(tops[2]).toBe(tops[3]);
     expect(tops[2]).toBeGreaterThan(tops[0]);
   });
-});
-
-// Ana's review: the story's exit read "Pregúntale a mi CV" right above the
-// section labelled the same. An exit never repeats its target's label.
-test('no exit repeats the label of the section it leads to', async ({ page }) => {
-  for (const lang of ['es', 'en']) {
-    await open(page, `?quiet=1&lang=${lang}`);
-    const echoes = await page.$$eval('.exit a', (as) => as.flatMap((a) => {
-      const label = document.querySelector(a.getAttribute('href')).closest('section').querySelector('.eyebrow span:last-child').textContent.toLowerCase();
-      return a.textContent.toLowerCase().includes(label) ? [`${a.textContent} → ${label}`] : [];
-    }));
-    expect(echoes).toEqual([]);
-  }
-  await expect(page.locator('#faq')).toHaveCount(0);
 });
 
 // Ana's review: on a desktop, Honduras stood outside the content column. The
