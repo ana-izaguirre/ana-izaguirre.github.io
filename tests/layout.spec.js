@@ -191,10 +191,12 @@ test.describe('resizing', () => {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto('/index.html?quiet=1');
     await page.waitForTimeout(900);
-    await expect(page.locator('a.dl').first()).toHaveText('Descargar CV');
+    // Ana: the bar says just "CV", at every width; its name says what it does.
+    await expect(page.locator('.bar a.dl')).toHaveText('CV');
+    await expect(page.locator('.bar a.dl')).toHaveAttribute('aria-label', 'Descargar CV');
 
     await page.setViewportSize({ width: 390, height: 844 });
-    await expect(page.locator('a.dl').first()).toHaveText('CV');
+    await expect(page.locator('.bar a.dl')).toHaveText('CV');
     await page.waitForTimeout(500);
     const fit = await page.evaluate(() => {
       const card = document.getElementById('card').getBoundingClientRect();
@@ -207,7 +209,7 @@ test.describe('resizing', () => {
     expect(fit.overlap, 'timeline labels collide after a resize').toBe(false);
 
     await page.setViewportSize({ width: 1280, height: 800 });
-    await expect(page.locator('a.dl').first()).toHaveText('Descargar CV');
+    await expect(page.locator('.bar a.dl')).toHaveText('CV');
   });
 });
 

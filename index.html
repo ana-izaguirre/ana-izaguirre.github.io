@@ -827,7 +827,7 @@ html[data-motion=off] .cards .tile:active,html[data-motion=off] :is(.btn,.pill,.
         <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1z"/><path class="spark" d="M17.6 3.2l.55 1.55 1.55.55-1.55.55-.55 1.55-.55-1.55-1.55-.55 1.55-.55z"/></svg>
       </button>
       <button class="btn ghost code" id="lang" type="button" lang="en" aria-label="EN, English" title="English">EN</button>
-      <a class="btn red dl" href="Ana-Izaguirre-CV-ES.pdf" download data-i18n="dl">Descargar CV</a>
+      <a class="btn red dl" href="Ana-Izaguirre-CV-ES.pdf" download aria-label="Descargar CV" data-i18n-aria="dl">CV</a>
     </div>
   </div>
 </header>
@@ -976,7 +976,6 @@ window.ES_TOP={};
   // halfway down, where the story has already played. A shared #link still lands.
   if('scrollRestoration' in history)history.scrollRestoration='manual';
   var keep=function(k,v){if(!(k in ES_TOP))ES_TOP[k]=v};
-  d.querySelectorAll('a.dl').forEach(function(a){if(a.dataset.i18n==='dl')keep('dl',a.textContent)});
   if(l==='en'){
     r.lang='en';
     d.querySelectorAll('.bar [data-i18n],#top [data-i18n]').forEach(function(e){var k=e.dataset.i18n;if(k in EN_TOP){keep(k,e.textContent);e.textContent=EN_TOP[k]}});
@@ -984,7 +983,6 @@ window.ES_TOP={};
     var m=d.getElementById('q-mini');keep('ph_mini',m.placeholder);m.placeholder=EN_TOP.ph_mini;
     d.getElementById('lang').textContent='ES';
   }
-  if(matchMedia('(max-width:430px)').matches)d.querySelectorAll('a.dl').forEach(function(a){if(a.dataset.i18n==='dl')a.textContent='CV'});
 })();
 </script>
 <section class="trust" aria-labelledby="trust-h">
