@@ -535,7 +535,7 @@ test.describe('who she is in one screen, reduced motion', () => {
 
 // Spec 016: a numbered editorial index.
 test.describe('editorial index', () => {
-  const ES = ['01Trayectoria', '02Pregúntale a mi CV', '03Perfil', '04Trabajo propio', '05Preguntas frecuentes', '06Hablemos'];
+  const ES = ['01Trayectoria', '02Pregúntale a mi CV', '03Perfil', '04Trabajo propio', '05Hablemos'];
 
   test('each section opens with its number, and the footer lists them in order', async ({ page }) => {
     await open(page, '?quiet=1');
@@ -557,7 +557,7 @@ test.describe('editorial index', () => {
 
   test('the index speaks English, and the numbers are not read twice', async ({ page }) => {
     await open(page, '?quiet=1&lang=en');
-    await expect(page.locator('.idx a')).toHaveText(['01Journey', '02Ask my CV', '03Profile', '04Own work', '05FAQ', "06Let's talk"]);
+    await expect(page.locator('.idx a')).toHaveText(['01Journey', '02Ask my CV', '03Profile', '04Own work', "05Let's talk"]);
     await expect(page.locator('.idx')).toHaveAttribute('aria-label', 'Index');
     expect(await page.$$eval('.eyebrow', (els) => els.every((e) => e.getAttribute('aria-hidden') === 'true'))).toBe(true);
   });
@@ -670,36 +670,6 @@ test.describe('motion switch, system reduced motion', () => {
   });
 });
 
-// Spec 020: the questions a recruiter asks first, answered with the CV's own words.
-test.describe('FAQ', () => {
-  test('four questions, closed, each answered with the CV\'s own sentence', async ({ page }) => {
-    await open(page, '?quiet=1');
-    await expect(page.locator('.faq details')).toHaveCount(4);
-    await expect(page.locator('.faq details[open]')).toHaveCount(0);
-    const cv = (id) => page.locator(id).textContent();
-    expect(await page.locator('.faq details').nth(0).locator('p').textContent()).toBe(await cv('#c-disp'));
-    expect(await page.locator('.faq details').nth(1).locator('p').textContent()).toBe(await cv('[data-i18n="l1"]:not(.faq *)'));
-    expect(await page.locator('.faq details').nth(2).locator('p').textContent()).toBe(await cv('#c-pausa [data-i18n="x0_1"]'));
-  });
-
-  test('opens and closes from the keyboard', async ({ page }) => {
-    await open(page, '?quiet=1');
-    await page.locator('.faq summary').first().focus();
-    await page.keyboard.press('Enter');
-    await expect(page.locator('.faq details').first()).toHaveAttribute('open', '');
-    await expect(page.locator('.faq details p').first()).toBeVisible();
-    await page.keyboard.press('Enter');
-    await expect(page.locator('.faq details[open]')).toHaveCount(0);
-  });
-
-  test('speaks English', async ({ page }) => {
-    await open(page, '?quiet=1&lang=en');
-    await expect(page.locator('#h-faq')).toHaveText('What I am usually asked');
-    await expect(page.locator('.faq summary').first()).toHaveText('Where, how and when do you want to work?');
-    await expect(page.locator('.faq details p').first()).toContainText('I live in Zaragoza');
-  });
-});
-
 // Spec 021: a case's parts unfold in reading order.
 test.describe('case parts unfold', () => {
   test('each part of an opened case arrives after the one before it', async ({ page }) => {
@@ -744,10 +714,10 @@ test.describe('story counters', () => {
 
 // Spec 022: each section closes on one link onward.
 test.describe('section exits', () => {
-  test('three exits, each landing on the section after it', async ({ page }) => {
+  test('two exits, each landing on the section after it', async ({ page }) => {
     await open(page, '?quiet=1');
     const hrefs = await page.$$eval('.exit a', (as) => as.map((a) => a.getAttribute('href')));
-    expect(hrefs).toEqual(['#ask-sec', '#sobre-mi', '#hablemos']);
+    expect(hrefs).toEqual(['#sobre-mi', '#hablemos']);
     for (const href of hrefs) {
       await page.click(`.exit a[href="${href}"]`);
       await expect(page.locator(href)).toBeInViewport({ timeout: 4000 });
@@ -756,7 +726,7 @@ test.describe('section exits', () => {
 
   test('they speak English', async ({ page }) => {
     await open(page, '?quiet=1&lang=en');
-    await expect(page.locator('.exit a')).toHaveText(['A specific question? Ask my CV →', 'Go on to who I am and what I have built →', "Do I fit your team? Let's talk →"]);
+    await expect(page.locator('.exit a')).toHaveText(['Go on to who I am and what I have built →', "Do I fit your team? Here's how to reach me →"]);
   });
 });
 
@@ -1477,4 +1447,18 @@ test.describe('the has-worked-at card', () => {
     expect(tops[2]).toBe(tops[3]);
     expect(tops[2]).toBeGreaterThan(tops[0]);
   });
+});
+
+// Ana's review: the story's exit read "Pregúntale a mi CV" right above the
+// section labelled the same. An exit never repeats its target's label.
+test('no exit repeats the label of the section it leads to', async ({ page }) => {
+  for (const lang of ['es', 'en']) {
+    await open(page, `?quiet=1&lang=${lang}`);
+    const echoes = await page.$$eval('.exit a', (as) => as.flatMap((a) => {
+      const label = document.querySelector(a.getAttribute('href')).closest('section').querySelector('.eyebrow span:last-child').textContent.toLowerCase();
+      return a.textContent.toLowerCase().includes(label) ? [`${a.textContent} → ${label}`] : [];
+    }));
+    expect(echoes).toEqual([]);
+  }
+  await expect(page.locator('#faq')).toHaveCount(0);
 });

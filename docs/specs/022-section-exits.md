@@ -1,6 +1,6 @@
 # 022. Section exits
 
-**Status:** implemented · **Roadmap:** phase 25
+**Status:** implemented · revised: the story's exit removed · **Roadmap:** phase 25
 
 ## Problem
 
@@ -28,3 +28,13 @@ arrow is decoration (`aria-hidden`).
 2. Each brings its target into view.
 3. English text. axe passes, the layout tests pass, coverage stays at 100%,
    and Lighthouse stays at 100.
+
+## Revision (2026-11-21)
+
+Ana saw "¿Una duda concreta? Pregúntale a mi CV" right above the section
+titled "Pregúntale a mi CV": the same thing twice, especially on a phone,
+where they touch. That exit is gone. The projects' exit said "Hablemos" over the card
+labelled "Hablemos", so it now reads "¿Encajo en tu equipo? Así me
+contactas". An exit never repeats its target's label, and a test checks it
+in both languages.
+

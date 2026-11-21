@@ -455,19 +455,6 @@ html:not([data-theme=light]) .world{--w0:#1B1838;--w1:#2E2550;--w2:#5B3A62;--w3:
 .ctas .pill{margin-top:0}
 .pill-go{background:var(--red);border-color:var(--red);color:var(--on-red)}
 .pill-go:hover{border-color:var(--red)}
-/* FAQ (spec 020): the questions a recruiter asks first, answered with the CV's
-   own sentences. Closed by default, native <details>, no script. */
-.faq{scroll-margin-top:76px;max-width:900px;margin:1.6rem auto 0;padding:clamp(1.4rem,4vw,2.4rem);border-radius:22px 16px 24px 14px/16px 24px 14px 22px;background:var(--sheet);color:var(--ink);box-shadow:var(--shadow)}
-.faq h2{margin:0 0 .8rem;font:400 1.6rem/1.2 var(--serif)}
-.faq details{border-top:1px solid var(--rule)}
-.faq details:last-of-type{border-bottom:1px solid var(--rule)}
-.faq summary{display:flex;justify-content:space-between;gap:1rem;padding:.85rem 0;cursor:pointer;list-style:none;font-weight:600;color:var(--text)}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";flex:none;color:var(--red-t);font-weight:700;transition:transform .25s}
-.faq details[open] summary::after{transform:rotate(45deg)}
-.faq summary:focus-visible{outline:2px solid var(--red-t);outline-offset:3px;border-radius:4px}
-.faq details p{margin:0 0 .9rem;color:var(--body);line-height:1.55}
-.faq details p a{color:var(--red-t)}
 .cta{scroll-margin-top:76px;max-width:900px;margin:1.6rem auto 0;padding:clamp(1.4rem,4vw,2.4rem);border-radius:22px 16px 24px 14px/16px 24px 14px 22px;border:1.5px dashed color-mix(in srgb,var(--red) 45%,transparent);background:var(--sheet);color:var(--ink);text-align:center;box-shadow:var(--shadow)}
 .cta h2{margin:0 0 .4rem;font:600 clamp(1.4rem,3.6vw,1.9rem)/1.2 var(--serif)}
 .cta p{margin:0 auto 1.1rem;max-width:46ch;color:var(--body)}
@@ -703,7 +690,7 @@ section.replay{-webkit-backdrop-filter:none;backdrop-filter:none;position:relati
   .brand{font-size:1.2rem}
   .bar .btn{padding:.6rem .7rem;font-size:.86rem}
   .sheet{border-radius:16px 11px 18px 10px/11px 18px 10px 16px;margin-left:.6rem;margin-right:.6rem;padding-left:1.35rem;padding-right:1.35rem}
-  .cta,.faq{margin-left:.6rem;margin-right:.6rem}
+  .cta{margin-left:.6rem;margin-right:.6rem}
   .sheet::after,section.replay::after{inset:6px}
   .rp-top{grid-template-columns:minmax(0,1fr) auto}
   .rp-ev{grid-column:1/-1;order:3;min-height:8.6rem;justify-content:flex-start}
@@ -723,7 +710,7 @@ section.replay{-webkit-backdrop-filter:none;backdrop-filter:none;position:relati
   @media (min-width:681px){.sys>.world{animation:cover-sink linear both;animation-timeline:--cover;animation-range:exit 0% exit 100%}}
   .hero-l{animation:cover-lift linear both;animation-timeline:--cover;animation-range:exit 0% exit 90%}
   /* Arriving content rises into place as it enters, then stays put. */
-  :is(.replay,.ask-head,.g-chips,.sheet>section>h2,.sheet .eyebrow,.pm,.faq,.about .txt,.row,.case,.views,.cta):not(.flash){animation:arrive linear both;animation-timeline:view();animation-range:entry 0% entry 70%}
+  :is(.replay,.ask-head,.g-chips,.sheet>section>h2,.sheet .eyebrow,.pm,.about .txt,.row,.case,.views,.cta):not(.flash){animation:arrive linear both;animation-timeline:view();animation-range:entry 0% entry 70%}
   /* The stitched rules draw themselves across. */
   .ask-rule{transform-origin:0 50%;animation:stitch linear both;animation-timeline:view();animation-range:entry 20% cover 30%}
 }
@@ -1017,7 +1004,6 @@ window.ES_TOP={};
         </div>
       </div>
     </section>
-    <p class="exit no-print"><a href="#ask-sec"><span data-i18n="ex_ask">¿Una duda concreta? Pregúntale a mi CV</span> <span aria-hidden="true">→</span></a></p>
   </div>
 </section>
 
@@ -1272,7 +1258,7 @@ window.ES_TOP={};
         </figure>
         <p class="case-src"><span data-i18n="case_src">Fuentes en el repositorio:</span> <a href="https://github.com/ana-izaguirre/latino-migra#readme">README</a> · <a href="https://github.com/ana-izaguirre/latino-migra/blob/main/CLAUDE.md">CLAUDE.md</a></p>
       </details>
-      <p class="exit no-print"><a href="#hablemos"><span data-i18n="ex_talk">¿Encajo en tu equipo? Hablemos</span> <span aria-hidden="true">→</span></a></p>
+      <p class="exit no-print"><a href="#hablemos"><span data-i18n="ex_talk">¿Encajo en tu equipo? Así me contactas</span> <span aria-hidden="true">→</span></a></p>
     </section>
 
     <section class="cv-only" aria-labelledby="h-sk">
@@ -1307,16 +1293,8 @@ window.ES_TOP={};
         <p data-line data-i18n="l1">Español nativo. Inglés profesional: más de 6 años con equipos de ingeniería de Estados Unidos. Portugués básico.</p></div>
     </section>
   </article>
-  <section class="faq no-print" id="faq" aria-labelledby="h-faq">
-    <p class="eyebrow" aria-hidden="true"><span class="eb-n">05</span><span data-i18n="eb_faq">Preguntas frecuentes</span></p>
-    <h2 id="h-faq" data-i18n="faq_h">Lo que suelen preguntarme</h2>
-    <details><summary data-i18n="faq_q1">¿Dónde, cómo y cuándo quieres trabajar?</summary><p data-i18n="disp">Vivo en Zaragoza. Busco un puesto indefinido como ingeniera backend o full stack: híbrido en Zaragoza o remoto desde España. Incorporación inmediata.</p></details>
-    <details><summary data-i18n="faq_q2">¿Qué nivel de inglés tienes?</summary><p data-i18n="l1">Español nativo. Inglés profesional: más de 6 años con equipos de ingeniería de Estados Unidos. Portugués básico.</p></details>
-    <details><summary data-i18n="faq_q3">¿Por qué hay una pausa desde 2025?</summary><p data-i18n="x0_1">Dedicación completa a la crianza tras una reducción de plantilla. En este tiempo he publicado proyectos backend propios en GitHub.</p></details>
-    <details><summary data-i18n="faq_q4">¿Puedo ver código tuyo?</summary><p><span data-i18n="faq_a4">Sí: tres proyectos propios, con sus decisiones y métricas, más arriba y en</span> <a href="https://github.com/ana-izaguirre">github.com/ana-izaguirre</a>.</p></details>
-  </section>
   <section class="cta no-print" id="hablemos" aria-labelledby="h-cta">
-    <p class="eyebrow" aria-hidden="true"><span class="eb-n">06</span><span data-i18n="eb_talk">Hablemos</span></p>
+    <p class="eyebrow" aria-hidden="true"><span class="eb-n">05</span><span data-i18n="eb_talk">Hablemos</span></p>
     <h2 id="h-cta" data-i18n="pop_t">Disponible para incorporarme ya</h2>
     <p data-i18n="pop_d">Puesto indefinido como ingeniera full stack o backend: híbrido en Zaragoza o remoto desde España.</p>
     <div class="cta-b">
@@ -1325,7 +1303,7 @@ window.ES_TOP={};
       <a class="btn ghost2" href="https://www.linkedin.com/in/ana-izaguirre/">LinkedIn</a>
     </div>
   </section>
-  <footer><nav class="idx" aria-label="Índice" data-i18n-aria="idx_a"><ol><li><a href="#story"><span class="eb-n">01</span><span data-i18n="eb_story">Trayectoria</span></a></li><li><a href="#ask-sec"><span class="eb-n">02</span><span data-i18n="eb_ask">Pregúntale a mi CV</span></a></li><li><a href="#sobre-mi"><span class="eb-n">03</span><span data-i18n="eb_about">Perfil</span></a></li><li><a href="#h-proj"><span class="eb-n">04</span><span data-i18n="eb_proj">Trabajo propio</span></a></li><li><a href="#faq"><span class="eb-n">05</span><span data-i18n="eb_faq">Preguntas frecuentes</span></a></li><li><a href="#hablemos"><span class="eb-n">06</span><span data-i18n="eb_talk">Hablemos</span></a></li></ol></nav><span data-i18n="foot">© 2026 Ana Izaguirre. Hecha a mano, sin frameworks ni rastreadores.</span></footer>
+  <footer><nav class="idx" aria-label="Índice" data-i18n-aria="idx_a"><ol><li><a href="#story"><span class="eb-n">01</span><span data-i18n="eb_story">Trayectoria</span></a></li><li><a href="#ask-sec"><span class="eb-n">02</span><span data-i18n="eb_ask">Pregúntale a mi CV</span></a></li><li><a href="#sobre-mi"><span class="eb-n">03</span><span data-i18n="eb_about">Perfil</span></a></li><li><a href="#h-proj"><span class="eb-n">04</span><span data-i18n="eb_proj">Trabajo propio</span></a></li><li><a href="#hablemos"><span class="eb-n">05</span><span data-i18n="eb_talk">Hablemos</span></a></li></ol></nav><span data-i18n="foot">© 2026 Ana Izaguirre. Hecha a mano, sin frameworks ni rastreadores.</span></footer>
 </section>
 </main>
 
