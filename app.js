@@ -3,9 +3,9 @@
 import {createIndex,search as rank,tokenize,normalize as norm,isHit,surfaceForm} from './js/search.js';
 (()=>{
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-// Reduced motion: asked by the system, or by the page's own switch (spec 019).
-const osReduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-let reduce=osReduce||document.documentElement.dataset.motion==='off';
+// Reduced motion lives in one place: the first-frame script sets data-motion
+// from the saved choice or, failing that, the system's setting (spec 026).
+let reduce=document.documentElement.dataset.motion==='off';
 const qs=new URLSearchParams(location.search),quiet=qs.has('quiet');
 const MAIL='ana.izaguirrematamoros@gmail.com';
 
@@ -312,7 +312,6 @@ idle(()=>{
    el.style.setProperty('--b',r(2.2,4.6).toFixed(1)+'s');
    dot.style.animationDelay=(-r(0,4)).toFixed(1)+'s';
    el.appendChild(dot);f.appendChild(el);
-   if(osReduce){dot.style.animation='none';dot.style.opacity='.8';continue}
    // A loop through three points and back, never retracing a line. Explicit px
    // values, not var() in @keyframes: Safari on iPhone ignored those (spec 007).
    const pt=()=>`translate(${r(-dx,dx).toFixed(0)}px,${r(-dy,dy).toFixed(0)}px)`;
@@ -502,7 +501,7 @@ phoneMQ.addEventListener('change',placeBox);placeBox();
 // project row glows where the pointer is. Only for a mouse or trackpad, never
 // for touch, and never under reduced motion. The values feed CSS; the CSS
 // decides the motion.
-if(!osReduce&&matchMedia('(hover:hover) and (pointer:fine)').matches){
+if(matchMedia('(hover:hover) and (pointer:fine)').matches){
   const at=(e,f)=>{const el=e.currentTarget,r=el.getBoundingClientRect();f(el,(e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height,r)};
   $$('.tile').forEach(el=>{
     el.addEventListener('pointermove',e=>at(e,(el,x,y)=>{el.style.setProperty('--tx',((x-.5)*9).toFixed(2)+'deg');el.style.setProperty('--ty',((.5-y)*9).toFixed(2)+'deg')}));
@@ -558,14 +557,14 @@ function scrollFallback(){
   const bar=$('.bar'),read=()=>bar.style.setProperty('--read',(scrollY/Math.max(1,root.scrollHeight-innerHeight)).toFixed(4));
   addEventListener('scroll',()=>requestAnimationFrame(read),{passive:true});read();
   const count=new IntersectionObserver(es=>{
-    if(!es.some(e=>e.isIntersecting))return;count.disconnect();$('.stats').dataset.counted='';
+    if(reduce||!es.some(e=>e.isIntersecting))return;count.disconnect();$('.stats').dataset.counted='';
     const figs=$$('.st-n b').map(b=>[b,parseInt(b.textContent,10),b.textContent.replace(/^\d+/,'')]),t0=performance.now();
     const step=now=>{const k=Math.min(1,(now-t0)/900);figs.forEach(([b,n,suf])=>{b.textContent=Math.round(n*k*(2-k))+suf});if(k<1)requestAnimationFrame(step)};
     requestAnimationFrame(step);
   },{threshold:.6});
   count.observe($('.stats'));
 }
-if(!osReduce&&!CSS.supports('animation-timeline: view()'))scrollFallback();
+if(!CSS.supports('animation-timeline: view()'))scrollFallback();
 
 /* ---------- motion switch (spec 019) ---------- */
 // Off, CSS stops every animation and transition, the fireflies land, the

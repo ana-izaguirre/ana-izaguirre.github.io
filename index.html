@@ -28,7 +28,7 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"Ana Izaguirre","jobTitle":"Senior Backend / Full Stack Engineer","url":"https://ana-izaguirre.github.io/","sameAs":["https://github.com/ana-izaguirre","https://www.linkedin.com/in/ana-izaguirre/"],"address":{"@type":"PostalAddress","addressLocality":"Zaragoza","addressCountry":"ES"},"knowsLanguage":["es","en"],"knowsAbout":["Node.js","TypeScript","AWS","GraphQL","Event-driven architecture","Message queues","Model Context Protocol"]}
 </script>
-<script>/* Theme before the first frame: ?theme= wins over the saved choice. The motion switch (spec 019) too. */(function(){var t=new URLSearchParams(location.search).get('theme');if(t!=='light'&&t!=='dark'){try{t=localStorage.getItem('theme')}catch(e){t=null}}if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;try{if(localStorage.getItem('motion')==='off')document.documentElement.dataset.motion='off'}catch(e){}})()</script>
+<script>/* Theme before the first frame: ?theme= wins over the saved choice. The motion switch (spec 019, 026) too: a saved choice wins; otherwise the system's reduced motion starts it off. */(function(){var t=new URLSearchParams(location.search).get('theme');if(t!=='light'&&t!=='dark'){try{t=localStorage.getItem('theme')}catch(e){t=null}}if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;var m=null;try{m=localStorage.getItem('motion')}catch(e){}document.documentElement.dataset.motion=m==='on'||m==='off'?m:matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on'})()</script>
 <style>
 @font-face{font-family:"Fraunces";src:url(fonts/fraunces.woff2) format("woff2");font-weight:300 800;font-display:swap}
 @font-face{font-family:"Nunito";src:url(fonts/nunito.woff2) format("woff2");font-weight:100 550;font-display:swap}
@@ -87,12 +87,12 @@ body{margin:0;background:linear-gradient(180deg,var(--sky1) 0%,var(--sky2) 42%,v
 .code{width:46px;padding:0;display:grid;place-items:center;font-weight:700;letter-spacing:.05em}
 .ico svg{width:20px;height:20px}
 /* The motion switch (spec 019): a site control, like the theme. Off, the page
-   behaves as under prefers-reduced-motion. Where the system already asks for
-   reduced motion, there is nothing to switch, so the button is not shown. */
+   behaves as under prefers-reduced-motion. A phone that asks for reduced
+   motion (battery saver often does) starts with it off, and the button is
+   always there to turn it on (spec 026). */
 .i-motion{fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round}
 .i-motion .off{display:none}
 html[data-motion=off] .i-motion .off{display:inline}
-@media (prefers-reduced-motion:reduce){#motion{display:none}}
 html[data-motion=off]{scroll-behavior:auto}
 html[data-motion=off] *,html[data-motion=off] *::before,html[data-motion=off] *::after{animation:none!important;transition:none!important}
 html[data-motion=off] .mq-win{-webkit-mask-image:none;mask-image:none}
@@ -137,7 +137,7 @@ html[data-theme=light] .i-moon{display:block}
 .st-l{margin-top:.3rem;font-size:.82rem;color:var(--slate)}
 @property --n{syntax:'<integer>';inherits:false;initial-value:0}
 @supports (animation-timeline:view()){
-@media screen and (prefers-reduced-motion:no-preference){
+@media screen{
   .st-n b{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
   .st-n::before{content:counter(n) attr(data-suffix) / ""}
   /* --n does not inherit, so the counter is set on the figure, not its ::before. */
@@ -510,7 +510,7 @@ html:not([data-theme=light]) .world{--w0:#1B1838;--w1:#2E2550;--w2:#5B3A62;--w3:
 .tile:hover,.tile:focus-visible{transform:rotate(0) translateY(-7px)}
 /* Pointer response (spec 011): app.js writes where the pointer is; the card
    leans toward it, and a project row glows under it. Mouse and trackpad only. */
-@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+@media (hover:hover) and (pointer:fine){
   .tile:hover{transform:perspective(800px) rotateX(var(--ty,0deg)) rotateY(var(--tx,0deg)) translateY(-7px);transition:transform .25s ease-out}
   .sheet .row:hover{background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--red) 10%,transparent),transparent 70%)}
 }
@@ -708,7 +708,7 @@ section.replay{-webkit-backdrop-filter:none;backdrop-filter:none;position:relati
    is reduced, or on paper, everything simply stands still and fully visible.
    Only transform and opacity change, so nothing reflows or shifts layout. */
 @supports (animation-timeline:view()){
-@media screen and (prefers-reduced-motion:no-preference){
+@media screen{
   /* Reading progress: a thin line under the bar fills as the page is read. */
   .bar::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--red);transform-origin:0 50%;transform:scaleX(0);animation:read-progress linear both;animation-timeline:scroll(root)}
   /* Leaving the cover: the landscape sinks slower than the page, the words lift
@@ -727,7 +727,7 @@ section.replay{-webkit-backdrop-filter:none;backdrop-filter:none;position:relati
    Safari and Firefox today, so every iPhone. app.js marks content .seen as it
    arrives and writes the reading progress into --read; CSS animates both. */
 @supports not (animation-timeline:view()){
-@media screen and (prefers-reduced-motion:no-preference){
+@media screen{
   html.io:not([data-motion=off]) :is(.replay,.ask-head,.g-chips,.sheet>section>h2,.sheet .eyebrow,.pm,.about .txt,.row,.case,.views,.cta,.trust):not(.seen):not(.flash){opacity:0;transform:translateY(32px)}
   html.io :is(.replay,.ask-head,.g-chips,.sheet>section>h2,.sheet .eyebrow,.pm,.about .txt,.row,.case,.views,.cta,.trust){transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
   html.io .bar::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--red);transform-origin:0 50%;transform:scaleX(var(--read,0))}
@@ -735,7 +735,7 @@ section.replay{-webkit-backdrop-filter:none;backdrop-filter:none;position:relati
 }
 /* A touch answers the finger (spec 025): cards, buttons and pills press in.
    iOS only shows :active once the page listens to touches (app.js). */
-@media (hover:none) and (prefers-reduced-motion:no-preference){
+@media (hover:none){
   .cards .tile,.btn,.pill,.chip,.chips-more,.node,.fab,.exit a{transition:transform .18s cubic-bezier(.34,1.56,.64,1)}
   .cards .tile:active{transform:scale(.97)}
   :is(.btn,.pill,.chip,.chips-more,.node,.fab,.exit a):active{transform:scale(.94)}
@@ -746,14 +746,6 @@ html[data-motion=off] .cards .tile:active,html[data-motion=off] :is(.btn,.pill,.
 @keyframes cover-lift{to{transform:translateY(-14%)}}
 @keyframes arrive{from{opacity:0;transform:translateY(32px)}}
 @keyframes stitch{from{transform:scaleX(0)}}
-@media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  *,*::before,*::after{transition:none!important;animation:none!important}
-  /* A still band: every company in view, wrapped, once. */
-  .mq-win{-webkit-mask-image:none;mask-image:none}
-  .mq{flex:1;flex-wrap:wrap;justify-content:center;row-gap:.5rem}
-  .mq[aria-hidden]{display:none}
-}
 @media (max-width:700px){
   .fab{width:54px;height:54px;padding:0;justify-content:center;border-radius:50%}
   .fab span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}

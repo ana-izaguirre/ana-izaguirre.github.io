@@ -662,11 +662,25 @@ test.describe('motion switch', () => {
   });
 });
 
+// Spec 026: a phone that asks for reduced motion (battery saver often does)
+// starts still, and the switch is there to turn the motion on.
 test.describe('motion switch, system reduced motion', () => {
   test.use({ reducedMotion: 'reduce' });
-  test('there is nothing to switch, so no button', async ({ page }) => {
+  test('the page starts still, and the switch turns the motion on', async ({ page }) => {
     await open(page, '?quiet=1');
-    await expect(page.locator('#motion')).toBeHidden();
+    await expect(page.locator('#motion')).toBeVisible();
+    await expect(page.locator('#motion')).toHaveAttribute('aria-pressed', 'false');
+    await expect(page.locator('html')).toHaveAttribute('data-motion', 'off');
+    await expect(page.locator('.fly').first()).toBeAttached();
+    const flights = () => page.$$eval('.fly', (els) => [...new Set(els.flatMap((e) => e.getAnimations().map((a) => a.playState)))]);
+    expect(await flights()).toEqual(['paused']);
+    await page.click('#motion');
+    await expect(page.locator('html')).toHaveAttribute('data-motion', 'on');
+    expect(await flights()).toEqual(['running']);
+    expect(await page.$eval('.mq', (e) => getComputedStyle(e).animationName)).toBe('marquee');
+    await page.reload();
+    await page.waitForTimeout(800);
+    await expect(page.locator('html'), 'the choice beats the system on the next visit').toHaveAttribute('data-motion', 'on');
   });
 });
 
@@ -1385,13 +1399,13 @@ test.describe('reduced motion', () => {
     // The premise first: without fireflies on the page this would pass for nothing.
     await expect(page.locator('.fly').first()).toBeAttached();
     const moving = await page.evaluate(() =>
-      [...document.querySelectorAll('.fly, .fly i, .land *')].some((e) => getComputedStyle(e).animationName !== 'none' || e.getAnimations().length > 0)
+      [...document.querySelectorAll('.fly, .fly i, .land *')].some((e) => getComputedStyle(e).animationName !== 'none' || e.getAnimations().some((a) => a.playState === 'running'))
     );
     expect(moving, 'something animates under prefers-reduced-motion').toBe(false);
     const scrolled = await page.$$eval('.sheet .row, .replay, .cta, .ask-rule', (els) => els.filter((e) => getComputedStyle(e).animationName !== 'none' || getComputedStyle(e).opacity !== '1').length);
     expect(scrolled, 'scroll motion runs under prefers-reduced-motion').toBe(0);
-    await page.locator('.tile[data-focus=proj]').dispatchEvent('pointermove', { clientX: 900, clientY: 300 });
-    expect(await page.$eval('.tile[data-focus=proj]', (e) => e.style.getPropertyValue('--tx')), 'a card tilts under reduced motion').toBe('');
+    await page.locator('.tile[data-focus=proj]').hover();
+    expect(await page.$eval('.tile[data-focus=proj]', (e) => getComputedStyle(e).transform), 'a card tilts under reduced motion').not.toMatch(/^matrix3d/);
     await expect(page.locator('#sheet')).toBeVisible();
     await expect(page.locator('h1')).toBeVisible();
   });
@@ -1528,7 +1542,11 @@ test.describe('motion without scroll-driven animations, reduced motion', () => {
   test('nothing is hidden waiting to arrive', async ({ page }) => {
     await page.addInitScript(() => { CSS.supports = () => false; });
     await open(page, '?quiet=1');
-    await expect(page.locator('html')).not.toHaveClass(/\bio\b/);
+    await expect(page.locator('html')).toHaveAttribute('data-motion', 'off');
+    expect(await page.$eval('#c-trainer', (e) => getComputedStyle(e).opacity), 'a row waits hidden').toBe('1');
+    await page.locator('.stats').evaluate((e) => e.scrollIntoView({ block: 'center', behavior: 'instant' }));
+    await page.waitForTimeout(300);
+    await expect(page.locator('.stats')).not.toHaveAttribute('data-counted', '');
   });
 });
 
