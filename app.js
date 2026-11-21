@@ -544,6 +544,29 @@ $('#chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(b)
 // Switching mode re-asks whatever is on screen, in the new scope.
 $('#modes').addEventListener('change',e=>{mode=e.target.value;ask(current.text,current.silent)});
 
+/* ---------- motion where scroll-driven animations are missing (spec 025) ---------- */
+// iOS shows :active only once the page listens to touches.
+document.addEventListener('touchstart',()=>{},{passive:true});
+// Safari and Firefox have no scroll-driven animations yet, so on every iPhone
+// the page stood still below the cover. Here an observer marks what arrives,
+// a passive scroll listener feeds the reading line, and the figures count up.
+const ARRIVE='.replay,.ask-head,.g-chips,.sheet>section>h2,.sheet .eyebrow,.pm,.about .txt,.row,.case,.views,.cta,.trust';
+function scrollFallback(){
+  const root=document.documentElement;root.classList.add('io');
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('seen');io.unobserve(e.target)}}),{rootMargin:'0px 0px -6% 0px'});
+  $$(ARRIVE).forEach(el=>io.observe(el));
+  const bar=$('.bar'),read=()=>bar.style.setProperty('--read',(scrollY/Math.max(1,root.scrollHeight-innerHeight)).toFixed(4));
+  addEventListener('scroll',()=>requestAnimationFrame(read),{passive:true});read();
+  const count=new IntersectionObserver(es=>{
+    if(!es.some(e=>e.isIntersecting))return;count.disconnect();$('.stats').dataset.counted='';
+    const figs=$$('.st-n b').map(b=>[b,parseInt(b.textContent,10),b.textContent.replace(/^\d+/,'')]),t0=performance.now();
+    const step=now=>{const k=Math.min(1,(now-t0)/900);figs.forEach(([b,n,suf])=>{b.textContent=Math.round(n*k*(2-k))+suf});if(k<1)requestAnimationFrame(step)};
+    requestAnimationFrame(step);
+  },{threshold:.6});
+  count.observe($('.stats'));
+}
+if(!osReduce&&!CSS.supports('animation-timeline: view()'))scrollFallback();
+
 /* ---------- motion switch (spec 019) ---------- */
 // Off, CSS stops every animation and transition, the fireflies land, the
 // story stops, and jumps around the page become instant. On again, it all resumes.
