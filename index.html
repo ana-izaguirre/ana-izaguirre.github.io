@@ -481,7 +481,11 @@ html:not([data-theme=light]) .world{--w0:#1B1838;--w1:#2E2550;--w2:#5B3A62;--w3:
 /* signs and cards: pushed to the foot of the hero, so they never meet the headline */
 /* The two signs stand where their places are in the landscape: Honduras at the
    start, on the left; Zaragoza by the basilica. Each on a post in the ground. */
-.signs{display:flex;flex-direction:row;align-items:flex-end;justify-content:space-between;gap:.6rem;margin:auto 0 0;padding:1rem 25% 0 8%}
+.signs{display:grid;grid-template-columns:1.05fr 1.15fr .95fr;gap:1.4rem;align-items:end;width:min(100%,1080px);margin:auto auto 0;padding:1rem 0 0;box-sizing:border-box}
+/* The signs follow the cards' own columns, so they line up at any width:
+   Honduras over "My journey", Zaragoza over "About me". */
+.signs>span{justify-self:start;margin-left:1.6rem}
+.signs>span:last-child{grid-column:-2}
 .signs span{position:relative}
 /* A small surprise (spec 023): hovering a sign raises its flag, Honduras and
    Aragón, waving on a little pole. Decoration only, like the signs. */
@@ -519,6 +523,8 @@ html:not([data-theme=light]) .world{--w0:#1B1838;--w1:#2E2550;--w2:#5B3A62;--w3:
 .tile:focus-visible .whisper{opacity:1;transform:none}
 /* Stacked cards on phones: a whisper would sit on the card above. The light stays. */
 @media (max-width:680px){.whisper{display:none}}
+/* On a short screen there is no room between the cover's buttons and the cards. */
+@media (min-width:681px) and (max-height:780px){.whisper{display:none}}
 @media (hover:hover){.tile:hover .whisper{opacity:1;transform:none}}
 .tl-t{display:flex;align-items:center;gap:.6rem;font:600 1.12rem/1.2 var(--serif);margin:.1rem 0 .35rem;color:var(--text)}
 .blob{display:grid;place-items:center;width:38px;height:38px;flex:none;border-radius:58% 42% 52% 48%/46% 56% 44% 54%;background:color-mix(in srgb,var(--hill2) 22%,transparent);color:var(--hill3)}
@@ -537,6 +543,7 @@ html:not([data-theme=light]) .tile:nth-child(3) .blob{color:#E8A49E}
   .hero{grid-template-columns:1fr;gap:1.2rem}
   .hero-r{justify-content:flex-start}
   .cards{grid-template-columns:1fr 1fr}
+  .signs{grid-template-columns:1fr 1fr}
   .tile:nth-child(3){grid-column:span 2}
 }
 /* phones: a different composition, not the same one shrunk */
@@ -549,7 +556,8 @@ html:not([data-theme=light]) .tile:nth-child(3) .blob{color:#E8A49E}
   .hero-r{order:3;padding:0 clamp(1.1rem,4vw,2rem);justify-content:stretch}
   .ask-mini{width:100%;transform:none}
   /* On the ground at the foot of the landscape band: the family on the left, the basilica on the right. */
-  .signs{order:4;position:relative;z-index:1;flex-direction:row;justify-content:space-between;margin:-3.6rem 0 1.4rem;padding:0 20% 0 7%}
+  .signs{order:4;position:relative;z-index:1;display:flex;flex-direction:row;justify-content:space-between;width:auto;margin:-3.6rem 0 1.4rem;padding:0 20% 0 7%}
+  .signs>span{margin-left:0}
   .signs span:nth-child(n){transform:none;margin:0}
   .cards{order:5;grid-template-columns:1fr;gap:.8rem;padding:0 clamp(1.1rem,4vw,2rem)}
   .tile:nth-child(n){transform:none}
