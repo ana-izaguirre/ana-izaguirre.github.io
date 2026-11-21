@@ -1487,3 +1487,71 @@ test.describe('signs and whispers line up with the cards', () => {
     });
   }
 });
+
+// Spec 025: Safari and Firefox have no scroll-driven animations, so on every
+// iPhone the page stood still below the cover. Chromium has them, so the
+// fallback is forced here by reporting the feature as missing.
+test.describe('motion without scroll-driven animations', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => {
+      const real = CSS.supports.bind(CSS);
+      CSS.supports = (...a) => (String(a.join(' ')).includes('animation-timeline') ? false : real(...a));
+    });
+  });
+
+  test('content is marked as it arrives, the reading line follows, the figures count', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await expect(page.locator('html')).toHaveClass(/\bio\b/);
+    const row = page.locator('#c-trainer');
+    await expect(row, 'the premise: below the fold, not yet seen').not.toHaveClass(/seen/);
+    await row.evaluate((e) => e.scrollIntoView({ block: 'center', behavior: 'instant' }));
+    await expect(row).toHaveClass(/seen/);
+    const read = Number(await page.$eval('.bar', (e) => e.style.getPropertyValue('--read')));
+    expect(read).toBeGreaterThan(0.1);
+    await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
+    await page.locator('.stats').evaluate((e) => e.scrollIntoView({ block: 'center', behavior: 'instant' }));
+    await expect(page.locator('.stats')).toHaveAttribute('data-counted', '');
+    await expect(page.locator('.st-n b')).toHaveText(['8+', '6', '25', '3']);
+  });
+
+  test('a page scrolled past the figures while they are out of view does not count them', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await page.evaluate(() => scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' }));
+    await page.waitForTimeout(300);
+    await expect(page.locator('.stats')).not.toHaveAttribute('data-counted', '');
+    await expect(page.locator('.st-n b')).toHaveText(['8+', '6', '25', '3']);
+  });
+});
+
+test.describe('motion without scroll-driven animations, reduced motion', () => {
+  test.use({ reducedMotion: 'reduce' });
+  test('nothing is hidden waiting to arrive', async ({ page }) => {
+    await page.addInitScript(() => { CSS.supports = () => false; });
+    await open(page, '?quiet=1');
+    await expect(page.locator('html')).not.toHaveClass(/\bio\b/);
+  });
+});
+
+test('Chromium uses its own scroll-driven animations, not the fallback', async ({ page }) => {
+  await open(page, '?quiet=1');
+  await expect(page.locator('html')).not.toHaveClass(/\bio\b/);
+});
+
+// Spec 025: a touch answers the finger.
+test.describe('touch feedback', () => {
+  test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
+  test('cards and buttons press in under the finger', async ({ page }) => {
+    await open(page, '?quiet=1');
+    await expect(page.locator('#loader')).toHaveClass(/gone/);
+    for (const sel of ['.tile[data-focus=proj]', '.pill-go', '#chips .chip']) {
+      const el = page.locator(sel).first();
+      await el.evaluate((e) => e.scrollIntoView({ block: 'center', behavior: 'instant' }));
+      const b = await el.boundingBox();
+      await page.mouse.move(b.x + b.width / 2, b.y + b.height / 2);
+      await page.mouse.down();
+      await expect.poll(() => el.evaluate((e) => new DOMMatrix(getComputedStyle(e).transform).a), { message: `${sel} did not press in` }).toBeLessThan(0.99);
+      await page.mouse.move(1, 1);
+      await page.mouse.up();
+    }
+  });
+});
