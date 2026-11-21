@@ -1454,3 +1454,27 @@ test.describe('reduced motion', () => {
     await expect(page.locator('#ask-mini')).toBeInViewport();
   });
 });
+
+// The "has worked at" band is a paper card like the story below it, with the
+// same side margins, not a full-width block.
+test.describe('the has-worked-at card', () => {
+  for (const [name, viewport] of [['phone', { width: 390, height: 844 }], ['desktop', { width: 1280, height: 800 }]]) {
+    test(`it lines up with the story card — ${name}`, async ({ page }) => {
+      await page.setViewportSize(viewport);
+      await open(page, '?quiet=1');
+      const [trust, story] = await page.$$eval('.trust, section.replay', (els) => els.map((e) => { const r = e.getBoundingClientRect(); return [Math.round(r.left), Math.round(r.right)]; }));
+      expect(trust[0], 'no side margin').toBeGreaterThan(0);
+      expect(trust).toEqual(story);
+      expect(await page.$eval('.trust', (e) => getComputedStyle(e, '::after').borderStyle)).toBe('dashed');
+    });
+  }
+
+  test('on a phone the figures sit two by two', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await open(page, '?quiet=1');
+    const tops = await page.$$eval('.stats li', (els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
+    expect(tops[0]).toBe(tops[1]);
+    expect(tops[2]).toBe(tops[3]);
+    expect(tops[2]).toBeGreaterThan(tops[0]);
+  });
+});
